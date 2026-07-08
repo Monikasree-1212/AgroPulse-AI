@@ -1,12 +1,12 @@
 const FILTERS = [
-  { key: 'all',        label: 'All',        icon: '📋' },
-  { key: 'price',      label: 'Price',      icon: '💰' },
-  { key: 'prediction', label: 'Prediction', icon: '📈' },
-  { key: 'weather',    label: 'Weather',    icon: '🌤️' },
-  { key: 'profit',     label: 'Profit',     icon: '🧮' },
-  { key: 'mandi',      label: 'Mandi',      icon: '🏪' },
-  { key: 'voice',      label: 'Voice',      icon: '🎙️' },
-  { key: 'government', label: 'Government', icon: '🏛️' },
+  { key: 'all',        label: 'All',        icon: 'List' },
+  { key: 'price',      label: 'Price',      icon: 'Price' },
+  { key: 'prediction', label: 'Prediction', icon: 'Predict' },
+  { key: 'weather',    label: 'Weather',    icon: 'Weather' },
+  { key: 'profit',     label: 'Profit',     icon: 'Calculator' },
+  { key: 'mandi',      label: 'Mandi',      icon: 'Market' },
+  { key: 'voice',      label: 'Voice',      icon: 'Voice' },
+  { key: 'government', label: 'Government', icon: 'Government' },
 ]
 
 export default function ActivityFilters({ active, onChange, counts }) {

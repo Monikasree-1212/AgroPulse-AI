@@ -1,13 +1,13 @@
 const ICONS = {
-  Clear:        '☀️',
-  Clouds:       '☁️',
-  Rain:         '🌧️',
-  Drizzle:      '🌦️',
-  Thunderstorm: '⛈️',
-  Snow:         '❄️',
-  Mist:         '🌫️',
-  Fog:          '🌫️',
-  Haze:         '🌫️',
+  Clear:        'Sun',
+  Clouds:       'Cloud',
+  Rain:         'Rain',
+  Drizzle:      'Rain',
+  Thunderstorm: 'Storm',
+  Snow:         'Cold',
+  Mist:         '',
+  Fog:          '',
+  Haze:         '',
 }
 
 const COLORS = {
@@ -20,18 +20,18 @@ const COLORS = {
 }
 
 export default function ForecastCard({ day, temperature, condition, humidity, rainfall }) {
-  const icon   = ICONS[condition]  || '🌤️'
+  const icon   = ICONS[condition]  || 'Weather'
   const colors = COLORS[condition] || COLORS.Clouds
 
   return (
     <div className={`bg-gradient-to-br ${colors} border rounded-2xl p-4 flex flex-col items-center gap-2 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 min-w-[90px]`}>
       <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">{day}</p>
       <span className="text-3xl leading-none">{icon}</span>
-      <p className="text-lg font-extrabold text-gray-800 dark:text-white">{temperature}°C</p>
+      <p className="text-lg font-extrabold text-gray-800 dark:text-white">{temperature} deg C</p>
       <p className="text-[11px] font-semibold text-gray-500 dark:text-gray-400 text-center">{condition}</p>
       <div className="flex gap-2 mt-1">
-        <span className="text-[10px] text-blue-500 font-semibold">💧{humidity}%</span>
-        {rainfall > 0 && <span className="text-[10px] text-cyan-500 font-semibold">🌧{rainfall}mm</span>}
+        <span className="text-[10px] text-blue-500 font-semibold">Water{humidity}%</span>
+        {rainfall > 0 && <span className="text-[10px] text-cyan-500 font-semibold">Rain{rainfall}mm</span>}
       </div>
     </div>
   )

@@ -10,7 +10,7 @@ function CustomTooltip({ active, payload, label }) {
       <p className="font-semibold text-gray-600 dark:text-gray-300 mb-1">{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }} className="font-bold">
-          {p.name}: ₹{p.value}/kg
+          {p.name}: Rs.{p.value}/kg
         </p>
       ))}
     </div>
@@ -30,7 +30,7 @@ export default function ProfitCard({ mandis }) {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-lg font-bold text-gray-900 dark:text-white">Profit Comparison Chart</h2>
-          <p className="text-sm text-gray-400 mt-0.5">Market Price · Transport Cost · Expected Profit</p>
+          <p className="text-sm text-gray-400 mt-0.5">Market Price  -  Transport Cost  -  Expected Profit</p>
         </div>
         <span className="text-xs font-semibold text-yellow-600 bg-yellow-50 dark:bg-yellow-900/30 dark:text-yellow-400 px-3 py-1 rounded-full border border-yellow-100 dark:border-yellow-800">
           Top 5 Mandis

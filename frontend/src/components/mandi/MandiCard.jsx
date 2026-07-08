@@ -8,7 +8,7 @@ export default function MandiCard({ mandi, isBest }) {
       {isBest && (
         <div className="absolute top-3 right-3 flex flex-col items-end gap-1">
           <span className="bg-yellow-400 text-yellow-900 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full shadow">
-            ⭐ Best Choice
+            Star Best Choice
           </span>
           <span className="bg-green-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">
             Highest Profit
@@ -32,10 +32,10 @@ export default function MandiCard({ mandi, isBest }) {
 
       <div className="grid grid-cols-2 gap-2">
         {[
-          { label: 'Market Price',    value: `₹${mandi.price}/kg`,          color: 'text-green-600 dark:text-green-400' },
+          { label: 'Market Price',    value: `Rs.${mandi.price}/kg`,          color: 'text-green-600 dark:text-green-400' },
           { label: 'Distance',        value: `${mandi.distance} km`,         color: 'text-blue-600 dark:text-blue-400'  },
-          { label: 'Transport Cost',  value: `₹${mandi.transportCost}/kg`,   color: 'text-orange-500 dark:text-orange-400' },
-          { label: 'Expected Profit', value: `₹${mandi.profit}/kg`,          color: isBest ? 'text-yellow-600 dark:text-yellow-400 font-extrabold' : 'text-violet-600 dark:text-violet-400' },
+          { label: 'Transport Cost',  value: `Rs.${mandi.transportCost}/kg`,   color: 'text-orange-500 dark:text-orange-400' },
+          { label: 'Expected Profit', value: `Rs.${mandi.profit}/kg`,          color: isBest ? 'text-yellow-600 dark:text-yellow-400 font-extrabold' : 'text-violet-600 dark:text-violet-400' },
         ].map(({ label, value, color }) => (
           <div key={label} className="bg-gray-50 dark:bg-gray-700/50 rounded-xl px-3 py-2">
             <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wide">{label}</p>

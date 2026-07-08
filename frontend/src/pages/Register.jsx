@@ -1,6 +1,6 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import { useGuest } from '../components/auth/GuestMode'
 import useTranslation from '../hooks/useTranslation'
 
@@ -20,7 +20,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState('')
   const [showPwd, setShowPwd] = useState(false)
-  const [step,    setStep]    = useState(1) // 1 = account, 2 = profile
+  const [step,    setStep]    = useState(1)
 
   const set = (k, v) => {
     setForm(p => ({ ...p, [k]: v }))
@@ -29,9 +29,9 @@ export default function Register() {
   }
 
   const validateStep1 = () => {
-    if (!form.name.trim())                    return t('register.errorName')
-    if (!/^\d{10}$/.test(form.phone))         return t('register.errorPhone')
-    if (form.password.length < 6)             return t('register.errorPassword')
+    if (!form.name.trim())                      return t('register.errorName')
+    if (!/^\d{10}$/.test(form.phone))           return t('register.errorPhone')
+    if (form.password.length < 6)               return t('register.errorPassword')
     if (form.password !== form.confirmPassword) return t('register.errorPasswordMatch')
     return ''
   }
@@ -49,7 +49,7 @@ export default function Register() {
     setError('')
     try {
       const { confirmPassword: _, ...payload } = form
-      const res = await axios.post('/api/auth/register', payload)
+      const res = await api.post('/api/auth/register', payload)
       login(res.data.token, res.data.user)
       navigate('/dashboard', { replace: true })
     } catch (err) {
@@ -69,7 +69,7 @@ export default function Register() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-extrabold text-white drop-shadow-xl">
-            ðŸŒ¾ <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
+            Farming <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
           </Link>
           <p className="text-white/60 text-sm mt-1">{t('register.subtitle')}</p>
         </div>
@@ -83,7 +83,7 @@ export default function Register() {
                   ? 'bg-gradient-to-br from-green-400 to-emerald-600 text-white shadow-lg shadow-green-900/50'
                   : 'bg-white/10 text-white/40 border border-white/20'
               }`}>
-                {step > s ? 'âœ“' : s}
+                {step > s ? 'Yes' : s}
               </div>
               <span className={`text-xs font-medium transition-colors ${step >= s ? 'text-green-300' : 'text-white/40'}`}>
                 {s === 1 ? t('register.step1Label') : t('register.step2Label')}
@@ -105,11 +105,11 @@ export default function Register() {
 
           {error && (
             <div className="mb-4 flex items-center gap-2 bg-red-500/20 border border-red-400/40 text-red-300 text-sm rounded-xl px-4 py-3">
-              <span>âš ï¸</span> {error}
+              <span>Warning</span> {error}
             </div>
           )}
 
-          {/* â”€â”€ Step 1 â”€â”€ */}
+          {/* Step 1 */}
           {step === 1 && (
             <form onSubmit={handleNext} className="space-y-5" noValidate>
               <div>
@@ -138,7 +138,7 @@ export default function Register() {
                     className="glass-input w-full pl-4 pr-11 py-3 rounded-xl text-sm transition-all" required />
                   <button type="button" onClick={() => setShowPwd(p => !p)}
                     className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/80 text-sm transition-colors">
-                    {showPwd ? 'ðŸ™ˆ' : 'ðŸ‘ï¸'}
+                    {showPwd ? 'Hide' : 'Show'}
                   </button>
                 </div>
               </div>
@@ -151,11 +151,12 @@ export default function Register() {
               </div>
 
               <button type="submit" className="btn-premium w-full py-3.5 text-white font-bold rounded-xl">
-                {t('register.continueBtn')}</button>
+                {t('register.continueBtn')}
+              </button>
             </form>
           )}
 
-          {/* â”€â”€ Step 2 â”€â”€ */}
+          {/* Step 2 */}
           {step === 2 && (
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <div className="grid grid-cols-2 gap-4">
@@ -219,8 +220,3 @@ export default function Register() {
     </div>
   )
 }
-
-
-
-
-

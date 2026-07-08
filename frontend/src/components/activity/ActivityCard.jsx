@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
 const TYPE_CONFIG = {
-  price:      { icon: '💰', label: 'Price Check',  accent: '#16a34a' },
-  prediction: { icon: '📈', label: 'AI Prediction', accent: '#3b82f6' },
-  weather:    { icon: '🌤️', label: 'Weather',       accent: '#f59e0b' },
-  profit:     { icon: '🧮', label: 'Profit Sim',    accent: '#8b5cf6' },
-  mandi:      { icon: '🏪', label: 'Mandi Search',  accent: '#f97316' },
-  voice:      { icon: '🎙️', label: 'Voice AI',      accent: '#06b6d4' },
-  government: { icon: '🏛️', label: 'Gov. Schemes',  accent: '#ec4899' },
+  price:      { icon: 'Price',      label: 'Price Check',  accent: '#16a34a' },
+  prediction: { icon: 'Predict',    label: 'AI Prediction', accent: '#3b82f6' },
+  weather:    { icon: 'Weather', label: 'Weather',       accent: '#f59e0b' },
+  profit:     { icon: 'Calculator', label: 'Profit Sim',    accent: '#8b5cf6' },
+  mandi:      { icon: 'Market', label: 'Mandi Search',  accent: '#f97316' },
+  voice:      { icon: 'Voice', label: 'Voice AI',      accent: '#06b6d4' },
+  government: { icon: 'Government', label: 'Gov. Schemes',  accent: '#ec4899' },
 }
 
 function timeAgo(date) {
@@ -58,7 +58,7 @@ export default function ActivityCard({ activity, onDelete }) {
         </p>
         <div className="flex items-center gap-3 mt-1.5">
           <span className="text-[10px] text-gray-400">{formatTime(activity.createdAt)}</span>
-          <span className="text-[10px] text-gray-300 dark:text-gray-600">·</span>
+          <span className="text-[10px] text-gray-300 dark:text-gray-600"> - </span>
           <span className="text-[10px] text-gray-400">{timeAgo(activity.createdAt)}</span>
         </div>
       </div>
@@ -69,7 +69,7 @@ export default function ActivityCard({ activity, onDelete }) {
         title="Remove"
         className="opacity-0 group-hover:opacity-100 transition-opacity duration-150 w-6 h-6 flex items-center justify-center rounded-md bg-red-100 dark:bg-red-900/40 text-red-500 hover:bg-red-200 dark:hover:bg-red-800 text-xs font-bold flex-shrink-0 self-start mt-0.5"
       >
-        ✕
+        No
       </button>
     </div>
   )

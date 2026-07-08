@@ -1,7 +1,7 @@
 const axios    = require("axios");
 const Activity = require("../models/Activity");
 
-const ML_URL = process.env.ML_URL || "http://localhost:8000";
+const ML_URL = process.env.ML_URL;
 
 const getPrediction = async (req, res) => {
   const { commodity, day } = req.params;
@@ -29,10 +29,8 @@ const getPrediction = async (req, res) => {
     const status  = error.response?.status  || 500;
     const message = error.response?.data?.error
       || error.response?.data?.message
-      || (error.code === 'ECONNREFUSED'
-          ? `ML server is not running on ${ML_URL}. Start it with: cd ml-model && python app.py`
-          : error.code === 'ETIMEDOUT' || error.code === 'ECONNABORTED'
-          ? 'ML server timed out. Make sure it is running and responsive.'
+      || (error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT' || error.code === 'ECONNABORTED'
+          ? 'Unable to connect to the server. Please try again later.'
           : error.message
          );
 

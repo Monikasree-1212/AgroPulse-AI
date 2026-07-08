@@ -23,7 +23,7 @@ AgroPulse-AI/
 | Frontend   | React 19, Vite, Tailwind CSS 4, Recharts, Axios |
 | Backend    | Node.js, Express 5, MongoDB, Mongoose   |
 | ML Server  | Python, Flask, scikit-learn, joblib     |
-| Database   | MongoDB (local via MongoDB Compass)     |
+| Database   | MongoDB Atlas (cloud)                   |
 
 ---
 
@@ -31,7 +31,7 @@ AgroPulse-AI/
 
 - Node.js >= 18
 - Python >= 3.9 (install from https://www.python.org/downloads/)
-- MongoDB running locally on port 27017
+- MongoDB Atlas cluster (connection string ready)
 
 ---
 
@@ -165,7 +165,10 @@ npm run dev
 **backend/.env**
 ```
 PORT=5000
-MONGO_URI=mongodb://127.0.0.1:27017/AgroPulseAI
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
+WEATHER_API_KEY=<your_openweather_api_key>
+JWT_SECRET=<your_jwt_secret>
+ML_URL=<your_flask_ml_server_url>
 ```
 
 ---

@@ -10,14 +10,14 @@ export default function RecommendationCard({ result }) {
 
       <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
         <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl flex-shrink-0 shadow-inner">
-          {hold ? '📦' : '💸'}
+          {hold ? '' : ''}
         </div>
 
         <div className="flex-1">
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <h2 className="text-xl font-extrabold text-white">AI Profit Recommendation</h2>
             <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
-              {result.commodity} · {result.quantity} kg
+              {result.commodity}  -  {result.quantity} kg
             </span>
             <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
               {result.daysToHold} days
@@ -28,22 +28,22 @@ export default function RecommendationCard({ result }) {
               <>
                 <span className="font-extrabold text-white">HOLD for {result.daysToHold} days.</span>{' '}
                 Expected profit increase of{' '}
-                <span className="font-extrabold text-white">₹{result.profitDifference.toLocaleString()}</span>.{' '}
+                <span className="font-extrabold text-white">Rs.{result.profitDifference.toLocaleString()}</span>.{' '}
                 Net future profit is{' '}
-                <span className="font-extrabold text-white">₹{result.netFutureProfit.toLocaleString()}</span> after all expenses.
+                <span className="font-extrabold text-white">Rs.{result.netFutureProfit.toLocaleString()}</span> after all expenses.
               </>
             ) : (
               <>
                 <span className="font-extrabold text-white">SELL TODAY.</span>{' '}
                 Holding will result in a loss of{' '}
-                <span className="font-extrabold text-white">₹{Math.abs(result.profitDifference).toLocaleString()}</span>.{' '}
+                <span className="font-extrabold text-white">Rs.{Math.abs(result.profitDifference).toLocaleString()}</span>.{' '}
                 Current revenue of{' '}
-                <span className="font-extrabold text-white">₹{result.currentRevenue.toLocaleString()}</span> is your best option.
+                <span className="font-extrabold text-white">Rs.{result.currentRevenue.toLocaleString()}</span> is your best option.
               </>
             )}
           </p>
           <p className="text-white/70 text-sm mt-2">
-            Break-even price: <span className="font-bold text-white">₹{result.breakEvenPrice}/kg</span>
+            Break-even price: <span className="font-bold text-white">Rs.{result.breakEvenPrice}/kg</span>
           </p>
         </div>
 

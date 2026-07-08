@@ -1,6 +1,7 @@
-﻿import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import en from '../locales/en.json'
 import hi from '../locales/hi.json'
+import api from '../services/api'
 
 export const LANGUAGE_STORAGE_KEY = 'agropulse_language'
 
@@ -60,14 +61,10 @@ async function syncLanguagePreference(languageName) {
   const token = localStorage.getItem('agropulse_token')
   if (!token) return
 
-  await fetch('/api/profile/preferences', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ preferredLanguage: languageName }),
-  })
+  await api.put('/api/profile/preferences',
+    { preferredLanguage: languageName },
+    { headers: { Authorization: `Bearer ${token}` } }
+  )
 }
 
 export function LanguageProvider({ children }) {

@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import axios from 'axios'
+import api from '../../services/api'
 import MSPCard from './MSPCard'
 import SchemeCard from './SchemeCard'
 import SearchBar from './SearchBar'
@@ -40,7 +40,7 @@ export default function GovernmentSchemes() {
   const [state,         setState]         = useState('All States')
 
   useEffect(() => {
-    axios.get('/api/government/msp')
+    api.get('/api/government/msp')
       .then((r) => setMsp(r.data))
       .catch(() => setMspError(true))
       .finally(() => setMspLoading(false))
@@ -58,7 +58,7 @@ export default function GovernmentSchemes() {
       ? '/api/government/search'
       : '/api/government/schemes'
 
-    axios.get(endpoint, { params })
+    api.get(endpoint, { params })
       .then((r) => setSchemes(r.data))
       .catch(() => setSchemesError(true))
       .finally(() => setSchemesLoading(false))
@@ -82,7 +82,7 @@ export default function GovernmentSchemes() {
             </h3>
           </div>
           <span className="text-xs font-semibold text-green-600 bg-green-50 dark:bg-green-900/40 dark:text-green-400 px-3 py-1 rounded-full border border-green-100 dark:border-green-800">
-            2024–25
+            2024-25
           </span>
         </div>
 
@@ -94,7 +94,7 @@ export default function GovernmentSchemes() {
 
         {!mspLoading && mspError && (
           <div className="flex items-center gap-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl px-5 py-4">
-            <span className="text-xl">⚠️</span>
+            <span className="text-xl">Warning</span>
             <p className="text-sm font-semibold text-red-600 dark:text-red-400">Unable to load MSP data.</p>
           </div>
         )}
@@ -139,7 +139,7 @@ export default function GovernmentSchemes() {
 
           {!schemesLoading && schemesError && (
             <div className="flex flex-col items-center justify-center py-12 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <span className="text-4xl">⚠️</span>
+              <span className="text-4xl">Warning</span>
               <p className="text-base font-bold text-red-500">Unable to fetch scheme information.</p>
               <p className="text-sm text-gray-400">Make sure the backend is running and database is seeded.</p>
               <button
@@ -153,7 +153,7 @@ export default function GovernmentSchemes() {
 
           {!schemesLoading && !schemesError && schemes.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <span className="text-5xl">🔍</span>
+              <span className="text-5xl">Search</span>
               <p className="text-base font-bold text-gray-700 dark:text-gray-300">No schemes found.</p>
               <p className="text-sm text-gray-400">Try adjusting your search or filters.</p>
             </div>

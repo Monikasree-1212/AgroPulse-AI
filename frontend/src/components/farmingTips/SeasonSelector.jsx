@@ -1,8 +1,8 @@
 const SEASONS = [
-  { key: 'All',    label: 'All Seasons', icon: '🌍', desc: 'Year-round' },
-  { key: 'Kharif', label: 'Kharif',      icon: '🌧️', desc: 'Jun – Sep'  },
-  { key: 'Rabi',   label: 'Rabi',        icon: '❄️',  desc: 'Oct – Feb'  },
-  { key: 'Zaid',   label: 'Zaid',        icon: '☀️',  desc: 'Mar – May'  },
+  { key: 'All',    label: 'All Seasons', icon: 'Global', desc: 'Year-round' },
+  { key: 'Kharif', label: 'Kharif',      icon: 'Rain', desc: 'Jun - Sep'  },
+  { key: 'Rabi',   label: 'Rabi',        icon: 'Cold',  desc: 'Oct - Feb'  },
+  { key: 'Zaid',   label: 'Zaid',        icon: 'Sun',  desc: 'Mar - May'  },
 ]
 
 export function getCurrentSeason() {

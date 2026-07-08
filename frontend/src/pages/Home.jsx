@@ -1,21 +1,21 @@
 const features = [
   {
-    icon: '📈',
+    icon: 'Chart',
     title: 'AI Price Forecasting',
     desc: 'Leverage machine learning models trained on years of mandi data to predict commodity prices with high accuracy up to 30 days in advance.',
   },
   {
-    icon: '🏪',
+    icon: 'Market',
     title: 'Smart Mandi Intelligence',
     desc: 'Compare real-time prices across hundreds of mandis in your region and find the most profitable market for your produce.',
   },
   {
-    icon: '💰',
+    icon: 'Profit',
     title: 'Profit Optimization',
     desc: 'Input your yield, transport cost, and storage capacity to receive a personalized selling strategy that maximises your net profit.',
   },
   {
-    icon: '🌦️',
+    icon: 'Rain',
     title: 'Weather Impact Analysis',
     desc: 'Understand how upcoming weather patterns will affect crop supply and demand, so you can time your sales perfectly.',
   },
@@ -29,10 +29,10 @@ const steps = [
 ]
 
 const benefits = [
-  { icon: '🎯', title: 'Better Selling Decisions', desc: 'Data-driven recommendations eliminate guesswork and emotional selling decisions.' },
-  { icon: '📊', title: 'Higher Profits', desc: 'Farmers using AgroPulse AI report an average 23% increase in net income per season.' },
-  { icon: '🔍', title: 'Market Transparency', desc: 'Full visibility into price movements, demand trends, and competitor activity across all mandis.' },
-  { icon: '🤖', title: 'AI-Powered Insights', desc: 'Continuously learning models adapt to new market conditions and improve forecast accuracy over time.' },
+  { icon: 'Target', title: 'Better Selling Decisions', desc: 'Data-driven recommendations eliminate guesswork and emotional selling decisions.' },
+  { icon: 'Chart', title: 'Higher Profits', desc: 'Farmers using AgroPulse AI report an average 23% increase in net income per season.' },
+  { icon: 'Search', title: 'Market Transparency', desc: 'Full visibility into price movements, demand trends, and competitor activity across all mandis.' },
+  { icon: 'AI', title: 'AI-Powered Insights', desc: 'Continuously learning models adapt to new market conditions and improve forecast accuracy over time.' },
 ]
 
 import { useNavigate } from 'react-router-dom'
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Navbar */}
       <nav className="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur border-b border-green-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold text-green-700">🌾 AgroPulse AI</span>
+          <span className="text-xl font-bold text-green-700">Farming AgroPulse AI</span>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
             <a href="#features" className="hover:text-green-600 transition-colors">Features</a>
             <a href="#how-it-works" className="hover:text-green-600 transition-colors">How It Works</a>
@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* ── HERO ── */}
+      {/* -- HERO -- */}
       <section className="relative pt-24 pb-20 bg-gradient-to-br from-green-50 via-emerald-50 to-lime-50 overflow-hidden">
         {/* decorative blobs */}
         <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-green-200 opacity-30 blur-3xl pointer-events-none" />
@@ -63,7 +63,7 @@ export default function Home() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-6">
-            🚀 Powered by Artificial Intelligence
+             Powered by Artificial Intelligence
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight mb-6">
@@ -77,7 +77,7 @@ export default function Home() {
           <p className="max-w-2xl mx-auto text-gray-600 text-lg leading-relaxed mb-10">
             Stop selling at the wrong price, at the wrong mandi, at the wrong time.
             AgroPulse AI empowers farmers with real-time market data, AI price forecasts,
-            and personalised profit strategies — all in one place.
+            and personalised profit strategies - all in one place.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center" id="get-started">
@@ -112,13 +112,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FEATURES ── */}
+      {/* -- FEATURES -- */}
       <section id="features" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <span className="text-green-600 font-semibold uppercase tracking-widest text-sm">What We Offer</span>
             <h2 className="text-4xl font-extrabold text-gray-900 mt-2">Powerful Features for Smarter Farming</h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto">Everything you need to make confident, profitable market decisions — backed by AI.</p>
+            <p className="text-gray-500 mt-3 max-w-xl mx-auto">Everything you need to make confident, profitable market decisions - backed by AI.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -136,7 +136,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
+      {/* -- HOW IT WORKS -- */}
       <section id="how-it-works" className="py-20 bg-gradient-to-b from-green-50 to-emerald-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -162,7 +162,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── BENEFITS ── */}
+      {/* -- BENEFITS -- */}
       <section id="benefits" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -188,7 +188,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA BANNER ── */}
+      {/* -- CTA BANNER -- */}
       <section className="py-20 bg-gradient-to-r from-green-600 to-emerald-500">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-extrabold text-white mb-4">Ready to Maximise Your Farm's Profits?</h2>
@@ -197,21 +197,21 @@ export default function Home() {
             onClick={() => navigate('/commodity')}
             className="inline-block bg-white text-green-700 font-bold text-lg px-10 py-4 rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200"
           >
-            Start for Free →
+            Start for Free {'->'}
           </button>
         </div>
       </section>
 
-      {/* ── FOOTER ── */}
+      {/* -- FOOTER -- */}
       <footer className="bg-gray-900 text-gray-400 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🌾</span>
+              <span className="text-2xl">Farming</span>
               <span className="text-lg font-bold text-white">AgroPulse AI</span>
             </div>
             <p className="text-sm">Smart Agricultural Market Intelligence Platform</p>
-            <p className="text-sm">© {new Date().getFullYear()} AgroPulse AI. All rights reserved.</p>
+            <p className="text-sm">(c) {new Date().getFullYear()} AgroPulse AI. All rights reserved.</p>
           </div>
         </div>
       </footer>

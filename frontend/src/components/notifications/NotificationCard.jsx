@@ -1,18 +1,18 @@
 import { useMemo } from 'react'
 
 const TYPE_CONFIG = {
-  price:      { icon: '📈', label: 'Price Alert',  borderColor: '#60a5fa' /* blue-400  */ },
-  weather:    { icon: '🌧️', label: 'Weather',      borderColor: '#facc15' /* yellow-400*/ },
-  mandi:      { icon: '🏪', label: 'Mandi',        borderColor: '#4ade80' /* green-400 */ },
-  government: { icon: '🏛️', label: 'Government',   borderColor: '#c084fc' /* purple-400*/ },
-  profit:     { icon: '💰', label: 'Profit',       borderColor: '#fb923c' /* orange-400*/ },
+  price:      { icon: 'Price',      label: 'Price Alert',  borderColor: '#60a5fa' },
+  weather:    { icon: 'Weather',    label: 'Weather',      borderColor: '#facc15' },
+  mandi:      { icon: 'Mandi',      label: 'Mandi',        borderColor: '#4ade80' },
+  government: { icon: 'Government', label: 'Government',   borderColor: '#c084fc' },
+  profit:     { icon: 'Profit',     label: 'Profit',       borderColor: '#fb923c' },
 }
 
 const PRIORITY_STYLES = {
-  low:      'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300',
-  medium:   'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  high:     'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300',
-  critical: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
+  low:      'bg-white/10 text-white/50',
+  medium:   'bg-blue-500/20 text-blue-300',
+  high:     'bg-yellow-500/20 text-yellow-300',
+  critical: 'bg-red-500/20 text-red-300',
 }
 
 function timeAgo(date) {
@@ -34,28 +34,31 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
     <div
       className={`
         group relative flex gap-3 p-4 rounded-xl
-        border border-gray-100 dark:border-gray-700
-        transition-all duration-200 hover:shadow-md animate-fadeIn
-        ${notification.isRead
-          ? 'bg-gray-50 dark:bg-gray-800/50'
-          : 'bg-white dark:bg-gray-800 shadow-sm'}
+        border border-white/10
+        transition-all duration-200 hover:bg-white/8 animate-fadeIn
+        ${notification.isRead ? 'opacity-60' : 'opacity-100'}
       `}
-      /* inline style for left accent — avoids Tailwind v4 border shorthand conflict */
-      style={{ borderLeftWidth: '4px', borderLeftColor: cfg.borderColor }}
+      style={{
+        background: notification.isRead
+          ? 'rgba(255,255,255,0.03)'
+          : 'rgba(255,255,255,0.07)',
+        borderLeftWidth: '3px',
+        borderLeftColor: cfg.borderColor,
+      }}
     >
       {/* Unread dot */}
       {!notification.isRead && (
-        <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+        <span className="absolute top-3 right-3 w-2 h-2 rounded-full bg-green-400 animate-pulse" />
       )}
 
       {/* Type icon */}
-      <span className="text-2xl flex-shrink-0 mt-0.5 leading-none">{cfg.icon}</span>
+      <span className="text-xs font-bold flex-shrink-0 mt-0.5 leading-none bg-white/10 px-1.5 py-0.5 rounded">{cfg.icon}</span>
 
       {/* Body */}
-      <div className="flex-1 min-w-0 pr-6">
-        {/* Title + priority */}
+      <div className="flex-1 min-w-0 pr-7">
+        {/* Title + priority badge */}
         <div className="flex flex-wrap items-center gap-1.5 mb-1">
-          <p className={`text-sm font-bold leading-snug ${notification.isRead ? 'text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white'}`}>
+          <p className={`text-sm font-bold leading-snug ${notification.isRead ? 'text-white/50' : 'text-white'}`}>
             {notification.title}
           </p>
           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0 ${priorityStyle}`}>
@@ -64,45 +67,45 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
         </div>
 
         {/* Message */}
-        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed mb-2">
+        <p className="text-xs text-white/50 leading-relaxed mb-2">
           {notification.message}
         </p>
 
         {/* Meta row */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wide">
+            <span className="text-[10px] font-semibold text-white/30 uppercase tracking-wide">
               {cfg.label}
             </span>
             {notification.commodity && (
-              <span className="text-[10px] bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded-full font-semibold">
+              <span className="text-[10px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded-full font-semibold border border-green-500/20">
                 {notification.commodity}
               </span>
             )}
           </div>
-          <span className="text-[10px] text-gray-400 flex-shrink-0">
+          <span className="text-[10px] text-white/25 flex-shrink-0">
             {timeAgo(notification.createdAt)}
           </span>
         </div>
       </div>
 
-      {/* Action buttons — always visible on mobile, hover on desktop */}
+      {/* Action buttons  appear on hover */}
       <div className="absolute top-3 right-3 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
         {!notification.isRead && (
           <button
             onClick={() => onRead(notification._id)}
             title="Mark as read"
-            className="w-6 h-6 flex items-center justify-center rounded-md bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-800 transition-colors text-xs font-bold"
+            className="w-6 h-6 flex items-center justify-center rounded-md bg-green-500/20 text-green-400 hover:bg-green-500/40 transition-colors text-xs"
           >
-            ✓
+            
           </button>
         )}
         <button
           onClick={() => onDelete(notification._id)}
           title="Delete"
-          className="w-6 h-6 flex items-center justify-center rounded-md bg-red-100 dark:bg-red-900/40 text-red-500 hover:bg-red-200 dark:hover:bg-red-800 transition-colors text-xs font-bold"
+          className="w-6 h-6 flex items-center justify-center rounded-md bg-red-500/20 text-red-400 hover:bg-red-500/40 transition-colors text-xs"
         >
-          ✕
+          
         </button>
       </div>
     </div>

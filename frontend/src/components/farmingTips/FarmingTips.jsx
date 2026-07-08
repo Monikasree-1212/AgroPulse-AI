@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import axios from 'axios'
+import api from '../../services/api'
 import TipCard from './TipCard'
 import SeasonSelector, { getCurrentSeason } from './SeasonSelector'
 import CategoryFilter from './CategoryFilter'
@@ -7,7 +7,7 @@ import CategoryFilter from './CategoryFilter'
 const COMMODITIES = ['All', 'Onion', 'Potato', 'Pulses', 'Maize']
 const PRIORITIES  = ['All', 'high', 'medium', 'low']
 
-const PRIORITY_LABEL = { high: '🔴 High', medium: '🟡 Medium', low: '🟢 Low' }
+const PRIORITY_LABEL = { high: 'High High', medium: 'Medium Medium', low: 'Low Low' }
 
 function SkeletonTip() {
   return (
@@ -61,7 +61,7 @@ export default function FarmingTips() {
     try {
       const params = {}
       if (com && com !== 'All') params.commodity = com
-      const res  = await axios.get('/api/farming-tips', { params })
+      const res  = await api.get('/api/farming-tips', { params })
       setTips(Array.isArray(res.data) ? res.data : [])
     } catch {
       setError(true)
@@ -171,10 +171,10 @@ export default function FarmingTips() {
       {/* Stats Row */}
       {!loading && !error && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <StatBadge icon="📋" label="Total Tips"     value={filtered.length} color="#16a34a" />
-          <StatBadge icon="🔴" label="High Priority"  value={highCount}       color="#ef4444" />
-          <StatBadge icon="🟡" label="Medium Priority" value={medCount}       color="#f59e0b" />
-          <StatBadge icon="🌱" label="Current Season"  value={currentSeason}  color="#8b5cf6" />
+          <StatBadge icon="List" label="Total Tips"     value={filtered.length} color="#16a34a" />
+          <StatBadge icon="High" label="High Priority"  value={highCount}       color="#ef4444" />
+          <StatBadge icon="Medium" label="Medium Priority" value={medCount}       color="#f59e0b" />
+          <StatBadge icon="Crop" label="Current Season"  value={currentSeason}  color="#8b5cf6" />
         </div>
       )}
 
@@ -187,7 +187,7 @@ export default function FarmingTips() {
 
       {!loading && error && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-          <span className="text-5xl">⚠️</span>
+          <span className="text-5xl">Warning</span>
           <p className="text-sm font-bold text-red-500">Unable to load farming tips.</p>
           <p className="text-xs text-gray-400">Make sure the backend server is running.</p>
           <button
@@ -201,7 +201,7 @@ export default function FarmingTips() {
 
       {!loading && !error && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-          <span className="text-5xl">🌿</span>
+          <span className="text-5xl"></span>
           <p className="text-base font-bold text-gray-500 dark:text-gray-400">No recommendations available.</p>
           <p className="text-sm text-gray-400 text-center">
             Try changing the season, category, or commodity filter.

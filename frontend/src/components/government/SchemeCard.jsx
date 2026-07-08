@@ -36,7 +36,7 @@ export default function SchemeCard({ scheme }) {
             {scheme.category}
           </span>
           <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600">
-            📍 {scheme.state}
+            Location {scheme.state}
           </span>
         </div>
 
@@ -64,7 +64,7 @@ export default function SchemeCard({ scheme }) {
           rel="noopener noreferrer"
           className="mt-auto inline-flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white text-xs font-extrabold rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
         >
-          🌐 Official Website
+           Official Website
         </a>
       </div>
     </div>

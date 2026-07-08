@@ -1,6 +1,6 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import {
   ResponsiveContainer,
   LineChart,
@@ -31,7 +31,7 @@ import { useGuest } from '../components/auth/GuestMode'
 import LoginRequiredModal from '../components/auth/LoginRequiredModal'
 import useTranslation from '../hooks/useTranslation'
 
-/* â”€â”€ Locked Section â”€â”€ */
+/* Locked Section */
 function LockedSection({ label, onUnlock, t }) {
   return (
     <div
@@ -47,7 +47,7 @@ function LockedSection({ label, onUnlock, t }) {
         </div>
       </div>
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-white/60 dark:bg-gray-900/60 backdrop-blur-[2px] rounded-2xl group-hover:bg-white/70 dark:group-hover:bg-gray-900/70 transition-all duration-200">
-        <span className="text-4xl">ðŸ”’</span>
+        <span className="text-4xl">Locked</span>
         <p className="text-base font-extrabold text-gray-900 dark:text-white">{t('dashboard.locked.loginRequired')}</p>
         <p className="text-xs text-gray-500 dark:text-gray-400">{t('dashboard.locked.unlockFeatures')}</p>
         <div className="flex gap-2 mt-1">
@@ -63,7 +63,7 @@ function LockedSection({ label, onUnlock, t }) {
   )
 }
 
-/* â”€â”€ Skeleton â”€â”€ */
+/* Skeleton */
 function Skeleton({ className }) {
   return <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl ${className}`} />
 }
@@ -81,7 +81,7 @@ function SkeletonCard() {
   )
 }
 
-/* â”€â”€ Circular Confidence Meter â”€â”€ */
+/* Circular Confidence Meter */
 function ConfidenceMeter({ value }) {
   const r = 36
   const circ = 2 * Math.PI * r
@@ -104,7 +104,7 @@ function ConfidenceMeter({ value }) {
   )
 }
 
-/* â”€â”€ Custom Chart Tooltip â”€â”€ */
+/* Custom Chart Tooltip */
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
@@ -112,36 +112,67 @@ function CustomTooltip({ active, payload, label }) {
       <p className="font-semibold text-gray-600 dark:text-gray-300 mb-1">{label}</p>
       {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }} className="font-bold">
-          {p.name}: â‚¹{p.value}/kg
+          {p.name}: Rs.{p.value}/kg
         </p>
       ))}
     </div>
   )
 }
 
-/* â”€â”€ KPI Card â”€â”€ */
+/* KPI Card */
 function KpiCard({ icon, label, value, sub, gradient, border, accent, badge }) {
   return (
-    <div className="group relative glass-card rounded-2xl p-6 hover:bg-white/15 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 overflow-hidden">
-      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-white/10 pointer-events-none" />
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <p className="text-xs font-semibold text-white/60 uppercase tracking-widest">{label}</p>
+    <div
+      className="group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7"
+      style={{
+        background: 'rgba(255,255,255,0.12)',
+        border: '1px solid rgba(255,255,255,0.18)',
+        backdropFilter: 'blur(18px)',
+        WebkitBackdropFilter: 'blur(18px)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
+        transition: 'transform 300ms ease, box-shadow 300ms ease',
+        gap: '18px',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)'; e.currentTarget.style.boxShadow = '0 28px 72px rgba(0,0,0,0.35)' }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 20px 60px rgba(0,0,0,0.25)' }}
+    >
+      {/* Top row */}
+      <div className="flex items-start justify-between">
+        <div className="flex flex-col gap-1.5">
+          <p style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '2px', color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', lineHeight: 1 }}>
+            {label}
+          </p>
           {badge && (
-            <span className="inline-block mt-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/15 text-white/80">
+            <span style={{ fontSize: '10px', fontWeight: 700, padding: '2px 8px', borderRadius: '9999px', background: 'rgba(255,255,255,0.15)', color: 'rgba(255,255,255,0.85)', display: 'inline-block', width: 'fit-content' }}>
               {badge}
             </span>
           )}
         </div>
-        <span className="text-3xl group-hover:scale-110 transition-transform duration-300">{icon}</span>
+        <div
+          className="flex items-center justify-center flex-shrink-0"
+          style={{ width: 64, height: 64, borderRadius: '9999px', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', fontSize: '28px', lineHeight: 1 }}
+        >
+          {icon}
+        </div>
       </div>
-      <p className={`text-3xl font-extrabold ${accent} mb-1`}>{value}</p>
-      <p className="text-xs text-white/50">{sub}</p>
+
+      {/* Main value */}
+      <p
+        className={`font-extrabold ${accent}`}
+        style={{ fontSize: 'clamp(28px, 4vw, 40px)', lineHeight: 1, letterSpacing: '-0.5px' }}
+      >
+        {value}
+      </p>
+
+      {/* Description */}
+      <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.72)', lineHeight: 1.4, marginTop: '-4px' }}>
+        {sub}
+      </p>
     </div>
   )
 }
 
-/* â”€â”€ Main Dashboard â”€â”€ */
+/* Main Dashboard */
 export default function Dashboard() {
   const navigate  = useNavigate()
   const { t } = useTranslation()
@@ -169,8 +200,8 @@ export default function Dashboard() {
     setLoading(true)
     setError(false)
     Promise.all([
-      axios.get(`/api/commodities/${commodity}`),
-      axios.get(`/api/predict/${commodity}/8`),
+      api.get(`/api/commodities/${commodity}`),
+      api.get(`/api/predict/${commodity}/8`),
     ])
       .then(([pricesRes, predRes]) => {
         setChartData(pricesRes.data.prices)
@@ -186,7 +217,7 @@ export default function Dashboard() {
 
     setWeatherLoading(true)
     setWeatherError(false)
-    axios.get('/api/weather/Delhi')
+    api.get('/api/weather/Delhi')
       .then((r) => setWeather(r.data))
       .catch(() => setWeatherError(true))
       .finally(() => setWeatherLoading(false))
@@ -194,12 +225,12 @@ export default function Dashboard() {
     setMandiLoading(true)
     setMandiError(false)
 
-    // Try to get user coordinates â€” from state (already acquired) or browser geolocation
+    // Try to get user coordinates - from state (already acquired) or browser geolocation
     const fetchMandis = (coords) => {
       const url = coords
         ? `/api/mandis/recommend/${commodity}?lat=${coords.lat}&lon=${coords.lon}`
         : `/api/mandis/recommend/${commodity}`
-      axios.get(url)
+      api.get(url)
         .then((r) => setMandiRecs(r.data))
         .catch(() => setMandiError(true))
         .finally(() => setMandiLoading(false))
@@ -214,7 +245,7 @@ export default function Dashboard() {
           setUserCoords(coords)
           fetchMandis(coords)
         },
-        () => fetchMandis(null),  // permission denied â€” fall back to profit sort
+        () => fetchMandis(null),  // permission denied - fall back to profit sort
         { timeout: 5000 }
       )
     } else {
@@ -241,23 +272,23 @@ export default function Dashboard() {
 
   const kpis = [
     {
-      icon: 'ðŸ’°', label: t('dashboard.kpi.currentPrice'),
-      value: `â‚¹${currentPrice}/kg`, sub: t('dashboard.kpi.liveMandi'),
+      icon: 'Price', label: t('dashboard.kpi.currentPrice'),
+      value: `Rs.${currentPrice}/kg`, sub: t('dashboard.kpi.liveMandi'),
       gradient: 'from-green-50 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/30',
       border: 'border-green-200 dark:border-green-800',
       accent: 'text-green-700 dark:text-green-400',
       badge: t('dashboard.kpi.live'),
     },
     {
-      icon: 'ðŸ“ˆ', label: t('dashboard.kpi.predictedPrice'),
-      value: `â‚¹${predictedPrice}/kg`, sub: t('dashboard.kpi.forecastDays'),
+      icon: 'Predict', label: t('dashboard.kpi.predictedPrice'),
+      value: `Rs.${predictedPrice}/kg`, sub: t('dashboard.kpi.forecastDays'),
       gradient: 'from-blue-50 to-cyan-100 dark:from-blue-900/40 dark:to-cyan-900/30',
       border: 'border-blue-200 dark:border-blue-800',
       accent: 'text-blue-700 dark:text-blue-400',
       badge: t('dashboard.kpi.aiForecast'),
     },
     {
-      icon: 'ðŸŽ¯', label: t('dashboard.kpi.confidence'),
+      icon: 'Target', label: t('dashboard.kpi.confidence'),
       value: `${confidence}%`, sub: t('dashboard.kpi.modelAccuracy'),
       gradient: 'from-violet-50 to-purple-100 dark:from-violet-900/40 dark:to-purple-900/30',
       border: 'border-violet-200 dark:border-violet-800',
@@ -265,7 +296,7 @@ export default function Dashboard() {
       badge: t('dashboard.kpi.high'),
     },
     {
-      icon: priceRising ? 'ðŸš€' : 'ðŸ“‰',
+      icon: priceRising ? '' : '',
       label: t('dashboard.kpi.expectedProfit'),
       value: `${priceRising ? '+' : ''}${estGain}%`,
       sub: t('dashboard.kpi.vsCurrentPrice'),
@@ -293,14 +324,14 @@ export default function Dashboard() {
         />
       )}
 
-      {/* Voice Assistant â€” logged-in only */}
+      {/* Voice Assistant - logged-in only */}
       {isLoggedIn && <VoiceAssistant />}
 
       {/* Navbar */}
       <nav className="glass-nav sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button onClick={() => navigate('/')} className="text-lg font-extrabold text-white flex items-center gap-2">
-            ðŸŒ¾ <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
+            Farming <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
           </button>
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-flex items-center gap-1.5 bg-green-500/20 border border-green-400/30 text-green-300 text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-sm">
@@ -334,7 +365,7 @@ export default function Dashboard() {
                   className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 text-white text-sm font-extrabold flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
                   title={t('nav.profile')}
                 >
-                  {user?.name?.[0]?.toUpperCase() || 'ðŸ‘¤'}
+                  {user?.name?.[0]?.toUpperCase() || 'User'}
                 </button>
                 <button
                   onClick={() => { logout(); navigate('/') }}
@@ -396,7 +427,7 @@ export default function Dashboard() {
             <div className="relative flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-2xl">ðŸŒ¾</span>
+                  <span className="text-2xl">Farming</span>
                   <h2 className="text-lg font-extrabold text-white">{t('dashboard.guest.welcome')}</h2>
                 </div>
                 <p className="text-white/80 text-sm">
@@ -459,7 +490,7 @@ export default function Dashboard() {
         {/* Error */}
         {!loading && error && (
           <div className="flex flex-col items-center justify-center py-28 gap-4">
-            <span className="text-6xl">âš ï¸</span>
+            <span className="text-6xl">Warning</span>
             <p className="text-xl font-bold text-red-500">Unable to connect to AI Engine.</p>
             <p className="text-sm text-white/60 max-w-md text-center">{error}</p>
             <button
@@ -475,7 +506,7 @@ export default function Dashboard() {
         {!loading && !error && (
           <>
             {/* KPI Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[18px] items-stretch">
               {kpis.map((kpi) => <KpiCard key={kpi.label} {...kpi} />)}
             </div>
 
@@ -487,7 +518,7 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between mb-6">
                   <div>
                     <h2 className="text-lg font-bold text-white">Prediction History Chart</h2>
-                    <p className="text-sm text-white/50 mt-0.5">Actual Â· Predicted Â· Future Projection</p>
+                    <p className="text-sm text-white/50 mt-0.5">Actual  -  Predicted  -  Future Projection</p>
                   </div>
                   <span className="text-xs font-semibold text-green-300 bg-green-500/20 border border-green-400/30 px-3 py-1 rounded-full">
                     AI Powered
@@ -528,7 +559,7 @@ export default function Dashboard() {
                 <div className="glass-card rounded-2xl shadow-2xl p-6 flex flex-col flex-1">
                   <div className="mb-4">
                     <h2 className="text-base font-bold text-white">Top Mandi Prices</h2>
-                    <p className="text-xs text-white/50 mt-0.5">Current rates Â· {commodity}</p>
+                    <p className="text-xs text-white/50 mt-0.5">Current rates  -  {commodity}</p>
                   </div>
                   <div className="flex flex-col gap-3 flex-1">
                     {mandis.map(({ name, basePrice, trend, up }) => (
@@ -543,9 +574,9 @@ export default function Dashboard() {
                           <span className="font-semibold text-white text-sm">{name}</span>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-white text-sm">â‚¹{basePrice}/kg</p>
+                          <p className="font-bold text-white text-sm">Rs.{basePrice}/kg</p>
                           <p className={`text-xs font-semibold ${up ? 'text-green-500' : 'text-red-500'}`}>
-                            {up ? 'â–²' : 'â–¼'} {trend}
+                            {up ? 'Up' : 'Down'} {trend}
                           </p>
                         </div>
                       </div>
@@ -555,7 +586,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* AI Prediction Section â€” locked for guests */}
+            {/* AI Prediction Section - locked for guests */}
             {!isLoggedIn && (
               <div className="space-y-5">
                 <div>
@@ -575,7 +606,7 @@ export default function Dashboard() {
 
               <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
                 <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl flex-shrink-0 shadow-inner">
-                  ðŸ¤–
+                  AI
                 </div>
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -591,14 +622,14 @@ export default function Dashboard() {
                     {priceRising ? (
                       <>
                         <span className="font-bold text-white">Hold your stock.</span> Prices are expected to increase from{' '}
-                        <span className="font-bold text-white">â‚¹{currentPrice}</span> to{' '}
-                        <span className="font-bold text-white">â‚¹{predictedPrice}/kg</span>. Wait for the optimal selling window.
+                        <span className="font-bold text-white">Rs.{currentPrice}</span> to{' '}
+                        <span className="font-bold text-white">Rs.{predictedPrice}/kg</span>. Wait for the optimal selling window.
                       </>
                     ) : (
                       <>
                         <span className="font-bold text-white">Sell today for maximum profit.</span> Prices are projected to fall from{' '}
-                        <span className="font-bold text-white">â‚¹{currentPrice}</span> to{' '}
-                        <span className="font-bold text-white">â‚¹{predictedPrice}/kg</span>. Act now to avoid losses.
+                        <span className="font-bold text-white">Rs.{currentPrice}</span> to{' '}
+                        <span className="font-bold text-white">Rs.{predictedPrice}/kg</span>. Act now to avoid losses.
                       </>
                     )}
                   </p>
@@ -612,7 +643,7 @@ export default function Dashboard() {
                     onClick={() => navigate('/commodity')}
                     className="text-xs font-semibold text-white/80 hover:text-white underline underline-offset-2 transition-colors"
                   >
-                    Change Commodity â†’
+                    Change Commodity {'->'}
                   </button>
                 </div>
               </div>
@@ -621,14 +652,14 @@ export default function Dashboard() {
             {/* Notification Center Section */}
             <div className="space-y-5">
               <div>
-                <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">Alerts &amp; Updates</p>
+                <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">Alerts {'&'} Updates</p>
                 <h2 className="text-2xl font-extrabold text-white">
                   Notification <span className="text-amber-300">Center</span>
                 </h2>
               </div>
               {isLoggedIn ? (
                 <div className="glass-card rounded-2xl p-6 flex items-center gap-4 shadow-xl">
-                  <span className="text-3xl">ðŸ””</span>
+                  <span className="text-3xl">Notifications</span>
                   <div>
                     <p className="font-bold text-white text-sm">Notifications are active</p>
                     <p className="text-xs text-white/50 mt-0.5">{t('dashboard.sections.notificationsDesc')}</p>
@@ -639,7 +670,7 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* Voice Assistant Section â€” locked for guests */}
+            {/* Voice Assistant Section - locked for guests */}
             {!isLoggedIn && (
               <div className="space-y-5">
                 <div>
@@ -676,7 +707,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-white/60 dark:bg-gray-900/60 backdrop-blur-[2px] rounded-2xl group-hover:bg-white/70 dark:group-hover:bg-gray-900/70 transition-all duration-200">
-                    <span className="text-4xl">ðŸ”’</span>
+                    <span className="text-4xl">Locked</span>
                     <p className="text-base font-extrabold text-gray-900 dark:text-white">{t('dashboard.locked.loginRequired')}</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Login to access the Profit Simulator</p>
                     <button className="px-5 py-2 bg-green-600 text-white text-sm font-bold rounded-full hover:bg-green-700 transition-colors shadow">
@@ -708,7 +739,7 @@ export default function Dashboard() {
 
               {!mandiLoading && mandiError && (
                 <div className="flex flex-col items-center justify-center py-12 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-                  <span className="text-4xl">ðŸª</span>
+                  <span className="text-4xl">Market</span>
                   <p className="text-base font-bold text-red-500">Unable to fetch mandi information.</p>
                   <p className="text-sm text-gray-400">{t('dashboard.errors.mandiDesc')}</p>
                   <button
@@ -718,7 +749,7 @@ export default function Dashboard() {
                       const url = userCoords
                         ? `/api/mandis/recommend/${commodity}?lat=${userCoords.lat}&lon=${userCoords.lon}`
                         : `/api/mandis/recommend/${commodity}`
-                      axios.get(url)
+                      api.get(url)
                         .then((r) => setMandiRecs(r.data))
                         .catch(() => setMandiError(true))
                         .finally(() => setMandiLoading(false))
@@ -746,9 +777,9 @@ export default function Dashboard() {
             {/* Government Schemes & MSP Section */}
             <div id="govt-section" className="space-y-5">
               <div>
-                <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">Policy &amp; Support</p>
+                <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">Policy {'&'} Support</p>
                 <h2 className="text-2xl font-extrabold text-white">
-                  Government Schemes <span className="text-green-300">&amp; MSP Portal</span>
+                  Government Schemes <span className="text-green-300">{'&'} MSP Portal</span>
                 </h2>
               </div>
               <GovernmentSchemes />
@@ -774,7 +805,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">AI Advisory</p>
                 <h2 className="text-2xl font-extrabold text-white">
-                  Smart Farming Tips <span className="text-emerald-300">&amp; Seasonal Advisory</span>
+                  Smart Farming Tips <span className="text-emerald-300">{'&'} Seasonal Advisory</span>
                 </h2>
               </div>
               <FarmingTips />
@@ -800,7 +831,7 @@ export default function Dashboard() {
               <div>
                 <p className="text-xs text-white/50 font-semibold uppercase tracking-widest mb-1">Data Export</p>
                 <h2 className="text-2xl font-extrabold text-white">
-                  Reports <span className="text-indigo-300">&amp; Export Center</span>
+                  Reports <span className="text-indigo-300">{'&'} Export Center</span>
                 </h2>
               </div>
               {isLoggedIn ? (
@@ -829,7 +860,7 @@ export default function Dashboard() {
 
               {!weatherLoading && weatherError && (
                 <div className="flex flex-col items-center justify-center py-12 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-                  <span className="text-4xl">ðŸŒ©ï¸</span>
+                  <span className="text-4xl">Weather</span>
                   <p className="text-base font-bold text-red-500">Weather data unavailable.</p>
                   <p className="text-sm text-gray-400">Check your WEATHER_API_KEY in backend .env</p>
                 </div>

@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 
-const CROP_EMOJI = { Onion: '🧅', Potato: '🥔', Pulses: '🌾', Maize: '🌽', Wheat: '🌾', Rice: '🍚', Tomato: '🍅', Cotton: '🌿', Sugarcane: '🎋', Soybean: '🫘', Groundnut: '🥜', Mustard: '🌻', Turmeric: '🟡', Chilli: '🌶️', Garlic: '🧄' }
+const CROP_EMOJI = { Onion: '', Potato: '', Pulses: 'Farming', Maize: '', Wheat: 'Farming', Rice: '', Tomato: '', Cotton: '', Sugarcane: '', Soybean: '', Groundnut: '', Mustard: '', Turmeric: 'Medium', Chilli: '', Garlic: '' }
 
 export default function ProfileHeader({ user, onEdit }) {
   const navigate = useNavigate()
   const initial  = user?.name?.[0]?.toUpperCase() || '?'
   const joined   = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
-    : '—'
+    : '-'
   const lastLogin = user?.lastLogin
     ? new Date(user.lastLogin).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
     : 'First session'
@@ -34,7 +34,7 @@ export default function ProfileHeader({ user, onEdit }) {
               </div>
             )}
             <div className="absolute -bottom-1.5 -right-1.5 w-6 h-6 rounded-full bg-green-400 border-2 border-white flex items-center justify-center">
-              <span className="text-[10px]">✓</span>
+              <span className="text-[10px]">Yes</span>
             </div>
           </div>
 
@@ -48,17 +48,17 @@ export default function ProfileHeader({ user, onEdit }) {
             <div className="flex flex-wrap gap-3">
               {user?.primaryCrop && (
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  {CROP_EMOJI[user.primaryCrop] || '🌱'} {user.primaryCrop}
+                  {CROP_EMOJI[user.primaryCrop] || 'Crop'} {user.primaryCrop}
                 </span>
               )}
               {(user?.state || user?.district) && (
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  📍 {[user.district, user.state].filter(Boolean).join(', ')}
+                  Location {[user.district, user.state].filter(Boolean).join(', ')}
                 </span>
               )}
               {user?.preferredLanguage && (
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/20 text-white px-3 py-1.5 rounded-full">
-                  🗣️ {user.preferredLanguage}
+                   {user.preferredLanguage}
                 </span>
               )}
             </div>
@@ -70,13 +70,13 @@ export default function ProfileHeader({ user, onEdit }) {
               onClick={onEdit}
               className="px-4 py-2 bg-white text-green-700 text-sm font-extrabold rounded-xl shadow hover:shadow-md hover:-translate-y-0.5 transition-all duration-200"
             >
-              ✏️ Edit Profile
+              Edit Edit Profile
             </button>
             <button
               onClick={() => navigate('/dashboard')}
               className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white text-sm font-bold rounded-xl transition-all duration-200"
             >
-              ← Dashboard
+              {'<-'} Dashboard
             </button>
           </div>
         </div>

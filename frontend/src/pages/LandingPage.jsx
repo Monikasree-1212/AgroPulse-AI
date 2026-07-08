@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import useTranslation from '../hooks/useTranslation'
 
@@ -254,7 +254,7 @@ export default function LandingPage() {
             <div><p className="text-xs font-bold text-white uppercase tracking-widest mb-3">{t('landing.footer.platform')}</p>{navLinks.map(([href, label]) => <a key={href} href={href} className="block hover:text-green-400 transition-colors text-sm mb-2">{label}</a>)}</div>
             <div><p className="text-xs font-bold text-white uppercase tracking-widest mb-3">{t('landing.footer.account')}</p><Link to="/register" className="block hover:text-green-400 transition-colors text-sm mb-2">{t('landing.footer.registerFree')}</Link><Link to="/login" className="block hover:text-green-400 transition-colors text-sm mb-2">{t('nav.login')}</Link>{user && <Link to="/profile" className="block hover:text-green-400 transition-colors text-sm mb-2">{t('landing.footer.myProfile')}</Link>}</div>
           </div>
-          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"><p>© {new Date().getFullYear()} AgroPulse AI. {t('landing.footer.rights')}</p><p>{t('tagline')}</p></div>
+          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"><p>(c) {new Date().getFullYear()} AgroPulse AI. {t('landing.footer.rights')}</p><p>{t('tagline')}</p></div>
         </div>
       </footer>
     </div>

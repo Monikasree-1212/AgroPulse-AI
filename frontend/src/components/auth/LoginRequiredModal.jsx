@@ -40,7 +40,7 @@ export default function LoginRequiredModal({ feature, onClose, redirectTo }) {
           {/* Icon + title */}
           <div className="flex flex-col items-center text-center mb-6">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/30 flex items-center justify-center text-3xl mb-4 shadow-sm">
-              🔒
+              Locked
             </div>
             <h2 className="text-xl font-extrabold text-gray-900 dark:text-white">
               Unlock Personalised Features
@@ -63,7 +63,7 @@ export default function LoginRequiredModal({ feature, onClose, redirectTo }) {
               'Farmer Activity History',
             ].map((item) => (
               <li key={item} className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                <span className="w-4 h-4 rounded-full bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center text-[10px] font-bold flex-shrink-0">✓</span>
+                <span className="w-4 h-4 rounded-full bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 flex items-center justify-center text-[10px] font-bold flex-shrink-0">Yes</span>
                 {item}
               </li>
             ))}
@@ -75,7 +75,7 @@ export default function LoginRequiredModal({ feature, onClose, redirectTo }) {
               onClick={goLogin}
               className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-extrabold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
             >
-              Login →
+              Login {'->'}
             </button>
             <button
               onClick={goRegister}
@@ -98,7 +98,7 @@ export default function LoginRequiredModal({ feature, onClose, redirectTo }) {
           aria-label="Close"
           className="absolute top-4 right-4 w-7 h-7 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 text-sm font-bold transition-colors"
         >
-          ✕
+          No
         </button>
       </div>
 

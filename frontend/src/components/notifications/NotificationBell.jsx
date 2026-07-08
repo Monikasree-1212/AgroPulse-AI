@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import axios from 'axios'
+import api from '../../services/api'
 import NotificationCenter from './NotificationCenter'
 
 export default function NotificationBell() {
@@ -10,18 +10,16 @@ export default function NotificationBell() {
   const [activeFilter,  setActiveFilter]  = useState('all')
   const [ringing,       setRinging]       = useState(false)
 
-  // useRef — never stale, never triggers re-render
   const prevUnreadRef   = useRef(0)
   const activeFilterRef = useRef('all')
 
-  // Keep ref in sync with state
   useEffect(() => { activeFilterRef.current = activeFilter }, [activeFilter])
 
   const fetchNotifications = useCallback(async (filterOverride) => {
     const filter = filterOverride ?? activeFilterRef.current
     try {
       const params = filter !== 'all' ? { type: filter } : {}
-      const res  = await axios.get('/api/notifications', { params })
+      const res  = await api.get('/api/notifications', { params })
       const data = Array.isArray(res.data) ? res.data : []
 
       const newUnread = data.filter(n => !n.isRead).length
@@ -38,9 +36,8 @@ export default function NotificationBell() {
     } finally {
       setLoading(false)
     }
-  }, []) // stable — no deps that change
+  }, [])
 
-  // Initial fetch + 30s polling
   useEffect(() => {
     fetchNotifications()
     const id = setInterval(fetchNotifications, 30000)
@@ -56,7 +53,7 @@ export default function NotificationBell() {
 
   const handleRead = useCallback(async (id) => {
     try {
-      await axios.put(`/api/notifications/${id}/read`)
+      await api.put(`/api/notifications/${id}/read`)
       setNotifications(prev => prev.map(n => n._id === id ? { ...n, isRead: true } : n))
       prevUnreadRef.current = Math.max(0, prevUnreadRef.current - 1)
     } catch (_) {}
@@ -64,7 +61,7 @@ export default function NotificationBell() {
 
   const handleDelete = useCallback(async (id) => {
     try {
-      await axios.delete(`/api/notifications/${id}`)
+      await api.delete(`/api/notifications/${id}`)
       setNotifications(prev => {
         const removed = prev.find(n => n._id === id)
         if (removed && !removed.isRead) prevUnreadRef.current = Math.max(0, prevUnreadRef.current - 1)
@@ -75,7 +72,7 @@ export default function NotificationBell() {
 
   const handleClearAll = useCallback(async () => {
     try {
-      await axios.delete('/api/notifications')
+      await api.delete('/api/notifications')
       setNotifications([])
       prevUnreadRef.current = 0
     } catch (_) {}
@@ -93,17 +90,18 @@ export default function NotificationBell() {
   )
 
   return (
-    <>
+    /* Relative wrapper  popup is positioned absolute inside this */
+    <div className="relative">
       <button
-        onClick={() => setOpen(true)}
-        className="relative w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-green-100 dark:hover:bg-green-900/40 transition-colors duration-200"
+        onClick={() => setOpen(v => !v)}
+        className="relative w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-green-500/20 border border-white/20 hover:border-green-400/40 transition-all duration-200"
         aria-label="Open notifications"
       >
         <span
-          style={{ display: 'inline-block' }}
+          style={{ display: 'inline-block', fontSize: '18px' }}
           className={ringing ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}
         >
-          🔔
+          Bell
         </span>
 
         {unreadCount > 0 && (
@@ -126,6 +124,6 @@ export default function NotificationBell() {
         onClearAll={handleClearAll}
         onRetry={handleRetry}
       />
-    </>
+    </div>
   )
 }

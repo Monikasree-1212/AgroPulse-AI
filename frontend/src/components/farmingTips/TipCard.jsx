@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
 const CATEGORY_CONFIG = {
-  Weather:       { icon: '🌤️', color: '#3b82f6' },
-  Harvest:       { icon: '🌾', color: '#16a34a' },
-  Storage:       { icon: '🏚️', color: '#f97316' },
-  Market:        { icon: '📊', color: '#8b5cf6' },
-  Fertilizer:    { icon: '🌱', color: '#22c55e' },
-  Irrigation:    { icon: '💧', color: '#06b6d4' },
-  'Pest Control':{ icon: '🐛', color: '#ef4444' },
+  Weather:       { icon: 'Weather', color: '#3b82f6' },
+  Harvest:       { icon: 'Farming', color: '#16a34a' },
+  Storage:       { icon: 'Storage', color: '#f97316' },
+  Market:        { icon: 'Chart', color: '#8b5cf6' },
+  Fertilizer:    { icon: 'Crop', color: '#22c55e' },
+  Irrigation:    { icon: 'Water', color: '#06b6d4' },
+  'Pest Control':{ icon: 'Pest', color: '#ef4444' },
 }
 
 const PRIORITY_STYLES = {

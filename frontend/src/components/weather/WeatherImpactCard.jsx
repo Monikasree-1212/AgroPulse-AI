@@ -3,7 +3,7 @@ const getImpacts = (temperature, humidity, rainfall) => {
 
   if (rainfall > 60) {
     impacts.push({
-      icon: '🌧️',
+      icon: 'Rain',
       level: 'High Risk',
       levelColor: 'text-red-600 dark:text-red-400',
       bg: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800',
@@ -14,7 +14,7 @@ const getImpacts = (temperature, humidity, rainfall) => {
 
   if (temperature > 35) {
     impacts.push({
-      icon: '🌡️',
+      icon: 'Heat',
       level: 'Moderate Risk',
       levelColor: 'text-orange-600 dark:text-orange-400',
       bg: 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800',
@@ -25,7 +25,7 @@ const getImpacts = (temperature, humidity, rainfall) => {
 
   if (humidity > 80) {
     impacts.push({
-      icon: '🍄',
+      icon: 'Humid',
       level: 'Moderate Risk',
       levelColor: 'text-yellow-600 dark:text-yellow-400',
       bg: 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800',
@@ -36,7 +36,7 @@ const getImpacts = (temperature, humidity, rainfall) => {
 
   if (impacts.length === 0) {
     impacts.push({
-      icon: '✅',
+      icon: 'Yes',
       level: 'Favorable',
       levelColor: 'text-green-600 dark:text-green-400',
       bg: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800',
@@ -54,7 +54,7 @@ export default function WeatherImpactCard({ temperature, humidity, rainfall }) {
   return (
     <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-5">
-        <span className="text-2xl">🤖</span>
+        <span className="text-2xl">AI</span>
         <div>
           <h2 className="text-base font-bold text-gray-900 dark:text-white">AI Weather Impact</h2>
           <p className="text-xs text-gray-400">Effect on agricultural commodity prices</p>
@@ -80,7 +80,7 @@ export default function WeatherImpactCard({ temperature, humidity, rainfall }) {
 
       <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 grid grid-cols-3 gap-3">
         {[
-          { label: 'Temperature', value: `${temperature}°C`, bar: Math.min((temperature / 50) * 100, 100), color: 'bg-orange-400' },
+          { label: 'Temperature', value: `${temperature} deg C`, bar: Math.min((temperature / 50) * 100, 100), color: 'bg-orange-400' },
           { label: 'Humidity',    value: `${humidity}%`,     bar: humidity,                                 color: 'bg-blue-400'   },
           { label: 'Rainfall',    value: `${rainfall}mm`,    bar: Math.min((rainfall / 100) * 100, 100),    color: 'bg-cyan-400'   },
         ].map(({ label, value, bar, color }) => (

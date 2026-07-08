@@ -24,18 +24,18 @@ export default function ProfileStats({ stats }) {
   if (!stats) return null
 
   const cards = [
-    { icon: '🤖', label: 'AI Predictions',       value: stats.totalPredictions,       suffix: '',  color: 'from-blue-500 to-cyan-500' },
-    { icon: '🧮', label: 'Profit Simulations',    value: stats.totalProfitSimulations, suffix: '',  color: 'from-violet-500 to-purple-500' },
-    { icon: '🌤️', label: 'Weather Checks',        value: stats.totalWeatherChecks,     suffix: '',  color: 'from-amber-500 to-orange-500' },
-    { icon: '🏪', label: 'Mandi Searches',        value: stats.totalMandiSearches,     suffix: '',  color: 'from-rose-500 to-pink-500' },
-    { icon: '⭐', label: 'Favourite Commodity',   value: null, text: stats.favoriteCommodity,       color: 'from-green-500 to-emerald-500' },
-    { icon: '🎯', label: 'Prediction Accuracy',   value: stats.averagePredictionAccuracy, suffix: '%', color: 'from-teal-500 to-green-500' },
+    { icon: 'AI', label: 'AI Predictions',       value: stats.totalPredictions,       suffix: '',  color: 'from-blue-500 to-cyan-500' },
+    { icon: 'Calculator', label: 'Profit Simulations',    value: stats.totalProfitSimulations, suffix: '',  color: 'from-violet-500 to-purple-500' },
+    { icon: 'Weather', label: 'Weather Checks',        value: stats.totalWeatherChecks,     suffix: '',  color: 'from-amber-500 to-orange-500' },
+    { icon: 'Market', label: 'Mandi Searches',        value: stats.totalMandiSearches,     suffix: '',  color: 'from-rose-500 to-pink-500' },
+    { icon: 'Star', label: 'Favourite Commodity',   value: null, text: stats.favoriteCommodity,       color: 'from-green-500 to-emerald-500' },
+    { icon: 'Target', label: 'Prediction Accuracy',   value: stats.averagePredictionAccuracy, suffix: '%', color: 'from-teal-500 to-green-500' },
   ]
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
-        <span className="text-xl">📊</span>
+        <span className="text-xl">Chart</span>
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-white">Your Statistics</h3>
           <p className="text-xs text-gray-400 mt-0.5">All-time platform usage</p>

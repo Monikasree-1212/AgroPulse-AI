@@ -1,12 +1,12 @@
 const CATEGORIES = [
-  { key: 'All',          icon: '📋' },
-  { key: 'Weather',      icon: '🌤️' },
-  { key: 'Harvest',      icon: '🌾' },
-  { key: 'Storage',      icon: '🏚️' },
-  { key: 'Market',       icon: '📊' },
-  { key: 'Fertilizer',   icon: '🌱' },
-  { key: 'Irrigation',   icon: '💧' },
-  { key: 'Pest Control', icon: '🐛' },
+  { key: 'All',          icon: 'List' },
+  { key: 'Weather',      icon: 'Weather' },
+  { key: 'Harvest',      icon: 'Farming' },
+  { key: 'Storage',      icon: 'Storage' },
+  { key: 'Market',       icon: 'Chart' },
+  { key: 'Fertilizer',   icon: 'Crop' },
+  { key: 'Irrigation',   icon: 'Water' },
+  { key: 'Pest Control', icon: 'Pest' },
 ]
 
 export default function CategoryFilter({ active, onChange, counts }) {

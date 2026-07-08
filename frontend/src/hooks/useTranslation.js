@@ -1,4 +1,4 @@
-﻿import { useContext } from 'react'
+import { useContext } from 'react'
 import LanguageContext from '../context/LanguageContext'
 
 export default function useTranslation() {

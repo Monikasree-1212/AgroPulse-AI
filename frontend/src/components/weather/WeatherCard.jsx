@@ -1,13 +1,13 @@
 const ICONS = {
-  Clear:        '☀️',
-  Clouds:       '☁️',
-  Rain:         '🌧️',
-  Drizzle:      '🌦️',
-  Thunderstorm: '⛈️',
-  Snow:         '❄️',
-  Mist:         '🌫️',
-  Fog:          '🌫️',
-  Haze:         '🌫️',
+  Clear:        'Sun',
+  Clouds:       'Cloud',
+  Rain:         'Rain',
+  Drizzle:      'Rain',
+  Thunderstorm: 'Storm',
+  Snow:         'Cold',
+  Mist:         '',
+  Fog:          '',
+  Haze:         '',
 }
 
 const GRADIENTS = {
@@ -90,7 +90,7 @@ const StatBadge = ({ icon, label, value }) => (
 
 export default function WeatherCard({ data }) {
   const condition = data.condition || 'Clear'
-  const icon      = ICONS[condition]      || '🌤️'
+  const icon      = ICONS[condition]      || 'Weather'
   const gradient  = GRADIENTS[condition]  || 'from-sky-400 to-blue-300'
 
   return (
@@ -119,7 +119,7 @@ export default function WeatherCard({ data }) {
           <h2 className="text-white text-2xl font-extrabold">{data.city}</h2>
           <p className="text-white/80 text-sm capitalize mt-0.5">{data.description}</p>
           <div className="flex items-end gap-2 mt-3">
-            <span className="text-6xl font-extrabold text-white leading-none">{data.temperature}°</span>
+            <span className="text-6xl font-extrabold text-white leading-none">{data.temperature} deg </span>
             <span className="text-white/70 text-lg font-semibold mb-1">C</span>
           </div>
         </div>
@@ -131,9 +131,9 @@ export default function WeatherCard({ data }) {
       </div>
 
       <div className="relative flex flex-wrap gap-2 mt-5">
-        <StatBadge icon="💧" label="Humidity"   value={`${data.humidity}%`} />
-        <StatBadge icon="🌧️" label="Rainfall"   value={`${data.rainfall}mm`} />
-        <StatBadge icon="💨" label="Wind"        value={`${data.windSpeed}km/h`} />
+        <StatBadge icon="Water" label="Humidity"   value={`${data.humidity}%`} />
+        <StatBadge icon="Rain" label="Rainfall"   value={`${data.rainfall}mm`} />
+        <StatBadge icon="" label="Wind"        value={`${data.windSpeed}km/h`} />
       </div>
     </div>
   )

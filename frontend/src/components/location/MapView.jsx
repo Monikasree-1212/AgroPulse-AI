@@ -59,14 +59,14 @@ export default function MapView({ userLocation, mandis }) {
           <Recenter lat={userLocation.lat} lng={userLocation.lng} />
 
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            attribution='? <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
           {/* User location */}
           <Marker position={[userLocation.lat, userLocation.lng]} icon={userIcon}>
             <Popup>
-              <div className="text-sm font-semibold">📍 Your Location<br />
+              <div className="text-sm font-semibold">Location Your Location<br />
                 <span className="text-xs text-gray-500">{userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}</span>
               </div>
             </Popup>
@@ -91,14 +91,14 @@ export default function MapView({ userLocation, mandis }) {
                   <p className="font-extrabold text-gray-900 mb-1">{m.name}</p>
                   <p className="text-xs text-gray-500 mb-2">{m.city}, {m.state}</p>
                   <div className="space-y-0.5 text-xs">
-                    <p>📏 <span className="font-semibold">{m.distance} km</span> · {m.travelTime}</p>
-                    <p>💰 Market Price: <span className="font-semibold text-green-600">₹{m.marketPrice}/kg</span></p>
-                    <p>🚛 Transport: <span className="font-semibold text-orange-500">₹{m.transportCost.toLocaleString()}</span></p>
-                    <p>📈 Profit: <span className={`font-semibold ${m.expectedProfit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                      ₹{m.expectedProfit.toLocaleString()}
+                    <p> <span className="font-semibold">{m.distance} km</span>  -  {m.travelTime}</p>
+                    <p> Market Price: <span className="font-semibold text-green-600">Rs.{m.marketPrice}/kg</span></p>
+                    <p> Transport: <span className="font-semibold text-orange-500">Rs.{m.transportCost.toLocaleString()}</span></p>
+                    <p>? Profit: <span className={`font-semibold ${m.expectedProfit >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                      Rs.{m.expectedProfit.toLocaleString()}
                     </span></p>
                   </div>
-                  {i === 0 && <p className="mt-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block">⭐ Nearest</p>}
+                  {i === 0 && <p className="mt-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full inline-block">Star Nearest</p>}
                 </div>
               </Popup>
             </Marker>

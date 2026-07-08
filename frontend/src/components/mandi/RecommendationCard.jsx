@@ -6,7 +6,7 @@ export default function RecommendationCard({ best, commodity }) {
       <div className="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-white/5 pointer-events-none" />
       <div className="relative flex flex-col sm:flex-row sm:items-center gap-6">
         <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-4xl flex-shrink-0 shadow-inner">
-          🏆
+          Top
         </div>
         <div className="flex-1">
           <div className="flex flex-wrap items-center gap-2 mb-2">
@@ -14,26 +14,26 @@ export default function RecommendationCard({ best, commodity }) {
             <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">Best Profit</span>
             {best.distance && (
               <span className="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
-                📍 {best.distance} km away
+                Location {best.distance} km away
               </span>
             )}
           </div>
           {best.isFallback && (
             <p className="text-white/80 text-xs font-semibold mb-2 bg-white/10 rounded-lg px-3 py-1.5 inline-block">
-              ⚠️ {best.fallbackMessage}
+              Warning {best.fallbackMessage}
             </p>
           )}
           <p className="text-white/90 text-base leading-relaxed">
             Based on today's prices, selling{' '}
             <span className="font-extrabold text-white">{commodity}</span> at{' '}
             <span className="font-extrabold text-white">{best.name}</span> ({best.district}, {best.state}) gives the highest expected profit of{' '}
-            <span className="font-extrabold text-white">₹{best.profit}/kg</span> after a transport cost of ₹{best.transportCost}/kg
+            <span className="font-extrabold text-white">Rs.{best.profit}/kg</span> after a transport cost of Rs.{best.transportCost}/kg
             {best.distance ? ` over ${best.distance} km` : ''}.
           </p>
         </div>
         <div className="flex-shrink-0 bg-white/20 rounded-2xl px-6 py-4 text-center min-w-[100px]">
           <p className="text-white/70 text-xs font-semibold uppercase tracking-wide">Best Profit</p>
-          <p className="text-white text-3xl font-extrabold">₹{best.profit}</p>
+          <p className="text-white text-3xl font-extrabold">Rs.{best.profit}</p>
           <p className="text-white/70 text-xs mt-0.5">per kg</p>
         </div>
       </div>

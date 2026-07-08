@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import axios from 'axios'
+import api from '../../services/api'
 import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, PieChart, Pie, Cell, Legend,
@@ -8,13 +8,13 @@ import ActivityCard from './ActivityCard'
 import ActivityFilters from './ActivityFilters'
 
 const TYPE_META = {
-  price:      { icon: '💰', label: 'Price Check',   color: '#16a34a' },
-  prediction: { icon: '📈', label: 'AI Prediction',  color: '#3b82f6' },
-  weather:    { icon: '🌤️', label: 'Weather',        color: '#f59e0b' },
-  profit:     { icon: '🧮', label: 'Profit Sim',     color: '#8b5cf6' },
-  mandi:      { icon: '🏪', label: 'Mandi Search',   color: '#f97316' },
-  voice:      { icon: '🎙️', label: 'Voice AI',       color: '#06b6d4' },
-  government: { icon: '🏛️', label: 'Gov. Schemes',   color: '#ec4899' },
+  price:      { icon: 'Price',   label: 'Price Check',   color: '#16a34a' },
+  prediction: { icon: 'Predict', label: 'AI Prediction',  color: '#3b82f6' },
+  weather:    { icon: 'Weather', label: 'Weather',        color: '#f59e0b' },
+  profit:     { icon: 'Calculator', label: 'Profit Sim',     color: '#8b5cf6' },
+  mandi:      { icon: 'Market', label: 'Mandi Search',   color: '#f97316' },
+  voice:      { icon: 'Voice', label: 'Voice AI',       color: '#06b6d4' },
+  government: { icon: 'Government', label: 'Gov. Schemes',   color: '#ec4899' },
 }
 
 function SkeletonCard() {
@@ -96,7 +96,7 @@ export default function ActivityTimeline() {
 
   const fetchActivities = useCallback(async () => {
     try {
-      const res  = await axios.get('/api/activities')
+      const res  = await api.get('/api/activities')
       const data = Array.isArray(res.data) ? res.data : []
       setActivities(data)
       setError(false)
@@ -115,14 +115,14 @@ export default function ActivityTimeline() {
 
   const handleDelete = useCallback(async (id) => {
     try {
-      await axios.delete(`/api/activities/${id}`)
+      await api.delete(`/api/activities/${id}`)
       setActivities(prev => prev.filter(a => a._id !== id))
     } catch (_) {}
   }, [])
 
   const handleClearAll = useCallback(async () => {
     try {
-      await axios.delete('/api/activities')
+      await api.delete('/api/activities')
       setActivities([])
     } catch (_) {}
   }, [])
@@ -150,9 +150,9 @@ export default function ActivityTimeline() {
   const weekCount    = useMemo(() => activities.filter(a => isThisWeek(a.createdAt)).length, [activities])
   const predCount    = useMemo(() => activities.filter(a => a.activityType === 'prediction').length, [activities])
   const mostUsed     = useMemo(() => {
-    if (!activities.length) return '—'
+    if (!activities.length) return '-'
     const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]
-    return top ? (TYPE_META[top[0]]?.label ?? top[0]) : '—'
+    return top ? (TYPE_META[top[0]]?.label ?? top[0]) : '-'
   }, [counts, activities])
 
   const dailyData  = useMemo(() => groupByDay(activities), [activities])
@@ -163,10 +163,10 @@ export default function ActivityTimeline() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon="📅" label="Today's Activities" value={todayCount}  sub="Actions today"          color="#16a34a" />
-        <StatCard icon="📆" label="This Week"          value={weekCount}   sub="Last 7 days"            color="#3b82f6" />
-        <StatCard icon="🏆" label="Most Used Module"   value={mostUsed}    sub="By activity count"      color="#f59e0b" />
-        <StatCard icon="🤖" label="AI Predictions"     value={predCount}   sub="Total predictions used" color="#8b5cf6" />
+        <StatCard icon="Calendar" label="Today's Activities" value={todayCount}  sub="Actions today"          color="#16a34a" />
+        <StatCard icon="Calendar" label="This Week"          value={weekCount}   sub="Last 7 days"            color="#3b82f6" />
+        <StatCard icon="Top" label="Most Used Module"   value={mostUsed}    sub="By activity count"      color="#f59e0b" />
+        <StatCard icon="AI" label="AI Predictions"     value={predCount}   sub="Total predictions used" color="#8b5cf6" />
       </div>
 
       {/* Charts */}
@@ -230,7 +230,7 @@ export default function ActivityTimeline() {
           <div>
             <h3 className="text-sm font-bold text-gray-900 dark:text-white">Activity Timeline</h3>
             <p className="text-xs text-gray-400 mt-0.5">
-              {loading ? 'Loading…' : `${filtered.length} activit${filtered.length !== 1 ? 'ies' : 'y'}`}
+              {loading ? 'Loading...' : `${filtered.length} activit${filtered.length !== 1 ? 'ies' : 'y'}`}
             </p>
           </div>
           {!loading && !error && activities.length > 0 && (
@@ -255,7 +255,7 @@ export default function ActivityTimeline() {
 
           {!loading && error && (
             <div className="flex flex-col items-center justify-center py-16 gap-3 text-center">
-              <span className="text-5xl">⚠️</span>
+              <span className="text-5xl">Warning</span>
               <p className="text-sm font-bold text-red-500">Unable to load activity history.</p>
               <p className="text-xs text-gray-400">Make sure the backend server is running.</p>
               <button
@@ -269,7 +269,7 @@ export default function ActivityTimeline() {
 
           {!loading && !error && filtered.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 gap-3 text-center">
-              <span className="text-5xl">📭</span>
+              <span className="text-5xl"></span>
               <p className="text-base font-bold text-gray-500 dark:text-gray-400">No activity yet.</p>
               <p className="text-sm text-gray-400">
                 Your actions on AgroPulse AI will be recorded here automatically.

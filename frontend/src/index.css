@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ── Keyframes ── */
+/* -- Keyframes -- */
 @keyframes wiggle {
   0%, 100% { transform: rotate(0deg); }
   20%       { transform: rotate(-20deg); }
@@ -52,7 +52,7 @@
   100% { transform: translateY(-60px) translateX(-8px) scale(0.8); opacity: 0; }
 }
 
-/* ── Utility classes ── */
+/* -- Utility classes -- */
 .animate-fadeIn   { animation: fadeIn   0.25s ease-out; }
 .animate-slideUp  { animation: slideUp  0.5s  ease-out both; }
 .animate-float-slow { animation: floatSlow 8s ease-in-out infinite; }
@@ -60,7 +60,7 @@
 .animate-pulse-glow { animation: pulseGlow 5s ease-in-out infinite; }
 .animate-gradient   { animation: gradientShift 8s ease infinite; background-size: 200% 200%; }
 
-/* ── Glassmorphism card ── */
+/* -- Glassmorphism card -- */
 .glass-card {
   background: rgba(255,255,255,0.10);
   backdrop-filter: blur(20px);
@@ -98,7 +98,7 @@
   background: rgba(255,255,255,0.12);
 }
 
-/* ── Cinematic page background ── */
+/* -- Cinematic page background -- */
 
 .bg-farmland {
   position: relative;
@@ -110,7 +110,7 @@
   min-height: 100vh;
 }
 
-/* Fixed attachment only on desktop — mobile ignores it to avoid iOS scroll bug */
+/* Fixed attachment only on desktop - mobile ignores it to avoid iOS scroll bug */
 @media (min-width: 768px) {
   .bg-farmland {
     background-attachment: fixed;
@@ -132,14 +132,34 @@
   );
 }
 
-/* ── Scrollbar ── */
+/* -- Scrollbar -- */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-/* ── Premium button ── */
+/* -- Thin scrollbar for notification list -- */
+.scrollbar-thin-green {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(74,222,128,0.45) transparent;
+}
+.scrollbar-thin-green::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar-thin-green::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin-green::-webkit-scrollbar-thumb {
+  background: rgba(74,222,128,0.45);
+  border-radius: 99px;
+}
+.scrollbar-thin-green::-webkit-scrollbar-thumb:hover {
+  background: rgba(74,222,128,0.70);
+}
+.scrollbar-thin-green::-webkit-scrollbar-button { display: none; }
+
+/* -- Premium button -- */
 .btn-premium {
   background: linear-gradient(135deg, #16a34a 0%, #059669 50%, #15803d 100%);
   background-size: 200% 200%;

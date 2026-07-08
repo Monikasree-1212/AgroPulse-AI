@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+﻿import { useState, useEffect, useCallback } from 'react'
 import api from '../../services/api'
 import AnalyticsCard from './AnalyticsCard'
 import UsageChart from './UsageChart'
@@ -23,7 +23,7 @@ function SkeletonChart() {
 }
 
 function InsightItem({ text, index }) {
-  const icons = ['Idea', 'Chart', '', 'Weather', 'Calculator', '', 'Top', 'Voice']
+  const icons = ['Idea', 'Chart', '🎯', 'Weather', 'Calculator', '📈', 'Top', 'Voice']
   return (
     <div className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors duration-150 animate-fadeIn">
       <span className="text-lg flex-shrink-0">{icons[index % icons.length]}</span>
@@ -54,14 +54,14 @@ export default function AnalyticsDashboard() {
   }, [fetchData])
 
   const kpis = data ? [
-    { icon: 'AI',      label: 'AI Predictions',       value: data.totalPredictions,          sub: 'Total predictions run',        color: '#60a5fa', badge: 'AI'       },
-    { icon: 'Weather', label: 'Weather Checks',        value: data.totalWeatherChecks,        sub: 'Weather module uses',          color: '#fbbf24', badge: 'Live'     },
-    { icon: 'Profit',  label: 'Profit Simulations',    value: data.totalProfitSimulations,    sub: 'Simulator runs',               color: '#a78bfa', badge: 'Profit'   },
-    { icon: 'Market',  label: 'Mandi Searches',        value: data.totalMandiSearches,        sub: 'Best mandi lookups',           color: '#fb923c', badge: 'Market'   },
-    { icon: 'Voice',   label: 'Voice Queries',         value: data.totalVoiceQueries,         sub: 'Voice assistant uses',         color: '#22d3ee', badge: 'Voice'    },
-    { icon: 'Bell',    label: 'Notifications',         value: data.totalNotifications,        sub: 'Total alerts generated',       color: '#f472b6', badge: 'Alerts'   },
-    { icon: 'Target',  label: 'Prediction Accuracy',   value: data.averagePredictionAccuracy, sub: 'Average model accuracy',       color: '#4ade80', suffix: '%', badge: 'Avg' },
-    { icon: 'Trend',   label: 'Weekly Growth',         value: Math.abs(data.weeklyGrowth),    sub: data.weeklyGrowth >= 0 ? 'Usage increase this week' : 'Usage decrease this week', color: data.weeklyGrowth >= 0 ? '#4ade80' : '#f87171', suffix: '%', badge: data.weeklyGrowth >= 0 ? 'Up' : 'Down' },
+    { icon: '🤖', label: 'AI Predictions',       value: data.totalPredictions,          sub: 'Total predictions run',        color: '#60a5fa', badge: 'AI'       },
+    { icon: '🌤️',  label: 'Weather Checks',        value: data.totalWeatherChecks,        sub: 'Weather module uses',          color: '#fbbf24', badge: 'Live'     },
+    { icon: '🧮', label: 'Profit Simulations',    value: data.totalProfitSimulations,    sub: 'Simulator runs',               color: '#a78bfa', badge: 'Profit'   },
+    { icon: '🏪', label: 'Mandi Searches',        value: data.totalMandiSearches,        sub: 'Best mandi lookups',           color: '#fb923c', badge: 'Market'   },
+    { icon: '🎙️',  label: 'Voice Queries',         value: data.totalVoiceQueries,         sub: 'Voice assistant uses',         color: '#22d3ee', badge: 'Voice'    },
+    { icon: '🔔', label: 'Notifications',         value: data.totalNotifications,        sub: 'Total alerts generated',       color: '#f472b6', badge: 'Alerts'   },
+    { icon: '🎯', label: 'Prediction Accuracy',   value: data.averagePredictionAccuracy, sub: 'Average model accuracy',       color: '#4ade80', suffix: '%', badge: 'Avg' },
+    { icon: '📈', label: 'Weekly Growth',         value: Math.abs(data.weeklyGrowth),    sub: data.weeklyGrowth >= 0 ? 'Usage increase this week' : 'Usage decrease this week', color: data.weeklyGrowth >= 0 ? '#4ade80' : '#f87171', suffix: '%', badge: data.weeklyGrowth >= 0 ? 'Up' : 'Down' },
   ] : []
 
   return (
@@ -163,3 +163,4 @@ export default function AnalyticsDashboard() {
     </div>
   )
 }
+

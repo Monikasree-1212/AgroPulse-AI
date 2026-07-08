@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { saveAs } from 'file-saver'
-import axios from 'axios'
+import api from '../../services/api'
 
 const STATUS = { idle: 'idle', loading: 'loading', success: 'success', error: 'error' }
 
 const FORMAT_META = {
-  pdf:   { icon: '📄', label: 'PDF',   color: 'bg-red-500 hover:bg-red-600',   ring: 'focus-visible:ring-red-400'   },
-  excel: { icon: '📊', label: 'Excel', color: 'bg-emerald-600 hover:bg-emerald-700', ring: 'focus-visible:ring-emerald-400' },
-  csv:   { icon: '📋', label: 'CSV',   color: 'bg-blue-500 hover:bg-blue-600', ring: 'focus-visible:ring-blue-400'  },
+  pdf:   { icon: 'Report', label: 'PDF',   color: 'bg-red-500 hover:bg-red-600',   ring: 'focus-visible:ring-red-400'   },
+  excel: { icon: 'Chart', label: 'Excel', color: 'bg-emerald-600 hover:bg-emerald-700', ring: 'focus-visible:ring-emerald-400' },
+  csv:   { icon: 'List', label: 'CSV',   color: 'bg-blue-500 hover:bg-blue-600', ring: 'focus-visible:ring-blue-400'  },
 }
 
 const MIME = {
@@ -26,7 +26,7 @@ export default function ExportButton({ endpoint, format, filename }) {
     if (status === STATUS.loading) return
     setStatus(STATUS.loading)
     try {
-      const res = await axios.get(endpoint, { responseType: 'blob' })
+      const res = await api.get(endpoint, { responseType: 'blob' })
       saveAs(new Blob([res.data], { type: MIME[format] }), `${filename}.${EXT[format]}`)
       setStatus(STATUS.success)
       setTimeout(() => setStatus(STATUS.idle), 2500)
@@ -55,12 +55,12 @@ export default function ExportButton({ endpoint, format, filename }) {
       {isLoading ? (
         <>
           <span className="w-3 h-3 border-2 border-white/40 border-t-white rounded-full animate-spin flex-shrink-0" />
-          Generating…
+          Generating...
         </>
       ) : isSuccess ? (
-        <>✅ Downloaded</>
+        <>Yes Downloaded</>
       ) : isError ? (
-        <>⚠️ Failed</>
+        <>Warning Failed</>
       ) : (
         <>{meta.icon} {meta.label}</>
       )}

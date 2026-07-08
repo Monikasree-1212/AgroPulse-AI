@@ -1,6 +1,6 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import { useGuest } from '../components/auth/GuestMode'
 import useTranslation from '../hooks/useTranslation'
 
@@ -9,7 +9,7 @@ export default function Login() {
   const location  = useLocation()
   const { login } = useGuest()
   const { t } = useTranslation()
-  const from      = sessionStorage.getItem('agropulse_redirect')
+  const from = sessionStorage.getItem('agropulse_redirect')
     || location.state?.from?.pathname
     || '/dashboard'
 
@@ -21,8 +21,8 @@ export default function Login() {
   const set = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError('') }
 
   const validate = () => {
-    if (!/^\d{10}$/.test(form.phone))  return t('login.errorPhone')
-    if (form.password.length < 6)      return t('login.errorPassword')
+    if (!/^\d{10}$/.test(form.phone)) return t('login.errorPhone')
+    if (form.password.length < 6)     return t('login.errorPassword')
     return ''
   }
 
@@ -34,7 +34,7 @@ export default function Login() {
     setLoading(true)
     setError('')
     try {
-      const res = await axios.post('/api/auth/login', { phone: form.phone, password: form.password })
+      const res = await api.post('/api/auth/login', { phone: form.phone, password: form.password })
       login(res.data.token, res.data.user)
       sessionStorage.removeItem('agropulse_redirect')
       navigate(from, { replace: true })
@@ -55,7 +55,7 @@ export default function Login() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-extrabold text-white drop-shadow-xl">
-            ðŸŒ¾ <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
+            Farming <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
           </Link>
           <p className="text-white/60 text-sm mt-1">{t('tagline')}</p>
         </div>
@@ -68,7 +68,7 @@ export default function Login() {
 
           {error && (
             <div className="mb-4 flex items-center gap-2 bg-red-500/20 border border-red-400/40 text-red-300 text-sm rounded-xl px-4 py-3 backdrop-blur-sm">
-              <span>âš ï¸</span> {error}
+              <span>Warning</span> {error}
             </div>
           )}
 
@@ -76,7 +76,7 @@ export default function Login() {
             {/* Phone */}
             <div>
               <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest mb-1.5">
-                Phone Number
+                {t('login.phoneNumber')}
               </label>
               <div className="relative">
                 <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/50 text-sm font-semibold">+91</span>
@@ -97,10 +97,10 @@ export default function Login() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest">
-                  Password
+                  {t('login.password')}
                 </label>
                 <button type="button" className="text-xs text-green-400 hover:text-green-300 font-medium transition-colors">
-                  Forgot password?
+                  {t('login.forgotPassword')}
                 </button>
               </div>
               <div className="relative">
@@ -117,7 +117,7 @@ export default function Login() {
                   onClick={() => setShowPwd(p => !p)}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/80 text-sm transition-colors"
                 >
-                  {showPwd ? 'ðŸ™ˆ' : 'ðŸ‘ï¸'}
+                  {showPwd ? 'Hide' : 'Show'}
                 </button>
               </div>
             </div>
@@ -147,7 +147,7 @@ export default function Login() {
           <p className="text-center text-sm text-white/50 mt-6">
             {t('login.noAccount')}{' '}
             <Link to="/register" className="text-green-400 font-semibold hover:text-green-300 transition-colors">
-              Register here
+              {t('login.registerHere')}
             </Link>
           </p>
         </div>
@@ -159,6 +159,3 @@ export default function Login() {
     </div>
   )
 }
-
-
-

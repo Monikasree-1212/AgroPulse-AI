@@ -21,7 +21,7 @@ function BarTooltip({ active, payload, label }) {
   return (
     <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-xl px-3 py-2 text-xs">
       <p className="font-semibold text-gray-600 dark:text-gray-300 mb-1">{label}</p>
-      <p className="font-bold text-green-600">Avg: ₹{payload[0]?.value}/kg</p>
+      <p className="font-bold text-green-600">Avg: Rs.{payload[0]?.value}/kg</p>
     </div>
   )
 }

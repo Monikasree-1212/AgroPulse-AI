@@ -1,6 +1,6 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../services/api'
 import { useGuest } from '../components/auth/GuestMode'
 import ProfileHeader      from '../components/profile/ProfileHeader'
 import PersonalInfoCard   from '../components/profile/PersonalInfoCard'
@@ -22,31 +22,31 @@ function InputField({ label, children }) {
   )
 }
 
-const inputCls = "w-full px-4 py-3 rounded-xl glass-input text-sm transition-all"
-const selectCls = "w-full px-4 py-3 rounded-xl glass-input text-sm transition-all [&>option]:bg-gray-900 [&>option]:text-white"
+const inputCls  = 'w-full px-4 py-3 rounded-xl glass-input text-sm transition-all'
+const selectCls = 'w-full px-4 py-3 rounded-xl glass-input text-sm transition-all [&>option]:bg-gray-900 [&>option]:text-white'
 
 export default function Profile() {
   const navigate = useNavigate()
   const { user: ctxUser, updateUser, logout } = useGuest()
   const { t, setLanguage } = useTranslation()
 
-  const [profile,  setProfile]  = useState(null)
-  const [loading,  setLoading]  = useState(true)
-  const [editing,  setEditing]  = useState(false)
-  const [saving,   setSaving]   = useState(false)
-  const [error,    setError]    = useState('')
-  const [success,  setSuccess]  = useState('')
-  const [form,     setForm]     = useState({})
+  const [profile, setProfile] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [editing, setEditing] = useState(false)
+  const [saving,  setSaving]  = useState(false)
+  const [error,   setError]   = useState('')
+  const [success, setSuccess] = useState('')
+  const [form,    setForm]    = useState({})
 
   const token = localStorage.getItem('agropulse_token')
 
   useEffect(() => {
     if (!token) { navigate('/login'); return }
-    axios.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
+    api.get('/api/profile', { headers: { Authorization: `Bearer ${token}` } })
       .then(r => { setProfile(r.data); setForm(r.data) })
       .catch(() => { logout(); navigate('/login') })
       .finally(() => setLoading(false))
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const set = (k, v) => {
     setForm(p => ({ ...p, [k]: v }))
@@ -59,7 +59,7 @@ export default function Profile() {
     setError('')
     setSuccess('')
     try {
-      const res = await axios.put('/api/profile', {
+      const res = await api.put('/api/profile', {
         name:              form.name,
         state:             form.state,
         district:          form.district,
@@ -101,7 +101,7 @@ export default function Profile() {
       <nav className="glass-nav sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <button onClick={() => navigate('/')} className="text-lg font-extrabold text-white flex items-center gap-2">
-            ðŸŒ¾ <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
+            Farming <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AgroPulse AI</span>
           </button>
           <div className="flex items-center gap-3">
             <button
@@ -129,12 +129,12 @@ export default function Profile() {
         {/* Alerts */}
         {success && (
           <div className="flex items-center gap-2 bg-green-500/20 border border-green-400/40 text-green-300 text-sm rounded-xl px-4 py-3 animate-fadeIn">
-            âœ… {success}
+            Yes {success}
           </div>
         )}
         {error && (
           <div className="flex items-center gap-2 bg-red-500/20 border border-red-400/40 text-red-300 text-sm rounded-xl px-4 py-3">
-            âš ï¸ {error}
+            Warning {error}
           </div>
         )}
 
@@ -159,12 +159,9 @@ export default function Profile() {
 
         {/* Edit Form */}
         {editing && (
-          <form
-            onSubmit={handleSave}
-            className="glass-card rounded-2xl shadow-2xl overflow-hidden"
-          >
+          <form onSubmit={handleSave} className="glass-card rounded-2xl shadow-2xl overflow-hidden">
             <div className="px-6 py-4 border-b border-white/10 flex items-center gap-2">
-              <span className="text-xl">âœï¸</span>
+              <span className="text-xl">Edit</span>
               <h3 className="text-sm font-bold text-white">{t('profile.editProfile')}</h3>
             </div>
 
@@ -274,15 +271,15 @@ export default function Profile() {
         {!editing && (
           <div className="glass-card rounded-2xl shadow-2xl overflow-hidden">
             <div className="px-6 py-4 border-b border-white/10 flex items-center gap-2">
-              <span className="text-xl">âš¡</span>
+              <span className="text-xl">Quick</span>
               <h3 className="text-sm font-bold text-white">{t('profile.quickActions')}</h3>
             </div>
             <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
               {[
-                { icon: 'âœï¸', label: t('profile.actions.editProfile'),   action: () => setEditing(true) },
-                { icon: 'ðŸŒ¾', label: t('profile.actions.changeCrop'),    action: () => navigate('/commodity') },
-                { icon: 'ðŸ“Š', label: t('profile.actions.viewDashboard'), action: () => navigate('/dashboard') },
-                { icon: 'ðŸšª', label: t('profile.actions.logout'),         action: handleLogout, danger: true },
+                { icon: 'Edit', label: t('profile.actions.editProfile'),   action: () => setEditing(true) },
+                { icon: 'Farming', label: t('profile.actions.changeCrop'),    action: () => navigate('/commodity') },
+                { icon: 'Chart', label: t('profile.actions.viewDashboard'), action: () => navigate('/dashboard') },
+                { icon: 'Logout', label: t('profile.actions.logout'),        action: handleLogout, danger: true },
               ].map(({ icon, label, action, danger }) => (
                 <button
                   key={label}
@@ -320,9 +317,3 @@ export default function Profile() {
     </div>
   )
 }
-
-
-
-
-
-
