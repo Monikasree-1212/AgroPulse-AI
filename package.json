@@ -1,0 +1,13 @@
+{
+  "name": "agropulse-ai",
+  "version": "1.0.0",
+  "description": "AgroPulse AI - Smart Agricultural Market Intelligence Platform",
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run dev",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"green,cyan\" \"npm run backend\" \"npm run frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

@@ -1,0 +1,21 @@
+# Node
+node_modules/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pkl
+venv/
+.venv/
+*.egg-info/
+
+# Vite / React
+frontend/dist/
+frontend/.vite/
+
+# Misc
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,82 @@
+{
+  "Onion": {
+    "chartData": [
+      { "day": "Mon", "price": 22 },
+      { "day": "Tue", "price": 24 },
+      { "day": "Wed", "price": 23 },
+      { "day": "Thu", "price": 26 },
+      { "day": "Fri", "price": 27 },
+      { "day": "Sat", "price": 29 },
+      { "day": "Sun", "price": 28 }
+    ],
+    "mandis": [
+      { "name": "Nashik",  "basePrice": 28, "trend": "+2%",  "up": true  },
+      { "name": "Pune",    "basePrice": 30, "trend": "+7%",  "up": true  },
+      { "name": "Mumbai",  "basePrice": 32, "trend": "+14%", "up": true  }
+    ]
+  },
+  "Potato": {
+    "chartData": [
+      { "day": "Mon", "price": 14 },
+      { "day": "Tue", "price": 13 },
+      { "day": "Wed", "price": 15 },
+      { "day": "Thu", "price": 16 },
+      { "day": "Fri", "price": 15 },
+      { "day": "Sat", "price": 17 },
+      { "day": "Sun", "price": 18 }
+    ],
+    "mandis": [
+      { "name": "Agra",    "basePrice": 14, "trend": "+5%",  "up": true  },
+      { "name": "Delhi",   "basePrice": 18, "trend": "+3%",  "up": true  },
+      { "name": "Kolkata", "basePrice": 16, "trend": "-1%",  "up": false }
+    ]
+  },
+  "Pulses": {
+    "chartData": [
+      { "day": "Mon", "price": 88 },
+      { "day": "Tue", "price": 90 },
+      { "day": "Wed", "price": 87 },
+      { "day": "Thu", "price": 92 },
+      { "day": "Fri", "price": 95 },
+      { "day": "Sat", "price": 93 },
+      { "day": "Sun", "price": 96 }
+    ],
+    "mandis": [
+      { "name": "Indore",  "basePrice": 92, "trend": "+4%",  "up": true  },
+      { "name": "Nagpur",  "basePrice": 96, "trend": "+9%",  "up": true  },
+      { "name": "Bhopal",  "basePrice": 90, "trend": "-2%",  "up": false }
+    ]
+  },
+  "Maize": {
+    "chartData": [
+      { "day": "Mon", "price": 19 },
+      { "day": "Tue", "price": 20 },
+      { "day": "Wed", "price": 21 },
+      { "day": "Thu", "price": 20 },
+      { "day": "Fri", "price": 22 },
+      { "day": "Sat", "price": 21 },
+      { "day": "Sun", "price": 23 }
+    ],
+    "mandis": [
+      { "name": "Davangere", "basePrice": 21, "trend": "+6%",  "up": true  },
+      { "name": "Nizamabad", "basePrice": 23, "trend": "+10%", "up": true  },
+      { "name": "Gulbarga",  "basePrice": 20, "trend": "-3%",  "up": false }
+    ]
+  },
+  "Coconut": {
+    "chartData": [
+      { "day": "Mon", "price": 18 },
+      { "day": "Tue", "price": 19 },
+      { "day": "Wed", "price": 20 },
+      { "day": "Thu", "price": 19 },
+      { "day": "Fri", "price": 21 },
+      { "day": "Sat", "price": 22 },
+      { "day": "Sun", "price": 21 }
+    ],
+    "mandis": [
+      { "name": "Pollachi",   "basePrice": 22, "trend": "+5%",  "up": true  },
+      { "name": "Coimbatore", "basePrice": 24, "trend": "+9%",  "up": true  },
+      { "name": "Ernakulam",  "basePrice": 20, "trend": "-2%",  "up": false }
+    ]
+  }
+}
