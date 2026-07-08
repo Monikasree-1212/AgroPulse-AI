@@ -1,7 +1,7 @@
 const Mandi    = require("../models/Mandi");
 const Activity = require("../models/Activity");
 
-/* ── Haversine distance in km ── */
+/* -- Haversine distance in km -- */
 function haversine(lat1, lon1, lat2, lon2) {
   const R    = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -14,7 +14,7 @@ function haversine(lat1, lon1, lat2, lon2) {
   return +(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))).toFixed(1);
 }
 
-/* ── Estimate travel time string ── */
+/* -- Estimate travel time string -- */
 function travelTime(km) {
   const hrs = km / 50;
   const h   = Math.floor(hrs);
@@ -48,9 +48,9 @@ const getMandisByCommodity = async (req, res) => {
 /*
  * GET /api/mandis/recommend/:commodity?lat=<lat>&lon=<lon>
  *
- * With lat/lon  → sort by real distance (nearest first), profit as tiebreaker.
+ * With lat/lon  -> sort by real distance (nearest first), profit as tiebreaker.
  *                 Sets isFallback=true when the nearest mandi is > 500 km away.
- * Without lat/lon → original behaviour: sort by profit descending.
+ * Without lat/lon -> original behaviour: sort by profit descending.
  */
 const recommendMandis = async (req, res) => {
   try {
@@ -73,7 +73,7 @@ const recommendMandis = async (req, res) => {
     if (hasLocation) {
       ranked = mandis.map((m) => {
         const dist          = haversine(lat, lon, m.latitude, m.longitude);
-        const transportCost = Math.round(dist * 12);          // ₹12/km estimate
+        const transportCost = Math.round(dist * 12);          // Rs.12/km estimate
         const profit        = +(m.price - transportCost / 1000).toFixed(2); // per-kg net
 
         return {
@@ -102,7 +102,7 @@ const recommendMandis = async (req, res) => {
         `[Mandi] top result: ${ranked[0]?.name} (${ranked[0]?.distance} km) isFallback=${isFallback}`
       );
     } else {
-      // No location — original profit-based sort
+      // No location - original profit-based sort
       ranked = mandis
         .map((m) => ({
           ...m.toObject(),
@@ -111,7 +111,7 @@ const recommendMandis = async (req, res) => {
         .sort((a, b) => b.profit - a.profit)
         .slice(0, 5);
 
-      console.log(`[Mandi] no location — profit sort, top: ${ranked[0]?.name}`);
+      console.log(`[Mandi] no location - profit sort, top: ${ranked[0]?.name}`);
     }
 
     res.json(ranked);
@@ -119,7 +119,7 @@ const recommendMandis = async (req, res) => {
     Activity.create({
       activityType: "mandi",
       commodity,
-      description:  `Searched best mandi for ${commodity} — top: ${ranked[0]?.name} at ₹${ranked[0]?.price}/kg`,
+      description:  `Searched best mandi for ${commodity} - top: ${ranked[0]?.name} at Rs.${ranked[0]?.price}/kg`,
       metadata:     { topMandi: ranked[0]?.name, topPrice: ranked[0]?.price, count: ranked.length },
     }).catch(() => {});
   } catch (error) {

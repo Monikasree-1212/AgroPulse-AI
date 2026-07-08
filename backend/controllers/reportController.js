@@ -7,7 +7,7 @@ const Notification    = require('../models/Notification')
 const Commodity       = require('../models/Commodity')
 const GovernmentScheme = require('../models/GovernmentScheme')
 
-/* ── helpers ── */
+/* -- helpers -- */
 const fmtDate = (d) => new Date(d).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
 const fmtNow  = ()  => new Date().toLocaleString('en-IN', { dateStyle: 'long',   timeStyle: 'short' })
 
@@ -20,7 +20,7 @@ function buildPDF(res, title, drawContent) {
   /* header bar */
   doc.rect(0, 0, doc.page.width, 70).fill('#16a34a')
   doc.fillColor('#ffffff').fontSize(20).font('Helvetica-Bold')
-     .text('🌾 AgroPulse AI', 50, 22)
+     .text('Farming AgroPulse AI', 50, 22)
   doc.fontSize(10).font('Helvetica')
      .text(title, 50, 46)
 
@@ -36,7 +36,7 @@ function buildPDF(res, title, drawContent) {
   doc.moveTo(50, bottom - 10).lineTo(doc.page.width - 50, bottom - 10)
      .strokeColor('#e5e7eb').stroke()
   doc.fillColor('#9ca3af').fontSize(8)
-     .text('AgroPulse AI — Smart Agricultural Market Intelligence Platform', 50, bottom, { align: 'center' })
+     .text('AgroPulse AI - Smart Agricultural Market Intelligence Platform', 50, bottom, { align: 'center' })
 
   doc.end()
 }
@@ -54,7 +54,7 @@ function tableRow(doc, cols, values, y, shade) {
   doc.fillColor('#374151').fontSize(8).font('Helvetica')
   let x = 55
   cols.forEach(({ w }, i) => {
-    doc.text(String(values[i] ?? '—'), x, y + 3, { width: w - 4, ellipsis: true })
+    doc.text(String(values[i] ?? '-'), x, y + 3, { width: w - 4, ellipsis: true })
     x += w
   })
   return y + 18
@@ -66,9 +66,9 @@ function sectionTitle(doc, text) {
   doc.moveDown(0.3)
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    PREDICTIONS PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.predictionsPDF = async (req, res) => {
   try {
     const commodities = await Commodity.find().lean()
@@ -80,10 +80,10 @@ exports.predictionsPDF = async (req, res) => {
       const cols = [
         { label: 'Commodity', w: 100 },
         { label: 'Days',      w: 50  },
-        { label: 'Min ₹/kg',  w: 80  },
-        { label: 'Max ₹/kg',  w: 80  },
-        { label: 'Avg ₹/kg',  w: 80  },
-        { label: 'Latest ₹/kg', w: 90 },
+        { label: 'Min Rs./kg',  w: 80  },
+        { label: 'Max Rs./kg',  w: 80  },
+        { label: 'Avg Rs./kg',  w: 80  },
+        { label: 'Latest Rs./kg', w: 90 },
       ]
       let y = tableHeader(doc, cols, doc.y)
       commodities.forEach((c, i) => {
@@ -105,7 +105,7 @@ exports.predictionsPDF = async (req, res) => {
       ]
       y = tableHeader(doc, cols2, doc.y)
       predActs.forEach((a, i) => {
-        y = tableRow(doc, cols2, [fmtDate(a.createdAt), a.commodity || '—', a.description, a.metadata?.confidence ? `${a.metadata.confidence}%` : '—'], y, i % 2 === 1)
+        y = tableRow(doc, cols2, [fmtDate(a.createdAt), a.commodity || '-', a.description, a.metadata?.confidence ? `${a.metadata.confidence}%` : '-'], y, i % 2 === 1)
         if (y > doc.page.height - 80) { doc.addPage(); y = 80 }
       })
     })
@@ -114,9 +114,9 @@ exports.predictionsPDF = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    PREDICTIONS EXCEL
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.predictionsExcel = async (req, res) => {
   try {
     const commodities = await Commodity.find().lean()
@@ -143,14 +143,14 @@ exports.predictionsExcel = async (req, res) => {
       return ws
     }
 
-    /* Sheet 1 — Predictions */
+    /* Sheet 1 - Predictions */
     addSheet('Predictions', [
       { header: 'Commodity', key: 'commodity', width: 18 },
       { header: 'Days of Data', key: 'days', width: 14 },
-      { header: 'Min Price (₹)', key: 'min', width: 16 },
-      { header: 'Max Price (₹)', key: 'max', width: 16 },
-      { header: 'Avg Price (₹)', key: 'avg', width: 16 },
-      { header: 'Latest Price (₹)', key: 'latest', width: 18 },
+      { header: 'Min Price (Rs.)', key: 'min', width: 16 },
+      { header: 'Max Price (Rs.)', key: 'max', width: 16 },
+      { header: 'Avg Price (Rs.)', key: 'avg', width: 16 },
+      { header: 'Latest Price (Rs.)', key: 'latest', width: 18 },
     ], commodities.map(c => {
       const prices = c.prices.map(p => p.price)
       return {
@@ -163,7 +163,7 @@ exports.predictionsExcel = async (req, res) => {
       }
     }))
 
-    /* Sheet 2 — Profit Simulations */
+    /* Sheet 2 - Profit Simulations */
     addSheet('Profit Simulations', [
       { header: 'Date',           key: 'date',           width: 22 },
       { header: 'Commodity',      key: 'commodity',      width: 16 },
@@ -172,24 +172,24 @@ exports.predictionsExcel = async (req, res) => {
       { header: 'Recommendation', key: 'recommendation', width: 30 },
     ], profitActs.map(a => ({
       date:           fmtDate(a.createdAt),
-      commodity:      a.commodity || '—',
+      commodity:      a.commodity || '-',
       description:    a.description,
-      roi:            a.metadata?.roi ?? '—',
-      recommendation: a.metadata?.recommendation ?? '—',
+      roi:            a.metadata?.roi ?? '-',
+      recommendation: a.metadata?.recommendation ?? '-',
     })))
 
-    /* Sheet 3 — Weather */
+    /* Sheet 3 - Weather */
     addSheet('Weather Checks', [
       { header: 'Date',        key: 'date',        width: 22 },
       { header: 'Commodity',   key: 'commodity',   width: 16 },
       { header: 'Description', key: 'description', width: 50 },
     ], weatherActs.map(a => ({
       date:        fmtDate(a.createdAt),
-      commodity:   a.commodity || '—',
+      commodity:   a.commodity || '-',
       description: a.description,
     })))
 
-    /* Sheet 4 — Analytics Summary */
+    /* Sheet 4 - Analytics Summary */
     const counts = {}
     allActs.forEach(a => { counts[a.activityType] = (counts[a.activityType] || 0) + 1 })
     addSheet('Analytics Summary', [
@@ -215,9 +215,9 @@ exports.predictionsExcel = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    PREDICTIONS CSV
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.predictionsCSV = async (req, res) => {
   try {
     const commodities = await Commodity.find().lean()
@@ -227,7 +227,7 @@ exports.predictionsCSV = async (req, res) => {
       header: [
         { id: 'commodity',   title: 'Commodity'       },
         { id: 'day',         title: 'Day'             },
-        { id: 'price',       title: 'Price (₹/kg)'    },
+        { id: 'price',       title: 'Price (Rs./kg)'    },
         { id: 'confidence',  title: 'Confidence (%)'  },
         { id: 'date',        title: 'Date'            },
       ],
@@ -241,8 +241,8 @@ exports.predictionsCSV = async (req, res) => {
           commodity:  c.commodity,
           day:        p.day,
           price:      p.price,
-          confidence: match?.metadata?.confidence ?? '—',
-          date:       match ? fmtDate(match.createdAt) : '—',
+          confidence: match?.metadata?.confidence ?? '-',
+          date:       match ? fmtDate(match.createdAt) : '-',
         })
       })
     })
@@ -256,9 +256,9 @@ exports.predictionsCSV = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    WEATHER PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.weatherPDF = async (req, res) => {
   try {
     const acts = await Activity.find({ activityType: 'weather' }).sort({ createdAt: -1 }).limit(50).lean()
@@ -278,7 +278,7 @@ exports.weatherPDF = async (req, res) => {
       ]
       let y = tableHeader(doc, cols, doc.y)
       acts.forEach((a, i) => {
-        y = tableRow(doc, cols, [fmtDate(a.createdAt), a.commodity || '—', a.description], y, i % 2 === 1)
+        y = tableRow(doc, cols, [fmtDate(a.createdAt), a.commodity || '-', a.description], y, i % 2 === 1)
         if (y > doc.page.height - 80) { doc.addPage(); y = 80 }
       })
 
@@ -291,9 +291,9 @@ exports.weatherPDF = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    PROFIT PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.profitPDF = async (req, res) => {
   try {
     const acts = await Activity.find({ activityType: 'profit' }).sort({ createdAt: -1 }).limit(50).lean()
@@ -326,8 +326,8 @@ exports.profitPDF = async (req, res) => {
       acts.forEach((a, i) => {
         y = tableRow(doc, cols, [
           fmtDate(a.createdAt),
-          a.commodity || '—',
-          a.metadata?.roi != null ? `${a.metadata.roi}%` : '—',
+          a.commodity || '-',
+          a.metadata?.roi != null ? `${a.metadata.roi}%` : '-',
           a.metadata?.recommendation || a.description,
         ], y, i % 2 === 1)
         if (y > doc.page.height - 80) { doc.addPage(); y = 80 }
@@ -338,9 +338,9 @@ exports.profitPDF = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    ANALYTICS PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.analyticsPDF = async (req, res) => {
   try {
     const [activities, notifications, commodities] = await Promise.all([
@@ -403,9 +403,9 @@ exports.analyticsPDF = async (req, res) => {
 
       const priceCols = [
         { label: 'Commodity',    w: 120 },
-        { label: 'Avg Price (₹)', w: 100 },
-        { label: 'Min (₹)',      w: 80  },
-        { label: 'Max (₹)',      w: 80  },
+        { label: 'Avg Price (Rs.)', w: 100 },
+        { label: 'Min (Rs.)',      w: 80  },
+        { label: 'Max (Rs.)',      w: 80  },
       ]
       y = tableHeader(doc, priceCols, doc.y)
       commodities.forEach((c, i) => {
@@ -420,9 +420,9 @@ exports.analyticsPDF = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    ACTIVITY PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.activityPDF = async (req, res) => {
   try {
     const acts = await Activity.find().sort({ createdAt: -1 }).limit(100).lean()
@@ -443,7 +443,7 @@ exports.activityPDF = async (req, res) => {
       ]
       let y = tableHeader(doc, cols, doc.y)
       acts.forEach((a, i) => {
-        y = tableRow(doc, cols, [fmtDate(a.createdAt), a.activityType, a.commodity || '—', a.description], y, i % 2 === 1)
+        y = tableRow(doc, cols, [fmtDate(a.createdAt), a.activityType, a.commodity || '-', a.description], y, i % 2 === 1)
         if (y > doc.page.height - 80) { doc.addPage(); y = 80 }
       })
     })
@@ -452,9 +452,9 @@ exports.activityPDF = async (req, res) => {
   }
 }
 
-/* ══════════════════════════════════════════════
+/* ----------------------------------------------
    NOTIFICATIONS PDF
-══════════════════════════════════════════════ */
+---------------------------------------------- */
 exports.notificationsPDF = async (req, res) => {
   try {
     const notifs = await Notification.find().sort({ createdAt: -1 }).limit(100).lean()

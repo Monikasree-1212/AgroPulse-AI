@@ -4,9 +4,9 @@ const GovernmentScheme = require('../models/GovernmentScheme')
 const axios = require('axios')
 const { getWeatherByCity } = require('../services/weatherService')
 
-/* ─────────────────────────────────────────
+/* -----------------------------------------
    CRUD handlers
-───────────────────────────────────────── */
+----------------------------------------- */
 const getNotifications = async (req, res) => {
   try {
     const { type } = req.query
@@ -57,20 +57,20 @@ const clearAllNotifications = async (req, res) => {
   }
 }
 
-/* ─────────────────────────────────────────
+/* -----------------------------------------
    Auto-generate notifications
-   — calls DB / services directly (no HTTP self-loop)
-───────────────────────────────────────── */
+   - calls DB / services directly (no HTTP self-loop)
+----------------------------------------- */
 const COMMODITIES = ['Onion', 'Potato', 'Pulses', 'Maize', 'Coconut']
 const DEDUP_PRICE_MS   = 30 * 60 * 1000   // 30 min
 const DEDUP_WEATHER_MS = 60 * 60 * 1000   // 1 hr
 const ML_BASE = 'http://localhost:8000'
 
 const autoGenerateNotifications = async () => {
-  /* ── 1. Price alerts (query DB + ML directly) ── */
+  /* -- 1. Price alerts (query DB + ML directly) -- */
   for (const commodity of COMMODITIES) {
     try {
-      // Check dedup first — skip if recent price alert exists
+      // Check dedup first - skip if recent price alert exists
       const recentPrice = await Notification.findOne({
         commodity,
         type: 'price',
@@ -93,20 +93,20 @@ const autoGenerateNotifications = async () => {
       const absDiff = Math.abs(diff)
 
       await Notification.create({
-        title:     rising ? `${commodity} Price Rising 📈` : `${commodity} Price Falling 📉`,
+        title:     rising ? `${commodity} Price Rising 📈` : `${commodity} Price Falling Downward`,
         message:   rising
-          ? `AI predicts ${commodity} price may increase by ₹${absDiff}/kg. Consider holding your stock.`
-          : `AI predicts ${commodity} price may decrease by ₹${absDiff}/kg. Consider selling now.`,
+          ? `AI predicts ${commodity} price may increase by Rs.${absDiff}/kg. Consider holding your stock.`
+          : `AI predicts ${commodity} price may decrease by Rs.${absDiff}/kg. Consider selling now.`,
         type:      'price',
         commodity,
         priority:  absDiff > 5 ? 'high' : 'medium',
       })
     } catch (_) {
-      // ML server offline or commodity missing — skip silently
+      // ML server offline or commodity missing - skip silently
     }
   }
 
-  /* ── 2. Weather alert (call service directly) ── */
+  /* -- 2. Weather alert (call service directly) -- */
   try {
     const recentWeather = await Notification.findOne({
       type: 'weather',
@@ -119,7 +119,7 @@ const autoGenerateNotifications = async () => {
                     || weather.humidity > 85
       if (isHeavy) {
         await Notification.create({
-          title:    'Heavy Rainfall Alert 🌧️',
+          title:    'Heavy Rainfall Alert Rain',
           message:  `Heavy rainfall expected in Delhi (${weather.condition}, Humidity: ${weather.humidity}%). Harvest carefully and protect stored crops.`,
           type:     'weather',
           priority: 'high',
@@ -128,7 +128,7 @@ const autoGenerateNotifications = async () => {
     }
   } catch (_) {}
 
-  /* ── 3. Government scheme alert (query DB directly) ── */
+  /* -- 3. Government scheme alert (query DB directly) -- */
   try {
     const schemes = await GovernmentScheme.find().sort({ createdAt: -1 }).limit(1)
     if (schemes.length > 0) {
@@ -139,7 +139,7 @@ const autoGenerateNotifications = async () => {
       })
       if (!existing) {
         await Notification.create({
-          title:    'New Government Scheme Available 🏛️',
+          title:    'New Government Scheme Available Government',
           message:  `New scheme: "${latest.title}" is now available for farmers. Check the Government Schemes section for details.`,
           type:     'government',
           priority: 'medium',

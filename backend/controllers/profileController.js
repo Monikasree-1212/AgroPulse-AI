@@ -3,7 +3,7 @@ const Activity = require('../models/Activity')
 
 const SAFE_FIELDS = '-password'
 
-/* ── GET /api/profile ── */
+/* -- GET /api/profile -- */
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select(SAFE_FIELDS).lean()
@@ -37,7 +37,7 @@ exports.getProfile = async (req, res) => {
   }
 }
 
-/* ── PUT /api/profile ── */
+/* -- PUT /api/profile -- */
 exports.updateProfile = async (req, res) => {
   try {
     const { name, state, district, village, primaryCrop, farmSize, preferredLanguage, profileImage } = req.body
@@ -61,7 +61,7 @@ exports.updateProfile = async (req, res) => {
   }
 }
 
-/* ── PUT /api/profile/preferences ── */
+/* -- PUT /api/profile/preferences -- */
 exports.updatePreferences = async (req, res) => {
   try {
     const { preferredLanguage, primaryCrop, state, district, village, farmSize } = req.body

@@ -8,7 +8,7 @@ const getWeather = async (req, res) => {
     // Log activity after response
     Activity.create({
       activityType: 'weather',
-      description:  `Viewed weather for ${data.city} — ${data.temperature}°C, ${data.description}`,
+      description:  `Viewed weather for ${data.city} - ${data.temperature} deg C, ${data.description}`,
       metadata:     { city: data.city, temperature: data.temperature, condition: data.condition, humidity: data.humidity },
     }).catch(() => {})
   } catch (error) {

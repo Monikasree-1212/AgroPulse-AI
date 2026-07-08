@@ -2,7 +2,7 @@ const FarmingTip = require('../models/FarmingTip')
 const Commodity  = require('../models/Commodity')
 const { getWeatherByCity } = require('../services/weatherService')
 
-/* ─── Determine current Indian agricultural season ─── */
+/* --- Determine current Indian agricultural season --- */
 function getCurrentSeason() {
   const month = new Date().getMonth() + 1 // 1-12
   if (month >= 6 && month <= 9)  return 'Kharif'
@@ -10,7 +10,7 @@ function getCurrentSeason() {
   return 'Zaid'
 }
 
-/* ─── Build dynamic tips from live context ─── */
+/* --- Build dynamic tips from live context --- */
 async function buildContextualTips(commodity, weather, predictedPrice, currentPrice) {
   const tips = []
   const season = getCurrentSeason()
@@ -22,11 +22,11 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
 
     if (['Rain', 'Thunderstorm', 'Drizzle'].includes(condition) || rainfall > 3) {
       tips.push({
-        title:       'Delay Irrigation — Rainfall Expected',
+        title:       'Delay Irrigation - Rainfall Expected',
         commodity,
         season,
         category:    'Irrigation',
-        description: `Heavy rainfall detected (${condition}, ${rainfall}mm). Skip irrigation for the next 2–3 days to avoid waterlogging and root damage.`,
+        description: `Heavy rainfall detected (${condition}, ${rainfall}mm). Skip irrigation for the next 2-3 days to avoid waterlogging and root damage.`,
         priority:    'high',
       })
       tips.push({
@@ -45,14 +45,14 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
         commodity,
         season,
         category:    'Irrigation',
-        description: `High temperature (${temperature}°C) detected. Increase irrigation to twice daily during early morning and evening to prevent heat stress in ${commodity} crops.`,
+        description: `High temperature (${temperature} deg C) detected. Increase irrigation to twice daily during early morning and evening to prevent heat stress in ${commodity} crops.`,
         priority:    'high',
       })
     }
 
     if (humidity > 80) {
       tips.push({
-        title:       'Fungal Disease Risk — Inspect Crops',
+        title:       'Fungal Disease Risk - Inspect Crops',
         commodity,
         season,
         category:    'Pest Control',
@@ -78,7 +78,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
         commodity,
         season,
         category:    'Weather',
-        description: `Temperature has dropped to ${temperature}°C. Cover ${commodity} seedlings with mulch or agro-nets to protect from frost damage overnight.`,
+        description: `Temperature has dropped to ${temperature} deg C. Cover ${commodity} seedlings with mulch or agro-nets to protect from frost damage overnight.`,
         priority:    'high',
       })
     }
@@ -91,20 +91,20 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
 
     if (diff > 0) {
       tips.push({
-        title:       `${commodity} Prices Rising — Hold Stock`,
+        title:       `${commodity} Prices Rising - Hold Stock`,
         commodity,
         season,
         category:    'Market',
-        description: `AI predicts ${commodity} price will rise by ₹${Math.abs(diff).toFixed(2)}/kg (+${pctDiff}%). Store your harvest for 5–7 days to maximise profit.`,
+        description: `AI predicts ${commodity} price will rise by Rs.${Math.abs(diff).toFixed(2)}/kg (+${pctDiff}%). Store your harvest for 5-7 days to maximise profit.`,
         priority:    Math.abs(diff) > 5 ? 'high' : 'medium',
       })
     } else {
       tips.push({
-        title:       `${commodity} Prices Falling — Sell Now`,
+        title:       `${commodity} Prices Falling - Sell Now`,
         commodity,
         season,
         category:    'Market',
-        description: `AI predicts ${commodity} price will fall by ₹${Math.abs(diff).toFixed(2)}/kg (${pctDiff}%). Consider selling your stock today to avoid losses.`,
+        description: `AI predicts ${commodity} price will fall by Rs.${Math.abs(diff).toFixed(2)}/kg (${pctDiff}%). Consider selling your stock today to avoid losses.`,
         priority:    Math.abs(diff) > 5 ? 'high' : 'medium',
       })
     }
@@ -118,7 +118,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
         commodity,
         season:      'Kharif',
         category:    'Harvest',
-        description: `June–July is the optimal sowing period for Kharif ${commodity}. Ensure soil is well-prepared with adequate organic matter before sowing.`,
+        description: `June-July is the optimal sowing period for Kharif ${commodity}. Ensure soil is well-prepared with adequate organic matter before sowing.`,
         priority:    'medium',
       },
       {
@@ -136,7 +136,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
         commodity,
         season:      'Rabi',
         category:    'Fertilizer',
-        description: `October–November is ideal for Rabi ${commodity} preparation. Apply basal dose of NPK fertilizer and ensure proper field levelling for uniform irrigation.`,
+        description: `October-November is ideal for Rabi ${commodity} preparation. Apply basal dose of NPK fertilizer and ensure proper field levelling for uniform irrigation.`,
         priority:    'medium',
       },
       {
@@ -144,7 +144,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
         commodity,
         season:      'Rabi',
         category:    'Storage',
-        description: `Store ${commodity} in well-ventilated, cool, and dry conditions during Rabi season. Maintain temperature between 2–5°C to extend shelf life by 3–4 weeks.`,
+        description: `Store ${commodity} in well-ventilated, cool, and dry conditions during Rabi season. Maintain temperature between 2-5 deg C to extend shelf life by 3-4 weeks.`,
         priority:    'low',
       },
     ],
@@ -170,7 +170,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
       commodity:   'Onion',
       season,
       category:    'Storage',
-      description: 'Store onions in well-ventilated, dry, and dark conditions at 25–30°C. Avoid stacking more than 3 layers. Check weekly for rotting bulbs and remove immediately.',
+      description: 'Store onions in well-ventilated, dry, and dark conditions at 25-30 deg C. Avoid stacking more than 3 layers. Check weekly for rotting bulbs and remove immediately.',
       priority:    'medium',
     },
     Potato: {
@@ -178,7 +178,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
       commodity:   'Potato',
       season,
       category:    'Storage',
-      description: 'Store potatoes at 4–10°C in dark conditions to prevent greening. Maintain 90–95% relative humidity. Avoid storing near onions as ethylene gas accelerates sprouting.',
+      description: 'Store potatoes at 4-10 deg C in dark conditions to prevent greening. Maintain 90-95% relative humidity. Avoid storing near onions as ethylene gas accelerates sprouting.',
       priority:    'medium',
     },
     Pulses: {
@@ -194,7 +194,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
       commodity:   'Maize',
       season,
       category:    'Storage',
-      description: 'Dry maize to 13–14% moisture content before storage to prevent aflatoxin contamination. Use solar dryers or spread on clean surfaces for 3–5 days.',
+      description: 'Dry maize to 13-14% moisture content before storage to prevent aflatoxin contamination. Use solar dryers or spread on clean surfaces for 3-5 days.',
       priority:    'medium',
     },
     Coconut: {
@@ -202,7 +202,7 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
       commodity:   'Coconut',
       season,
       category:    'Storage',
-      description: 'Store harvested coconuts in a cool, dry, well-ventilated area. Dehusked coconuts should be sold within 2–3 weeks. Avoid direct sunlight to prevent oil rancidity and weight loss.',
+      description: 'Store harvested coconuts in a cool, dry, well-ventilated area. Dehusked coconuts should be sold within 2-3 weeks. Avoid direct sunlight to prevent oil rancidity and weight loss.',
       priority:    'medium',
     },
   }
@@ -215,14 +215,14 @@ async function buildContextualTips(commodity, weather, predictedPrice, currentPr
     commodity,
     season,
     category:    'Harvest',
-    description: `Monitor ${commodity} maturity indicators closely. Harvest during early morning hours (6–9 AM) to reduce field heat and improve post-harvest quality and shelf life.`,
+    description: `Monitor ${commodity} maturity indicators closely. Harvest during early morning hours (6-9 AM) to reduce field heat and improve post-harvest quality and shelf life.`,
     priority:    'low',
   })
 
   return tips
 }
 
-/* ─── Controllers ─── */
+/* --- Controllers --- */
 const getAllTips = async (req, res) => {
   try {
     const { commodity, season, category, priority } = req.query

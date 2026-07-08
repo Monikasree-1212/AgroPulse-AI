@@ -4,7 +4,7 @@ const User = require('../models/User')
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' })
 
-/* ── Register ── */
+/* -- Register -- */
 exports.register = async (req, res) => {
   try {
     const { name, phone, password, state, district, primaryCrop, preferredLanguage } = req.body
@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
   }
 }
 
-/* ── Login ── */
+/* -- Login -- */
 exports.login = async (req, res) => {
   try {
     const { phone, password } = req.body
@@ -53,7 +53,7 @@ exports.login = async (req, res) => {
   }
 }
 
-/* ── Get Profile ── */
+/* -- Get Profile -- */
 exports.getProfile = async (req, res) => {
   try {
     res.json(req.user)
@@ -62,7 +62,7 @@ exports.getProfile = async (req, res) => {
   }
 }
 
-/* ── Update Profile ── */
+/* -- Update Profile -- */
 exports.updateProfile = async (req, res) => {
   try {
     const { name, state, district, village, primaryCrop, farmSize, preferredLanguage, profileImage } = req.body

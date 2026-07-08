@@ -10,7 +10,7 @@ const getDashboard = async (req, res) => {
       Commodity.find().lean(),
     ])
 
-    /* ── Per-type counts from Activity ── */
+    /* -- Per-type counts from Activity -- */
     const counts = {
       price:      0,
       prediction: 0,
@@ -30,12 +30,12 @@ const getDashboard = async (req, res) => {
       }
     })
 
-    /* ── Favourite commodity (most searched) ── */
+    /* -- Favourite commodity (most searched) -- */
     const favoriteCommodity = Object.keys(commodityFreq).length
       ? Object.entries(commodityFreq).sort((a, b) => b[1] - a[1])[0][0]
       : 'Onion'
 
-    /* ── Highest profit commodity (from profit activity metadata) ── */
+    /* -- Highest profit commodity (from profit activity metadata) -- */
     const profitByComm = {}
     activities
       .filter(a => a.activityType === 'profit' && a.commodity && a.metadata?.roi != null)
@@ -49,7 +49,7 @@ const getDashboard = async (req, res) => {
       ? Object.entries(profitByComm).sort((a, b) => b[1] - a[1])[0][0]
       : favoriteCommodity
 
-    /* ── Average prediction accuracy (from prediction metadata) ── */
+    /* -- Average prediction accuracy (from prediction metadata) -- */
     const predActivities = activities.filter(
       a => a.activityType === 'prediction' && a.metadata?.confidence != null
     )
@@ -57,7 +57,7 @@ const getDashboard = async (req, res) => {
       ? Math.round(predActivities.reduce((s, a) => s + a.metadata.confidence, 0) / predActivities.length)
       : 91
 
-    /* ── Weekly growth: compare this week vs last week activity count ── */
+    /* -- Weekly growth: compare this week vs last week activity count -- */
     const now       = Date.now()
     const oneWeekMs = 7 * 24 * 60 * 60 * 1000
     const thisWeek  = activities.filter(a => now - new Date(a.createdAt) < oneWeekMs).length
@@ -69,7 +69,7 @@ const getDashboard = async (req, res) => {
       ? Math.round(((thisWeek - lastWeek) / lastWeek) * 100)
       : thisWeek > 0 ? 100 : 0
 
-    /* ── Daily activity breakdown (last 7 days) ── */
+    /* -- Daily activity breakdown (last 7 days) -- */
     const dailyMap = {}
     for (let i = 6; i >= 0; i--) {
       const d = new Date()
@@ -86,12 +86,12 @@ const getDashboard = async (req, res) => {
     })
     const dailyActivity = Object.entries(dailyMap).map(([day, count]) => ({ day, count }))
 
-    /* ── Commodity usage breakdown ── */
+    /* -- Commodity usage breakdown -- */
     const commodityUsage = Object.entries(commodityFreq)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value)
 
-    /* ── Feature usage breakdown ── */
+    /* -- Feature usage breakdown -- */
     const featureUsage = [
       { name: 'Price Check',   value: counts.price,      color: '#16a34a' },
       { name: 'AI Prediction', value: counts.prediction,  color: '#3b82f6' },
@@ -102,7 +102,7 @@ const getDashboard = async (req, res) => {
       { name: 'Gov. Schemes',  value: counts.government,  color: '#ec4899' },
     ].filter(f => f.value > 0)
 
-    /* ── Average commodity prices from DB ── */
+    /* -- Average commodity prices from DB -- */
     const avgPrices = commodities.map(c => {
       const prices = c.prices ?? []
       const avg = prices.length
@@ -111,7 +111,7 @@ const getDashboard = async (req, res) => {
       return { commodity: c.commodity, avgPrice: avg }
     })
 
-    /* ── Profit trend (last 10 profit simulations) ── */
+    /* -- Profit trend (last 10 profit simulations) -- */
     const profitTrend = activities
       .filter(a => a.activityType === 'profit' && a.metadata?.roi != null)
       .slice(0, 10)
@@ -122,7 +122,7 @@ const getDashboard = async (req, res) => {
         recommendation: a.metadata.recommendation ?? '',
       }))
 
-    /* ── AI insights text ── */
+    /* -- AI insights text -- */
     const insights = []
     if (favoriteCommodity) insights.push(`${favoriteCommodity} is your most searched commodity.`)
     if (counts.prediction > 0) insights.push(`You have used AI predictions ${counts.prediction} time${counts.prediction !== 1 ? 's' : ''}.`)

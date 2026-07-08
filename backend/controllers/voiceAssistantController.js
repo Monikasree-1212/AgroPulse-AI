@@ -45,7 +45,7 @@ const handleQuery = async (req, res) => {
   }).catch(() => {})
 
   try {
-    /* ── Price query ── */
+    /* -- Price query -- */
     if ((t.includes("price") || t.includes("rate") || t.includes("cost")) &&
         !t.includes("predict") && !t.includes("forecast") && !t.includes("future")) {
       const commodity = detectCommodity(t);
@@ -60,11 +60,11 @@ const handleQuery = async (req, res) => {
       const name   = doc.commodity;
       return res.json({
         type: "price",
-        reply: `Today's ${name} price is ₹${latest.price} per kilogram on ${latest.day}.`,
+        reply: `Today's ${name} price is Rs.${latest.price} per kilogram on ${latest.day}.`,
       });
     }
 
-    /* ── Prediction query ── */
+    /* -- Prediction query -- */
     if (t.includes("predict") || t.includes("forecast") || t.includes("future") || t.includes("after")) {
       const commodity = detectCommodity(t);
       if (!commodity)
@@ -75,14 +75,14 @@ const handleQuery = async (req, res) => {
         const { data } = await axios.get(`http://localhost:8000/predict/${commodity}/${day}`);
         return res.json({
           type: "prediction",
-          reply: `Expected ${commodity} price after ${day} days is ₹${data.predictedPrice} per kilogram with ${data.confidence}% confidence.`,
+          reply: `Expected ${commodity} price after ${day} days is Rs.${data.predictedPrice} per kilogram with ${data.confidence}% confidence.`,
         });
       } catch {
         return res.json({ type: "prediction", reply: "Prediction service is currently unavailable. Please ensure the ML server is running." });
       }
     }
 
-    /* ── Weather query ── */
+    /* -- Weather query -- */
     if (t.includes("weather") || t.includes("temperature") || t.includes("rain") ||
         t.includes("humidity") || t.includes("wind") || t.includes("climate")) {
       const city = detectCity(t);
@@ -90,14 +90,14 @@ const handleQuery = async (req, res) => {
         const weather = await getWeatherByCity(city);
         return res.json({
           type: "weather",
-          reply: `Today's weather in ${weather.city} is ${weather.temperature} degrees Celsius with ${weather.description}. Humidity is ${weather.humidity}% and wind speed is ${weather.windSpeed} kilometres per hour.`,
+          reply: `Today's weather in ${weather.city} is ${weather.temperature} deg rees Celsius with ${weather.description}. Humidity is ${weather.humidity}% and wind speed is ${weather.windSpeed} kilometres per hour.`,
         });
       } catch {
         return res.json({ type: "weather", reply: "Weather service is currently unavailable. Please check your API key." });
       }
     }
 
-    /* ── Mandi query ── */
+    /* -- Mandi query -- */
     if (t.includes("mandi") || t.includes("market") || t.includes("sell") || t.includes("best place")) {
       const commodity = detectCommodity(t);
       const searchCommodity = commodity || "onion";
@@ -112,11 +112,11 @@ const handleQuery = async (req, res) => {
 
       return res.json({
         type: "mandi",
-        reply: `For ${best.commodity}, ${best.name} in ${best.district}, ${best.state} gives the highest expected profit of ₹${best.profit} per kilogram at a market price of ₹${best.price}.`,
+        reply: `For ${best.commodity}, ${best.name} in ${best.district}, ${best.state} gives the highest expected profit of Rs.${best.profit} per kilogram at a market price of Rs.${best.price}.`,
       });
     }
 
-    /* ── Government schemes query ── */
+    /* -- Government schemes query -- */
     if (t.includes("scheme") || t.includes("government") || t.includes("subsidy") ||
         t.includes("pm kisan") || t.includes("insurance") || t.includes("loan") ||
         t.includes("kcc") || t.includes("msp") || t.includes("support price")) {
@@ -124,7 +124,7 @@ const handleQuery = async (req, res) => {
       if (t.includes("msp") || t.includes("support price") || t.includes("minimum")) {
         return res.json({
           type: "government",
-          reply: "Current MSP rates: Wheat ₹2425, Paddy ₹2369, Maize ₹2090, Cotton ₹7710, Tur ₹7550, Moong ₹8682 per quintal. Onion and Potato are market driven.",
+          reply: "Current MSP rates: Wheat Rs.2425, Paddy Rs.2369, Maize Rs.2090, Cotton Rs.7710, Tur Rs.7550, Moong Rs.8682 per quintal. Onion and Potato are market driven.",
         });
       }
 
@@ -139,7 +139,7 @@ const handleQuery = async (req, res) => {
       });
     }
 
-    /* ── Profit query ── */
+    /* -- Profit query -- */
     if (t.includes("profit") || t.includes("earn") || t.includes("income") || t.includes("revenue")) {
       const commodity = detectCommodity(t) || "onion";
       const doc = await Commodity.findOne({ commodity: { $regex: new RegExp(`^${commodity}$`, "i") } });
@@ -151,14 +151,14 @@ const handleQuery = async (req, res) => {
         const action = diff > 0 ? "hold your stock" : "sell today";
         return res.json({
           type: "profit",
-          reply: `For ${commodity}, current price is ₹${currentPrice} and predicted price after 7 days is ₹${data.predictedPrice}. I recommend you ${action} for maximum profit. Use the Profit Simulator for detailed calculations.`,
+          reply: `For ${commodity}, current price is Rs.${currentPrice} and predicted price after 7 days is Rs.${data.predictedPrice}. I recommend you ${action} for maximum profit. Use the Profit Simulator for detailed calculations.`,
         });
       } catch {
         return res.json({ type: "profit", reply: "Use the Profit Simulator on the dashboard to calculate your expected earnings." });
       }
     }
 
-    /* ── Help / fallback ── */
+    /* -- Help / fallback -- */
     return res.json({
       type: "help",
       reply: "I can help you with: crop prices, price predictions, weather updates, best mandi recommendations, government schemes, and profit calculations. Try asking: What is today's onion price? or What is the weather in Delhi?",

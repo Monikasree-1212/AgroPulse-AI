@@ -13,7 +13,7 @@ const getCommodityPrices = async (req, res) => {
     Activity.create({
       activityType: 'price',
       commodity:    commodity.commodity,
-      description:  `Checked ${commodity.commodity} price — ₹${latest?.price ?? '?'}/kg on ${latest?.day ?? '?'}`,
+      description:  `Checked ${commodity.commodity} price - Rs.${latest?.price ?? '?'}/kg on ${latest?.day ?? '?'}`,
       metadata:     { price: latest?.price, day: latest?.day },
     }).catch(() => {})
   } catch (error) {

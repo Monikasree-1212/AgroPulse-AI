@@ -18,7 +18,7 @@ const getPrediction = async (req, res) => {
     Activity.create({
       activityType: 'prediction',
       commodity,
-      description:  `AI predicted ${commodity} price — ₹${response.data.predictedPrice}/kg (${response.data.confidence}% confidence) for day ${day}`,
+      description:  `AI predicted ${commodity} price - Rs.${response.data.predictedPrice}/kg (${response.data.confidence}% confidence) for day ${day}`,
       metadata:     { predictedPrice: response.data.predictedPrice, confidence: response.data.confidence, day },
     }).catch(() => {});
   } catch (error) {

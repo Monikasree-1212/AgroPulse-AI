@@ -40,7 +40,7 @@ const simulate = (req, res) => {
   Activity.create({
     activityType: 'profit',
     commodity,
-    description:  `Profit Simulator: ${recommendation} for ${commodity} — ROI ${roi >= 0 ? '+' : ''}${roi}% over ${daysToHold} days`,
+    description:  `Profit Simulator: ${recommendation} for ${commodity} - ROI ${roi >= 0 ? '+' : ''}${roi}% over ${daysToHold} days`,
     metadata:     { recommendation, roi, profitDifference, daysToHold },
   }).catch(() => {})
 }

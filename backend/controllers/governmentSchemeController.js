@@ -28,7 +28,7 @@ const getAllSchemes = async (req, res) => {
     res.json(schemes);
     Activity.create({
       activityType: 'government',
-      description:  `Viewed Government Schemes — ${schemes.length} scheme${schemes.length !== 1 ? 's' : ''} available`,
+      description:  `Viewed Government Schemes - ${schemes.length} scheme${schemes.length !== 1 ? 's' : ''} available`,
       metadata:     { count: schemes.length },
     }).catch(() => {})
   } catch (error) {

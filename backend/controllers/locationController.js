@@ -1,6 +1,6 @@
 const Mandi = require("../models/Mandi");
 
-/* Haversine formula — returns distance in km */
+/* Haversine formula - returns distance in km */
 function haversine(lat1, lon1, lat2, lon2) {
   const R   = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -41,7 +41,7 @@ const getNearbyMandis = async (req, res) => {
       return res.status(404).json({ message: `No mandis found for commodity: ${commodity}` });
 
     const QUANTITY       = 1000;   // default reference quantity (kg)
-    const COST_PER_KM    = 12;     // ₹ per km transport cost estimate
+    const COST_PER_KM    = 12;     // Rs. per km transport cost estimate
 
     const results = mandis.map((m) => {
       const dist          = haversine(latitude, longitude, m.latitude, m.longitude);
