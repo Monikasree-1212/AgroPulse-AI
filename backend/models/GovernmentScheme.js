@@ -7,7 +7,7 @@ const governmentSchemeSchema = new mongoose.Schema({
   state:        { type: String, default: "All India" },
   eligibility:  { type: String, required: true },
   benefits:     { type: String, required: true },
-  officialLink: { type: String, required: true },
+  website: { type: String, required: true },
   image:        { type: String, default: "" },
   createdAt:    { type: Date,   default: Date.now },
 });

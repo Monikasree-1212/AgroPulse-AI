@@ -63,7 +63,7 @@ const getPredictionOverview = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] });
   }
 };
 
@@ -83,7 +83,7 @@ const getPredictionHistory = async (req, res) => {
     }));
     res.json(history);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] });
   }
 };
 

@@ -1,0 +1,8 @@
+Total: 234
+Onion: 39
+Potato: 39
+Schemes: 9
+Websites: 9
+Sample: https://pmkisan.gov.in/
+API Count: 8
+First Result: Coimbatore Market - Potato - Rs.31

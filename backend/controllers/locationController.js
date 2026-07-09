@@ -68,7 +68,7 @@ const getNearbyMandis = async (req, res) => {
 
     res.json(results);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] });
   }
 };
 

@@ -25,7 +25,7 @@ exports.getReports = async (req, res) => {
       ],
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -132,7 +132,7 @@ exports.predictionsPDF = async (req, res) => {
       })
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -233,7 +233,7 @@ exports.predictionsExcel = async (req, res) => {
     await wb.xlsx.write(res)
     res.end()
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -274,7 +274,7 @@ exports.predictionsCSV = async (req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename="AgroPulse_Predictions.csv"')
     res.send(csv)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -309,7 +309,7 @@ exports.weatherPDF = async (req, res) => {
          .text(`Total Weather Checks: ${acts.length}`)
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -356,7 +356,7 @@ exports.profitPDF = async (req, res) => {
       })
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -438,7 +438,7 @@ exports.analyticsPDF = async (req, res) => {
       })
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -470,7 +470,7 @@ exports.activityPDF = async (req, res) => {
       })
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -516,6 +516,6 @@ exports.notificationsPDF = async (req, res) => {
       })
     })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }

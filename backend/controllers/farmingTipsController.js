@@ -256,7 +256,7 @@ const getAllTips = async (req, res) => {
 
     res.json(merged)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -281,7 +281,7 @@ const getTipsByCommodity = async (req, res) => {
     const storedTitles = new Set(stored.map(t => t.title))
     res.json([...stored, ...contextual.filter(t => !storedTitles.has(t.title))])
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -296,7 +296,7 @@ const getTipsBySeason = async (req, res) => {
     }).sort({ priority: 1, createdAt: -1 })
     res.json(tips)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 

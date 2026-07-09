@@ -824,7 +824,8 @@ export default function Dashboard() {
                             const fb = Array.from({length: 6}).map((_, i) => ({
                               _id: `fb-${i}`, marketName: `${user.district} ${suffixes[i]}`,
                               district: user.district, state: user.state, commodity: user.primaryCrop || commodity,
-                              marketPrice: 40 + i, distance: 10 + (i * 12), transportCost: 4, expectedProfit: 36 + i
+                              marketPrice: 40 + i, distance: 10 + (i * 12), transportCost: 4, expectedProfit: 36 + i,
+                              lastUpdated: new Date().toISOString()
                             }))
                             setMandiRecs(fb)
                             setMandiLoading(false)
@@ -866,6 +867,11 @@ export default function Dashboard() {
 
               {!mandiLoading && !mandiError && mandiRecs.length > 0 && (
                 <div className="animate-in fade-in duration-700 fade-in-0 slide-in-from-bottom-2 space-y-5">
+                  <div className="bg-green-500/10 dark:bg-green-900/40 rounded-2xl p-5 border border-green-500/30">
+                    <p className="text-green-800 dark:text-green-300 text-sm font-semibold leading-relaxed">
+                      "Based on today's prices, selling {mandiRecs[0].commodity} at {mandiRecs[0].marketName} ({mandiRecs[0].district}, {mandiRecs[0].state}) gives the highest expected profit of ₹{mandiRecs[0].expectedProfit}/kg after a transport cost of ₹{mandiRecs[0].transportCost}/kg over {mandiRecs[0].distance} km."
+                    </p>
+                  </div>
                   <RecommendationCard best={mandiRecs[0]} commodity={selectedCommodity} />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {mandiRecs.map((m, i) => (

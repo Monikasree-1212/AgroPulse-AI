@@ -53,7 +53,7 @@ const schemes = realSchemeNames.map(([title, cat], idx) => ({
   state: idx % 3 === 0 ? "Maharashtra" : idx % 2 === 0 ? "Tamil Nadu" : "All India",
   eligibility: `All farmers eligible for ${cat} schemes in notified regions.`,
   benefits: `Direct financial assistance, subsidized rates, or insurance coverage based on ${cat}.`,
-  officialLink: "https://agricoop.nic.in"
+  website: "https://agriwelfare.gov.in/"
 }));
 
 const content = fs.readFileSync('backend/data/sampleData.js', 'utf8');

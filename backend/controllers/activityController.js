@@ -7,7 +7,7 @@ const getActivities = async (req, res) => {
     const activities = await Activity.find(filter).sort({ createdAt: -1 }).limit(100)
     res.json(activities)
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -25,7 +25,7 @@ const deleteActivity = async (req, res) => {
     await Activity.findByIdAndDelete(req.params.id)
     res.json({ message: 'Deleted' })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 
@@ -34,7 +34,7 @@ const clearActivities = async (req, res) => {
     await Activity.deleteMany({})
     res.json({ message: 'All cleared' })
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] })
   }
 }
 

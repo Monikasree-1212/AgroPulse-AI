@@ -51,392 +51,86 @@ const mandis = [
 const governmentSchemes = [
   {
     "title": "PM-KISAN",
-    "description": "A realistic government initiative focusing on income support and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
+    "description": "Direct income support for farmer families offering ₹6000 per year paid in three equal installments.",
     "category": "Income Support",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Income Support schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Income Support.",
-    "officialLink": "https://agricoop.nic.in"
+    "state": "All India",
+    "eligibility": "Small and Marginal Farmers",
+    "benefits": "₹6000/year financial assistance directly deposited into bank accounts.",
+    "website": "https://pmkisan.gov.in/"
   },
   {
-    "title": "PMFBY (Pradhan Mantri Fasal Bima Yojana)",
-    "description": "A realistic government initiative focusing on insurance and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
+    "title": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "description": "Crop insurance scheme protecting farmers against crop failure due to natural calamities, pests or diseases.",
     "category": "Insurance",
     "state": "All India",
-    "eligibility": "All farmers eligible for Insurance schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Insurance.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Kisan Credit Card (KCC)",
-    "description": "A realistic government initiative focusing on loan and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Loan",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Loan schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Loan.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Soil Health Card Scheme",
-    "description": "A realistic government initiative focusing on technology and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Technology",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Technology schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Technology.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Paramparagat Krishi Vikas Yojana",
-    "description": "A realistic government initiative focusing on organic farming and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Organic Farming",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Organic Farming schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Organic Farming.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "PM Krishi Sinchai Yojana",
-    "description": "A realistic government initiative focusing on technology and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Technology",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Technology schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Technology.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "All farmers growing notified crops",
+    "benefits": "Comprehensive risk coverage and financial support.",
+    "website": "https://pmfby.gov.in/"
   },
   {
     "title": "National Agriculture Market (eNAM)",
-    "description": "A realistic government initiative focusing on technology and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Technology",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Technology schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Technology.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "National Mission for Sustainable Ag (NMSA)",
-    "description": "A realistic government initiative focusing on technology and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Technology",
+    "description": "Pan-India electronic trading portal networking the existing APMC mandis to create a unified national agricultural market.",
+    "category": "Market Access",
     "state": "All India",
-    "eligibility": "All farmers eligible for Technology schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Technology.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "All farmers and traders",
+    "benefits": "Better price discovery and seamless online agri-trade.",
+    "website": "https://enam.gov.in/"
   },
   {
-    "title": "Sub-Mission on Agricultural Mechanization",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
+    "title": "Soil Health Card Scheme",
+    "description": "Provides farmers with soil nutrient status and recommendations on appropriate dosage of nutrients.",
+    "category": "Soil Management",
+    "state": "All India",
+    "eligibility": "All farmers",
+    "benefits": "Improves crop yield through appropriate fertilizer application.",
+    "website": "https://soilhealth.dac.gov.in/"
   },
   {
-    "title": "Rashtriya Krishi Vikas Yojana (RKVY)",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
+    "title": "Kisan Credit Card (KCC)",
+    "description": "Scheme delivering timely agricultural credit to farmers for their cultivation and other short-term needs.",
+    "category": "Credit Facility",
+    "state": "All India",
+    "eligibility": "Farmers, Tenant Farmers, Oral Lessees",
+    "benefits": "Short-term credit limits at concessional interest rates.",
+    "website": "https://www.myscheme.gov.in/"
   },
   {
     "title": "Agriculture Infrastructure Fund",
-    "description": "A realistic government initiative focusing on loan and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Loan",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Loan schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Loan.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "National Food Security Mission",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
+    "description": "Medium-long term debt financing facility for investment in viable projects for post-harvest management infrastructure.",
+    "category": "Infrastructure",
     "state": "All India",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "Agri-entrepreneurs, Startups, Farmer Groups",
+    "benefits": "Interest subvention and credit guarantee.",
+    "website": "https://agriinfra.dac.gov.in/"
   },
   {
-    "title": "Gramin Bhandaran Yojana",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Livestock Insurance Scheme",
-    "description": "A realistic government initiative focusing on insurance and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Insurance",
+    "title": "Agmarknet",
+    "description": "Agricultural Marketing Information Network linking important agricultural markets across the country.",
+    "category": "Market Information",
     "state": "All India",
-    "eligibility": "All farmers eligible for Insurance schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Insurance.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Dairy Entrepreneurship Development Scheme",
-    "description": "A realistic government initiative focusing on youth and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Youth",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Youth schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Youth.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Fisheries and Aquaculture Infrastructure Dev",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Pradhan Mantri Kisan Maandhan Yojana",
-    "description": "A realistic government initiative focusing on income support and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Income Support",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Income Support schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Income Support.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "National Scheme on Welfare of Fishermen",
-    "description": "A realistic government initiative focusing on sc/st and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "SC/ST",
-    "state": "All India",
-    "eligibility": "All farmers eligible for SC/ST schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on SC/ST.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Micro Irrigation Fund",
-    "description": "A realistic government initiative focusing on loan and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Loan",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Loan schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Loan.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "PM Kusum (Kisan Urja Suraksha)",
-    "description": "A realistic government initiative focusing on solar and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Solar",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Solar schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Solar.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Gobar Dhan Yojana",
-    "description": "A realistic government initiative focusing on organic farming and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Organic Farming",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Organic Farming schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Organic Farming.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Mahila Kisan Sashaktikaran Pariyojana",
-    "description": "A realistic government initiative focusing on women farmers and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Women Farmers",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Women Farmers schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Women Farmers.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Deen Dayal Upadhyaya Grameen Kaushalya Yojana",
-    "description": "A realistic government initiative focusing on youth and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Youth",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Youth schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Youth.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Bhartiya Prakritik Krishi Paddhati",
-    "description": "A realistic government initiative focusing on organic farming and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Organic Farming",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Organic Farming schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Organic Farming.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Agri-Clinics and Agri-Business Centres",
-    "description": "A realistic government initiative focusing on youth and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Youth",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Youth schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Youth.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Mission for Integrated Development of Horticulture",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "All farmers and market participants",
+    "benefits": "Daily prices and arrivals of agricultural commodities.",
+    "website": "https://agmarknet.gov.in/"
   },
   {
     "title": "National Bamboo Mission",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "National Project on Organic Farming",
-    "description": "A realistic government initiative focusing on organic farming and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Organic Farming",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Organic Farming schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Organic Farming.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Fertilizer Subsidy Scheme",
-    "description": "A realistic government initiative focusing on fertilizer and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Fertilizer",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Fertilizer schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Fertilizer.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Nutrient Based Subsidy (NBS) Scheme",
-    "description": "A realistic government initiative focusing on fertilizer and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Fertilizer",
+    "description": "Holistic growth of bamboo sector supporting area expansion via setting up commercial plantations.",
+    "category": "Horticulture",
     "state": "All India",
-    "eligibility": "All farmers eligible for Fertilizer schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Fertilizer.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "Farmers, Artisans, Entrepreneurs",
+    "benefits": "Grants for cultivation, processing and product development.",
+    "website": "https://nbm.nic.in/"
   },
   {
-    "title": "City Compost Scheme",
-    "description": "A realistic government initiative focusing on fertilizer and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Fertilizer",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Fertilizer schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Fertilizer.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Capital Investment Subsidy for Commercial Horticulture",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
+    "title": "PM Kusum",
+    "description": "Provides subsidies for solar pumps and grid-connected solar power plants for rural farming setups.",
+    "category": "Energy & Irrigation",
     "state": "All India",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Venture Capital Assistance Scheme",
-    "description": "A realistic government initiative focusing on loan and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Loan",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Loan schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Loan.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Weather Based Crop Insurance Scheme",
-    "description": "A realistic government initiative focusing on insurance and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Insurance",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Insurance schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Insurance.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Coconut Palm Insurance Scheme",
-    "description": "A realistic government initiative focusing on insurance and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Insurance",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Insurance schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Insurance.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Stand-Up India Scheme for Agri Startups",
-    "description": "A realistic government initiative focusing on sc/st and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "SC/ST",
-    "state": "All India",
-    "eligibility": "All farmers eligible for SC/ST schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on SC/ST.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "National SC/ST Hub for Agri Enterprises",
-    "description": "A realistic government initiative focusing on sc/st and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "SC/ST",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for SC/ST schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on SC/ST.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Women Entrepreneurship Platform (WEP)",
-    "description": "A realistic government initiative focusing on women farmers and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Women Farmers",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Women Farmers schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Women Farmers.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Solar Pump Subsidy Program",
-    "description": "A realistic government initiative focusing on solar and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Solar",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Solar schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Solar.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Mukhya Mantri Krishi Ashirwad Yojana",
-    "description": "A realistic government initiative focusing on income support and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Income Support",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Income Support schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Income Support.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Rythu Bandhu Scheme",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Tamil Nadu",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Kalia Scheme",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "All India",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
-  },
-  {
-    "title": "Bhavantar Bhugtan Yojana",
-    "description": "A realistic government initiative focusing on subsidy and agricultural development. Ideal for eligible farmers applying for national and state benefits.",
-    "category": "Subsidy",
-    "state": "Maharashtra",
-    "eligibility": "All farmers eligible for Subsidy schemes in notified regions.",
-    "benefits": "Direct financial assistance, subsidized rates, or insurance coverage based on Subsidy.",
-    "officialLink": "https://agricoop.nic.in"
+    "eligibility": "Individual farmers and Cooperatives",
+    "benefits": "Capital subsidy for solar water pumps.",
+    "website": "https://pmkusum.mnre.gov.in/"
   }
-]
+];
 
 const users = [
   {

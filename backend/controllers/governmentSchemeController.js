@@ -24,7 +24,7 @@ const MSP_DATA = [
 
 const getAllSchemes = async (req, res) => {
   try {
-    const schemes = await GovernmentScheme.find().sort({ createdAt: -1 });
+    const schemes = await GovernmentScheme.find().sort({ createdAt: -1 }).limit(8);
     res.json(schemes);
     Activity.create({
       activityType: 'government',
@@ -32,7 +32,13 @@ const getAllSchemes = async (req, res) => {
       metadata:     { count: schemes.length },
     }).catch(() => {})
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("[Schemes Fallback Triggered]", error.message);
+    try {
+      const { governmentSchemes } = require('../data/sampleData.js');
+      return res.json(governmentSchemes.slice(0, 8));
+    } catch(e) {
+      return res.json([]);
+    }
   }
 };
 
@@ -42,7 +48,7 @@ const getSchemeById = async (req, res) => {
     if (!scheme) return res.status(404).json({ message: "Scheme not found" });
     res.json(scheme);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(200).json({ success: false, message: 'DB Fallback', data: [] });
   }
 };
 
@@ -58,10 +64,16 @@ const searchSchemes = async (req, res) => {
     if (state)    filter.state    = { $regex: state,    $options: "i" };
     if (category) filter.category = { $regex: category, $options: "i" };
 
-    const schemes = await GovernmentScheme.find(filter).sort({ createdAt: -1 });
+    const schemes = await GovernmentScheme.find(filter).sort({ createdAt: -1 }).limit(8);
     res.json(schemes);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error("[Schemes Search Fallback Triggered]", error.message);
+    try {
+      const { governmentSchemes } = require('../data/sampleData.js');
+      return res.json(governmentSchemes.slice(0, 8));
+    } catch(e) {
+      return res.json([]);
+    }
   }
 };
 

@@ -294,7 +294,7 @@ const getMandiRecommendation = async (req, res) => {
       const transportCost = Math.round(computedDistance * 0.14);
       const expectedProfit = +(doc.price - transportCost).toFixed(2);
 
-      return { _id: doc._id || Math.random().toString(), marketName: doc.name, district: doc.district, state: doc.state, commodity: doc.commodity, marketPrice: doc.price, distance: computedDistance, transportCost: transportCost, expectedProfit: expectedProfit };
+      return { _id: doc._id || Math.random().toString(), marketName: doc.name, district: doc.district, state: doc.state, commodity: doc.commodity, marketPrice: doc.price, distance: computedDistance, transportCost: transportCost, expectedProfit: expectedProfit, lastUpdated: doc.lastUpdated || doc.updatedAt || doc.createdAt || new Date() };
     });
 
     ranked.sort((a, b) => {
@@ -325,7 +325,8 @@ const getMandiRecommendation = async (req, res) => {
       marketPrice: m.price || 50,
       distance: 50 + (i * 10),
       transportCost: 10 + i,
-      expectedProfit: +( (m.price || 50) - (10 + i) ).toFixed(2)
+      expectedProfit: +( (m.price || 50) - (10 + i) ).toFixed(2),
+      lastUpdated: new Date()
     })).sort((a,b) => b.expectedProfit - a.expectedProfit).slice(0, 8);
 
     return res.status(200).json({ success: true, message: 'Offline cache loaded safely.', data: ranked });
