@@ -8,6 +8,7 @@ const {
 } = require("../controllers/governmentSchemeController");
 
 router.get("/",           getAllSchemes);   // GET /api/government
+router.get("",            getAllSchemes);   // GET /api/government
 router.get("/schemes",    getAllSchemes);   // GET /api/government/schemes
 router.get("/search",     searchSchemes);  // GET /api/government/search
 router.get("/msp",        getMSPPrices);   // GET /api/government/msp

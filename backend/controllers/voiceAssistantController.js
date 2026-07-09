@@ -6,6 +6,7 @@ const Activity         = require("../models/Activity");
 const { getWeatherByCity } = require("../services/weatherService");
 
 const COMMODITIES = ["onion", "potato", "pulses", "maize", "coconut"];
+const ML_URL = process.env.ML_URL || "http://localhost:8000";
 
 function detectCommodity(text) {
   const t = text.toLowerCase();
@@ -72,7 +73,7 @@ const handleQuery = async (req, res) => {
 
       const day = detectDay(t);
       try {
-        const { data } = await axios.get(`http://localhost:8000/predict/${commodity}/${day}`);
+        const { data } = await axios.get(`${ML_URL}/predict/${commodity}/${day}`);
         return res.json({
           type: "prediction",
           reply: `Expected ${commodity} price after ${day} days is Rs.${data.predictedPrice} per kilogram with ${data.confidence}% confidence.`,
@@ -146,7 +147,7 @@ const handleQuery = async (req, res) => {
       const currentPrice = doc ? doc.prices[doc.prices.length - 1].price : 0;
 
       try {
-        const { data } = await axios.get(`http://localhost:8000/predict/${commodity}/7`);
+        const { data } = await axios.get(`${ML_URL}/predict/${commodity}/7`);
         const diff = (data.predictedPrice - currentPrice).toFixed(2);
         const action = diff > 0 ? "hold your stock" : "sell today";
         return res.json({

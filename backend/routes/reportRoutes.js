@@ -2,6 +2,7 @@ const express = require('express')
 const router  = express.Router()
 const ctrl    = require('../controllers/reportController')
 
+router.get('/',                  ctrl.getReports)
 router.get('/predictions/pdf',   ctrl.predictionsPDF)
 router.get('/predictions/excel', ctrl.predictionsExcel)
 router.get('/predictions/csv',   ctrl.predictionsCSV)

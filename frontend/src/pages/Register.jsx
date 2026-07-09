@@ -3,10 +3,9 @@ import { useNavigate, Link } from 'react-router-dom'
 import api from '../services/api'
 import { useGuest } from '../components/auth/GuestMode'
 import useTranslation from '../hooks/useTranslation'
-
-const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh']
-const CROPS  = ['Onion','Potato','Pulses','Maize','Wheat','Rice','Tomato','Cotton','Sugarcane','Soybean','Groundnut','Mustard','Turmeric','Chilli','Garlic','Coconut']
-const LANGS  = ['English','Hindi','Marathi','Telugu','Tamil','Kannada','Gujarati','Bengali','Punjabi','Odia']
+import { stateDistricts, STATES } from '../data/stateDistricts'
+const CROPS = ['Onion', 'Potato', 'Pulses', 'Maize', 'Wheat', 'Rice', 'Tomato', 'Cotton', 'Sugarcane', 'Soybean', 'Groundnut', 'Mustard', 'Turmeric', 'Chilli', 'Garlic', 'Coconut']
+const LANGS = ['English', 'Hindi', 'Marathi', 'Telugu', 'Tamil', 'Kannada', 'Gujarati', 'Bengali', 'Punjabi', 'Odia']
 
 export default function Register() {
   const navigate = useNavigate()
@@ -18,9 +17,9 @@ export default function Register() {
     state: '', district: '', primaryCrop: 'Onion', preferredLanguage: languageName,
   })
   const [loading, setLoading] = useState(false)
-  const [error,   setError]   = useState('')
+  const [error, setError] = useState('')
   const [showPwd, setShowPwd] = useState(false)
-  const [step,    setStep]    = useState(1)
+  const [step, setStep] = useState(1)
 
   const set = (k, v) => {
     setForm(p => ({ ...p, [k]: v }))
@@ -29,10 +28,16 @@ export default function Register() {
   }
 
   const validateStep1 = () => {
-    if (!form.name.trim())                      return t('register.errorName')
-    if (!/^\d{10}$/.test(form.phone))           return t('register.errorPhone')
-    if (form.password.length < 6)               return t('register.errorPassword')
+    if (!form.name.trim()) return t('register.errorName')
+    if (!/^\d{10}$/.test(form.phone)) return t('register.errorPhone')
+    if (form.password.length < 6) return t('register.errorPassword')
     if (form.password !== form.confirmPassword) return t('register.errorPasswordMatch')
+    return ''
+  }
+
+  const validateStep2 = () => {
+    if (!form.state) return t('register.errorState') || 'Please select a state'
+    if (!form.district) return t('register.errorDistrict') || 'Please select a district'
     return ''
   }
 
@@ -45,6 +50,10 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    const step2Err = validateStep2()
+    if (step2Err) { setError(step2Err); return }
+
     setLoading(true)
     setError('')
     try {
@@ -59,6 +68,8 @@ export default function Register() {
       setLoading(false)
     }
   }
+
+  const districts = form.state ? (stateDistricts[form.state] || []) : [];
 
   return (
     <div className="min-h-screen bg-farmland flex items-center justify-center px-4 py-12 relative overflow-hidden">
@@ -78,11 +89,10 @@ export default function Register() {
         <div className="flex items-center gap-2 mb-6 px-1">
           {[1, 2].map(s => (
             <div key={s} className="flex items-center gap-2 flex-1">
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                step >= s
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${step >= s
                   ? 'bg-gradient-to-br from-green-400 to-emerald-600 text-white shadow-lg shadow-green-900/50'
                   : 'bg-white/10 text-white/40 border border-white/20'
-              }`}>
+                }`}>
                 {step > s ? 'Yes' : s}
               </div>
               <span className={`text-xs font-medium transition-colors ${step >= s ? 'text-green-300' : 'text-white/40'}`}>
@@ -162,17 +172,35 @@ export default function Register() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest mb-1.5">{t('register.state')}</label>
-                  <select value={form.state} onChange={e => set('state', e.target.value)}
-                    className="glass-input w-full px-3 py-3 rounded-xl text-sm transition-all">
+                  <select
+                    value={form.state}
+                    onChange={e => {
+                      set('state', e.target.value)
+                      set('district', '') // Reset district on state change
+                    }}
+                    className="glass-input w-full px-3 py-3 rounded-xl text-sm transition-all text-white bg-transparent outline-none">
                     <option value="" className="bg-gray-900">{t('register.selectState')}</option>
                     {STATES.map(s => <option key={s} value={s} className="bg-gray-900">{s}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-white/70 uppercase tracking-widest mb-1.5">{t('register.district')}</label>
-                  <input type="text" value={form.district} onChange={e => set('district', e.target.value)}
-                    placeholder={t('register.districtPlaceholder')}
-                    className="glass-input w-full px-3 py-3 rounded-xl text-sm transition-all" />
+                  <select
+                    value={form.district}
+                    onChange={e => set('district', e.target.value)}
+                    disabled={!form.state}
+                    className="glass-input w-full px-3 py-3 rounded-xl text-sm transition-all text-white bg-transparent outline-none disabled:opacity-50 disabled:cursor-not-allowed">
+                    {/* Placeholder shown only when no state is selected or no district selected */}
+                    {!form.state ? (
+                      <option value="" className="bg-gray-900">Select a state first</option>
+                    ) : (
+                      <option value="" className="bg-gray-900">Select District</option>)}
+                    {districts.map((district) => (
+                      <option key={district} value={district} className="bg-gray-900">
+                        {district}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 const CATEGORY_CONFIG = {
-  Weather:       { icon: 'Weather', color: '#3b82f6' },
+  Weather:       { icon: '🌦️', color: '#3b82f6' },
   Harvest:       { icon: 'Farming', color: '#16a34a' },
   Storage:       { icon: 'Storage', color: '#f97316' },
   Market:        { icon: 'Chart', color: '#8b5cf6' },

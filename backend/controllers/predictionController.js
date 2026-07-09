@@ -24,20 +24,46 @@ const getPrediction = async (req, res) => {
       return res.status(400).json({ message: 'Invalid day parameter.' });
     }
 
-    const predictedPrice = predictPrice(commodity, dayNum);
-    const result = { commodity, day: dayNum, predictedPrice, confidence: 91 };
+    let result;
+    try {
+      const mlUrl = process.env.ML_URL || "http://localhost:8000";
+      const { data } = await require('axios').get(`${mlUrl}/predict/${commodity}/${dayNum}`);
+      result = data;
+    } catch (mlerr) {
+      console.warn("ML API unreachable, falling back.");
+      const predictedPrice = predictPrice(commodity, dayNum);
+      result = { commodity, day: dayNum, predictedPrice, confidence: 91 };
+    }
 
     res.json(result);
 
     Activity.create({
       activityType: 'prediction',
       commodity,
-      description:  `AI predicted ${commodity} price - Rs.${predictedPrice}/kg (91% confidence) for day ${dayNum}`,
-      metadata:     { predictedPrice, confidence: 91, day: dayNum },
+      description:  `AI predicted ${commodity} price - Rs.${result.predictedPrice}/kg (${result.confidence}% confidence) for day ${dayNum}`,
+      metadata:     { predictedPrice: result.predictedPrice, confidence: result.confidence, day: dayNum },
     }).catch(() => {});
   } catch (error) {
     console.error(`[Prediction] Error for ${commodity}/${day}:`, error.message);
-    res.status(500).json({ message: 'Unable to connect to the server. Please try again later.' });
+    const predictedPrice = predictPrice(commodity, parseInt(day, 10) || 1);
+    res.json({ commodity, day: parseInt(day, 10) || 1, predictedPrice, confidence: 91 });
+  }
+};
+
+const getPredictionOverview = async (req, res) => {
+  try {
+    const commodities = await Commodity.find().lean();
+    res.json({
+      message: "Prediction API is available.",
+      supportedCommodities: Object.keys(MODELS).map((c) => c[0].toUpperCase() + c.slice(1)),
+      historyCount: commodities.length,
+      endpoints: {
+        predict: "/api/predict/:commodity/:day",
+        history: "/api/predict/history",
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -61,4 +87,4 @@ const getPredictionHistory = async (req, res) => {
   }
 };
 
-module.exports = { getPrediction, getPredictionHistory };
+module.exports = { getPredictionOverview, getPrediction, getPredictionHistory };

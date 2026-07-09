@@ -1,4 +1,5 @@
 import { useEffect, useRef, useMemo } from 'react'
+import { AlertTriangle, BellOff, X } from 'lucide-react'
 import NotificationCard from './NotificationCard'
 
 const FILTERS = ['all', 'price', 'weather', 'mandi', 'government', 'profit']
@@ -121,7 +122,7 @@ export default function NotificationCenter({
               className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-all text-sm font-bold"
               aria-label="Close notifications"
             >
-              
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -156,7 +157,7 @@ export default function NotificationCenter({
           {/* Error state */}
           {!loading && error && (
             <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
-              <span className="text-sm font-bold">Warning</span>
+              <AlertTriangle size={20} className="text-red-400" />
               <p className="text-sm font-bold text-red-400">Unable to load notifications.</p>
               <p className="text-xs text-white/40">Make sure the backend server is running.</p>
               <button
@@ -171,7 +172,7 @@ export default function NotificationCenter({
           {/* Empty state */}
           {!loading && !error && notifications.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
-              <span className="text-sm font-bold">No Alerts</span>
+              <BellOff size={40} className="text-white/30" />
               <p className="text-sm font-bold text-white/50">No notifications yet.</p>
               <p className="text-xs text-white/30 max-w-[260px] leading-relaxed">
                 Alerts will appear here automatically as AI monitors your crops.

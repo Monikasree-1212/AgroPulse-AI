@@ -8,6 +8,7 @@ import Profile from './pages/Profile.jsx'
 import Commodity from './pages/Commodity.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import ProtectedRoute from './components/auth/ProtectedRoute.jsx'
+import SchemesPage from './pages/SchemesPage.jsx'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
 
             {/* Protected - requires login */}
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/schemes" element={<ProtectedRoute><SchemesPage /></ProtectedRoute>} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -140,7 +140,7 @@ export default function ProfitSimulator() {
       border: 'border-rose-200 dark:border-rose-800', accent: 'text-rose-600 dark:text-rose-400', badge: 'Cost',
     },
     {
-      icon: 'Profit',  label: 'Net Future Profit', value: `Rs.${result.netFutureProfit.toLocaleString()}`,
+      icon: '💰',  label: 'Net Future Profit', value: `Rs.${result.netFutureProfit.toLocaleString()}`,
       sub: 'After all deductions',
       gradient: 'from-violet-50 to-purple-100 dark:from-violet-900/40 dark:to-purple-900/30',
       border: 'border-violet-200 dark:border-violet-800', accent: 'text-violet-700 dark:text-violet-400', badge: 'Net',
@@ -194,7 +194,7 @@ export default function ProfitSimulator() {
             {loading ? (
               <><span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />Calculating...</>
             ) : (
-              <><span>Calculator</span> Calculate Profit</>
+              <><span>💰</span> Calculate Profit</>
             )}
           </button>
         </form>

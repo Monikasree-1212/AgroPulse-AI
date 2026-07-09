@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
+import { Bell, Check, CloudSun, Landmark, Store, Trash2, TrendingUp, WalletCards } from 'lucide-react'
 
 const TYPE_CONFIG = {
-  price:      { icon: 'Price',      label: 'Price Alert',  borderColor: '#60a5fa' },
-  weather:    { icon: 'Weather',    label: 'Weather',      borderColor: '#facc15' },
-  mandi:      { icon: 'Mandi',      label: 'Mandi',        borderColor: '#4ade80' },
-  government: { icon: 'Government', label: 'Government',   borderColor: '#c084fc' },
-  profit:     { icon: 'Profit',     label: 'Profit',       borderColor: '#fb923c' },
+  price:      { icon: TrendingUp,  label: 'Price Alert', borderColor: '#60a5fa' },
+  weather:    { icon: CloudSun,    label: 'Weather',     borderColor: '#facc15' },
+  mandi:      { icon: Store,       label: 'Mandi',       borderColor: '#4ade80' },
+  government: { icon: Landmark,    label: 'Government',  borderColor: '#c084fc' },
+  profit:     { icon: WalletCards, label: 'Profit',      borderColor: '#fb923c' },
 }
 
 const PRIORITY_STYLES = {
@@ -29,6 +30,7 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
     [notification.type]
   )
   const priorityStyle = PRIORITY_STYLES[notification.priority] ?? PRIORITY_STYLES.medium
+  const TypeIcon = cfg.icon ?? Bell
 
   return (
     <div
@@ -52,7 +54,9 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
       )}
 
       {/* Type icon */}
-      <span className="text-xs font-bold flex-shrink-0 mt-0.5 leading-none bg-white/10 px-1.5 py-0.5 rounded">{cfg.icon}</span>
+      <span className="text-xs font-bold flex-shrink-0 mt-0.5 leading-none bg-white/10 px-1.5 py-0.5 rounded">
+        <TypeIcon size={14} aria-hidden="true" />
+      </span>
 
       {/* Body */}
       <div className="flex-1 min-w-0 pr-7">
@@ -97,7 +101,7 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
             title="Mark as read"
             className="w-6 h-6 flex items-center justify-center rounded-md bg-green-500/20 text-green-400 hover:bg-green-500/40 transition-colors text-xs"
           >
-            
+            <Check size={13} aria-hidden="true" />
           </button>
         )}
         <button
@@ -105,7 +109,7 @@ export default function NotificationCard({ notification, onRead, onDelete }) {
           title="Delete"
           className="w-6 h-6 flex items-center justify-center rounded-md bg-red-500/20 text-red-400 hover:bg-red-500/40 transition-colors text-xs"
         >
-          
+          <Trash2 size={13} aria-hidden="true" />
         </button>
       </div>
     </div>

@@ -19,10 +19,10 @@ function CustomTooltip({ active, payload, label }) {
 
 export default function ProfitCard({ mandis }) {
   const chartData = mandis.map((m) => ({
-    name:          m.name.split(' ')[0],
-    'Market Price':    m.price,
+    name:          m.marketName.split(' ')[0],
+    'Market Price':    m.marketPrice,
     'Transport Cost':  m.transportCost,
-    'Expected Profit': m.profit,
+    'Expected Profit': m.expectedProfit,
   }))
 
   return (

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { AlertTriangle, BarChart2, Brain, Target, CloudSun, Calculator, TrendingUp, Star, Mic, Bell } from 'lucide-react'
 import api from '../../services/api'
 import AnalyticsCard from './AnalyticsCard'
 import UsageChart from './UsageChart'
@@ -23,7 +24,7 @@ function SkeletonChart() {
 }
 
 function InsightItem({ text, index }) {
-  const icons = ['Idea', 'Chart', '', 'Weather', 'Calculator', '', 'Top', 'Voice']
+  const icons = [<Brain />, <BarChart2 />, <Target />, <CloudSun />, <Calculator />, <TrendingUp />, <Star />, <Mic />]
   return (
     <div className="flex items-start gap-3 p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors duration-150 animate-fadeIn">
       <span className="text-lg flex-shrink-0">{icons[index % icons.length]}</span>
@@ -54,14 +55,14 @@ export default function AnalyticsDashboard() {
   }, [fetchData])
 
   const kpis = data ? [
-    { icon: 'AI',      label: 'AI Predictions',       value: data.totalPredictions,          sub: 'Total predictions run',        color: '#60a5fa', badge: 'AI'       },
-    { icon: 'Weather', label: 'Weather Checks',        value: data.totalWeatherChecks,        sub: 'Weather module uses',          color: '#fbbf24', badge: 'Live'     },
-    { icon: 'Profit',  label: 'Profit Simulations',    value: data.totalProfitSimulations,    sub: 'Simulator runs',               color: '#a78bfa', badge: 'Profit'   },
-    { icon: 'Market',  label: 'Mandi Searches',        value: data.totalMandiSearches,        sub: 'Best mandi lookups',           color: '#fb923c', badge: 'Market'   },
-    { icon: 'Voice',   label: 'Voice Queries',         value: data.totalVoiceQueries,         sub: 'Voice assistant uses',         color: '#22d3ee', badge: 'Voice'    },
-    { icon: 'Bell',    label: 'Notifications',         value: data.totalNotifications,        sub: 'Total alerts generated',       color: '#f472b6', badge: 'Alerts'   },
-    { icon: 'Target',  label: 'Prediction Accuracy',   value: data.averagePredictionAccuracy, sub: 'Average model accuracy',       color: '#4ade80', suffix: '%', badge: 'Avg' },
-    { icon: 'Trend',   label: 'Weekly Growth',         value: Math.abs(data.weeklyGrowth),    sub: data.weeklyGrowth >= 0 ? 'Usage increase this week' : 'Usage decrease this week', color: data.weeklyGrowth >= 0 ? '#4ade80' : '#f87171', suffix: '%', badge: data.weeklyGrowth >= 0 ? 'Up' : 'Down' },
+    { icon: <Brain size={24} />,      label: 'AI Predictions',       value: data.totalPredictions,          sub: 'Total predictions run',        color: '#60a5fa', badge: 'AI'       },
+    { icon: <CloudSun size={24} />,   label: 'Weather Checks',        value: data.totalWeatherChecks,        sub: 'Weather module uses',          color: '#fbbf24', badge: 'Live'     },
+    { icon: <Calculator size={24} />, label: 'Profit Simulations',    value: data.totalProfitSimulations,    sub: 'Simulator runs',               color: '#a78bfa', badge: 'Profit'   },
+    { icon: <Star size={24} />,       label: 'Mandi Searches',        value: data.totalMandiSearches,        sub: 'Best mandi lookups',           color: '#fb923c', badge: 'Market'   },
+    { icon: <Mic size={24} />,        label: 'Voice Queries',         value: data.totalVoiceQueries,         sub: 'Voice assistant uses',         color: '#22d3ee', badge: 'Voice'    },
+    { icon: <Bell size={24} />,       label: 'Notifications',         value: data.totalNotifications,        sub: 'Total alerts generated',       color: '#f472b6', badge: 'Alerts'   },
+    { icon: <Target size={24} />,     label: 'Prediction Accuracy',   value: data.averagePredictionAccuracy, sub: 'Average model accuracy',       color: '#4ade80', suffix: '%', badge: 'Avg' },
+    { icon: <TrendingUp size={24} />, label: 'Weekly Growth',         value: Math.abs(data.weeklyGrowth),    sub: data.weeklyGrowth >= 0 ? 'Usage increase this week' : 'Usage decrease this week', color: data.weeklyGrowth >= 0 ? '#4ade80' : '#f87171', suffix: '%', badge: data.weeklyGrowth >= 0 ? 'Up' : 'Down' },
   ] : []
 
   return (
@@ -76,7 +77,7 @@ export default function AnalyticsDashboard() {
 
       {!loading && error && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-          <span className="text-5xl">Warning</span>
+          <AlertTriangle size={48} className="text-red-400" />
           <p className="text-sm font-bold text-red-500">Unable to load analytics.</p>
           <p className="text-xs text-gray-400">Make sure the backend server is running.</p>
           <button
@@ -90,7 +91,7 @@ export default function AnalyticsDashboard() {
 
       {!loading && !error && data && data.totalActivities === 0 && (
         <div className="flex flex-col items-center justify-center py-20 gap-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-          <span className="text-5xl">Chart</span>
+          <BarChart2 size={48} className="text-gray-300" />
           <p className="text-base font-bold text-gray-500 dark:text-gray-400">No analytics available yet.</p>
           <p className="text-sm text-gray-400 text-center">
             Start using AgroPulse AI features to generate insights.
@@ -145,7 +146,7 @@ export default function AnalyticsDashboard() {
           {data.insights?.length > 0 && (
             <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
               <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center gap-2">
-                <span className="text-xl">Intelligence</span>
+                <BarChart2 size={20} className="text-gray-400" />
                 <div>
                   <h3 className="text-sm font-bold text-gray-900 dark:text-white">AI Insights</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Personalised observations from your usage</p>

@@ -54,7 +54,7 @@ export default function WeatherImpactCard({ temperature, humidity, rainfall }) {
   return (
     <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-2xl p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-5">
-        <span className="text-2xl">AI</span>
+        <span className="text-2xl">🤖</span>
         <div>
           <h2 className="text-base font-bold text-gray-900 dark:text-white">AI Weather Impact</h2>
           <p className="text-xs text-gray-400">Effect on agricultural commodity prices</p>

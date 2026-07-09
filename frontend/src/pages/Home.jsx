@@ -1,21 +1,21 @@
 const features = [
   {
-    icon: 'Chart',
+    icon: '📈',
     title: 'AI Price Forecasting',
     desc: 'Leverage machine learning models trained on years of mandi data to predict commodity prices with high accuracy up to 30 days in advance.',
   },
   {
-    icon: 'Market',
+    icon: '🏪',
     title: 'Smart Mandi Intelligence',
     desc: 'Compare real-time prices across hundreds of mandis in your region and find the most profitable market for your produce.',
   },
   {
-    icon: 'Profit',
+    icon: '💰',
     title: 'Profit Optimization',
     desc: 'Input your yield, transport cost, and storage capacity to receive a personalized selling strategy that maximises your net profit.',
   },
   {
-    icon: 'Rain',
+    icon: '🌦️',
     title: 'Weather Impact Analysis',
     desc: 'Understand how upcoming weather patterns will affect crop supply and demand, so you can time your sales perfectly.',
   },
@@ -29,10 +29,10 @@ const steps = [
 ]
 
 const benefits = [
-  { icon: 'Target', title: 'Better Selling Decisions', desc: 'Data-driven recommendations eliminate guesswork and emotional selling decisions.' },
-  { icon: 'Chart', title: 'Higher Profits', desc: 'Farmers using AgroPulse AI report an average 23% increase in net income per season.' },
-  { icon: 'Search', title: 'Market Transparency', desc: 'Full visibility into price movements, demand trends, and competitor activity across all mandis.' },
-  { icon: 'AI', title: 'AI-Powered Insights', desc: 'Continuously learning models adapt to new market conditions and improve forecast accuracy over time.' },
+  { icon: '🎯', title: 'Better Selling Decisions', desc: 'Data-driven recommendations eliminate guesswork and emotional selling decisions.' },
+  { icon: '📈', title: 'Higher Profits', desc: 'Farmers using AgroPulse AI report an average 23% increase in net income per season.' },
+  { icon: '🔎', title: 'Market Transparency', desc: 'Full visibility into price movements, demand trends, and competitor activity across all mandis.' },
+  { icon: '🤖', title: 'AI-Powered Insights', desc: 'Continuously learning models adapt to new market conditions and improve forecast accuracy over time.' },
 ]
 
 import { useNavigate } from 'react-router-dom'
@@ -67,8 +67,7 @@ export default function Home() {
           </span>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight mb-6">
-            Agro<span className="text-green-600">Pulse</span> AI
-          </h1>
+            Agro<span className="text-green-600">Pulse</span>🤖</h1>
 
           <p className="text-xl sm:text-2xl font-semibold text-green-700 mb-4">
             Smart Agricultural Market Intelligence Platform

@@ -1,6 +1,6 @@
 const CATEGORIES = [
   { key: 'All',          icon: 'List' },
-  { key: 'Weather',      icon: 'Weather' },
+  { key: 'Weather',      icon: '🌦️' },
   { key: 'Harvest',      icon: 'Farming' },
   { key: 'Storage',      icon: 'Storage' },
   { key: 'Market',       icon: 'Chart' },

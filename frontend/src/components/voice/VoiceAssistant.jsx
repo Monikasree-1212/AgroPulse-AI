@@ -194,7 +194,7 @@ export default function VoiceAssistant() {
               {/* Live transcript */}
               {listening && transcript && (
                 <div className="flex gap-3 animate-fadeIn flex-row-reverse">
-                  <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-base flex-shrink-0">Farming</div>
+                  <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-[36px] flex-shrink-0">🌾</div>
                   <div className="flex-1 max-w-[85%] flex flex-col items-end gap-1">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Listening...</span>
                     <div className="rounded-2xl rounded-tr-sm px-4 py-3 text-sm bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 italic">
@@ -207,7 +207,7 @@ export default function VoiceAssistant() {
               {/* Processing indicator */}
               {processing && (
                 <div className="flex gap-3 animate-fadeIn">
-                  <div className="w-8 h-8 rounded-full bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 flex items-center justify-center text-base flex-shrink-0">AI</div>
+                  <div className="w-8 h-8 rounded-full bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 flex items-center justify-center text-[36px] flex-shrink-0">🤖</div>
                   <div className="flex items-center gap-1.5 px-4 py-3 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-2xl rounded-tl-sm">
                     {[0, 1, 2].map((i) => (
                       <span key={i} className="w-2 h-2 bg-green-500 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />

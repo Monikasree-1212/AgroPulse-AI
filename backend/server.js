@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const connectDB = require("./config/db");
+const ensureSeedData = require("./utils/ensureSeedData");
 const commodityRoutes  = require("./routes/commodityRoutes");
 const predictionRoutes = require("./routes/predictionRoutes");
 const weatherRoutes    = require("./routes/weatherRoutes");
@@ -22,7 +23,12 @@ const profileRoutes            = require("./routes/profileRoutes");
 const { autoGenerateNotifications } = require("./controllers/notificationController");
 
 const app = express();
-connectDB();
+connectDB()
+  .then(() => ensureSeedData())
+  .catch((error) => {
+    console.error("Startup Error:", error.message);
+    process.exit(1);
+  });
 
 app.use(cors());
 app.use(express.json());

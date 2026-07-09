@@ -26,14 +26,14 @@ export default function RecommendationCard({ best, commodity }) {
           <p className="text-white/90 text-base leading-relaxed">
             Based on today's prices, selling{' '}
             <span className="font-extrabold text-white">{commodity}</span> at{' '}
-            <span className="font-extrabold text-white">{best.name}</span> ({best.district}, {best.state}) gives the highest expected profit of{' '}
-            <span className="font-extrabold text-white">Rs.{best.profit}/kg</span> after a transport cost of Rs.{best.transportCost}/kg
+            <span className="font-extrabold text-white">{best.marketName}</span> ({best.district}, {best.state}) gives the highest expected profit of{' '}
+            <span className="font-extrabold text-white">Rs.{best.expectedProfit}/kg</span> after a transport cost of Rs.{best.transportCost}/kg
             {best.distance ? ` over ${best.distance} km` : ''}.
           </p>
         </div>
         <div className="flex-shrink-0 bg-white/20 rounded-2xl px-6 py-4 text-center min-w-[100px]">
           <p className="text-white/70 text-xs font-semibold uppercase tracking-wide">Best Profit</p>
-          <p className="text-white text-3xl font-extrabold">Rs.{best.profit}</p>
+          <p className="text-white text-3xl font-extrabold">Rs.{best.expectedProfit}</p>
           <p className="text-white/70 text-xs mt-0.5">per kg</p>
         </div>
       </div>

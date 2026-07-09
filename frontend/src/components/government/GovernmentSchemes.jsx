@@ -4,6 +4,12 @@ import MSPCard from './MSPCard'
 import SchemeCard from './SchemeCard'
 import SearchBar from './SearchBar'
 
+import { Search } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+
+const DASHBOARD_SCHEME_LIMIT = 8;
+
 function Skeleton({ className }) {
   return <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl ${className}`} />
 }
@@ -28,7 +34,8 @@ function SchemeSkeleton() {
   )
 }
 
-export default function GovernmentSchemes() {
+export default function GovernmentSchemes({ isDashboard = true }) {
+  const navigate = useNavigate()
   const [msp,           setMsp]           = useState([])
   const [schemes,       setSchemes]       = useState([])
   const [mspLoading,    setMspLoading]    = useState(true)
@@ -94,7 +101,7 @@ export default function GovernmentSchemes() {
 
         {!mspLoading && mspError && (
           <div className="flex items-center gap-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl px-5 py-4">
-            <span className="text-xl">Warning</span>
+          <AlertTriangle size={20} className="text-red-500" />
             <p className="text-sm font-semibold text-red-600 dark:text-red-400">Unable to load MSP data.</p>
           </div>
         )}
@@ -114,8 +121,7 @@ export default function GovernmentSchemes() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="text-xs text-gray-400 font-semibold uppercase tracking-widest mb-0.5">Central & State</p>
-            <h3 className="text-lg font-extrabold text-gray-900 dark:text-white">
-              Government <span className="text-blue-600 dark:text-blue-400">Schemes</span>
+            <h3 className="text-lg font-extrabold text-gray-900 dark:text-white">🏛️<span className="text-blue-600 dark:text-blue-400">Schemes</span>
             </h3>
           </div>
           {!schemesLoading && (
@@ -139,7 +145,7 @@ export default function GovernmentSchemes() {
 
           {!schemesLoading && schemesError && (
             <div className="flex flex-col items-center justify-center py-12 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <span className="text-4xl">Warning</span>
+              <AlertTriangle size={40} className="text-red-400" />
               <p className="text-base font-bold text-red-500">Unable to fetch scheme information.</p>
               <p className="text-sm text-gray-400">Make sure the backend is running and database is seeded.</p>
               <button
@@ -153,17 +159,43 @@ export default function GovernmentSchemes() {
 
           {!schemesLoading && !schemesError && schemes.length === 0 && (
             <div className="flex flex-col items-center justify-center py-16 gap-3 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700">
-              <span className="text-5xl">Search</span>
+              <Search size={48} className="text-gray-300" />
               <p className="text-base font-bold text-gray-700 dark:text-gray-300">No schemes found.</p>
               <p className="text-sm text-gray-400">Try adjusting your search or filters.</p>
             </div>
           )}
 
-          {!schemesLoading && !schemesError && schemes.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {schemes.map((scheme) => <SchemeCard key={scheme._id} scheme={scheme} />)}
-            </div>
-          )}
+          {!schemesLoading && !schemesError && schemes.length > 0 && (() => {
+            let displaySchemes = [...schemes];
+            if (isDashboard) {
+              displaySchemes.sort((a, b) => {
+                const aFeat = (a.title.includes('PM') || a.title.includes('Pradhan')) ? 1 : 0;
+                const bFeat = (b.title.includes('PM') || b.title.includes('Pradhan')) ? 1 : 0;
+                if (aFeat !== bFeat) return bFeat - aFeat;
+                return new Date(b.createdAt) - new Date(a.createdAt);
+              });
+              displaySchemes = displaySchemes.slice(0, DASHBOARD_SCHEME_LIMIT);
+            }
+
+            return (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {displaySchemes.map((scheme) => <SchemeCard key={scheme._id} scheme={scheme} />)}
+                </div>
+                {isDashboard && schemes.length > DASHBOARD_SCHEME_LIMIT && (
+                  <div className="flex justify-center mt-6">
+                    <button
+                      onClick={() => navigate('/schemes')}
+                      className="px-6 py-2.5 bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 font-bold rounded-full hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors shadow-sm"
+                      style={{ backdropFilter: 'blur(10px)', border: '1px solid rgba(59, 130, 246, 0.2)' }}
+                    >
+                      View All Schemes
+                    </button>
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </div>
     </div>

@@ -21,14 +21,14 @@ export default function LandingPage() {
   const [openFaq, setOpenFaq] = useState(null)
 
   const features = [
-    { icon: 'AI', title: t('landing.features.aiPricePrediction'), desc: t('landing.features.aiPricePredictionDesc'), color: '#3b82f6' },
-    { icon: 'WX', title: t('landing.features.weatherIntelligence'), desc: t('landing.features.weatherIntelligenceDesc'), color: '#f59e0b' },
-    { icon: 'M', title: t('landing.features.smartMandiFinder'), desc: t('landing.features.smartMandiFinderDesc'), color: '#16a34a' },
-    { icon: 'P', title: t('landing.features.profitSimulator'), desc: t('landing.features.profitSimulatorDesc'), color: '#8b5cf6' },
-    { icon: 'G', title: t('landing.features.governmentSchemes'), desc: t('landing.features.governmentSchemesDesc'), color: '#f97316' },
-    { icon: 'V', title: t('landing.features.voiceAssistant'), desc: t('landing.features.voiceAssistantDesc'), color: '#06b6d4' },
-    { icon: 'A', title: t('landing.features.smartAnalytics'), desc: t('landing.features.smartAnalyticsDesc'), color: '#ec4899' },
-    { icon: 'R', title: t('landing.features.reportsExport'), desc: t('landing.features.reportsExportDesc'), color: '#10b981' },
+    { icon: '🤖', title: t('landing.features.aiPricePrediction'), desc: t('landing.features.aiPricePredictionDesc'), color: '#3b82f6' },
+    { icon: '🌦️', title: t('landing.features.weatherIntelligence'), desc: t('landing.features.weatherIntelligenceDesc'), color: '#f59e0b' },
+    { icon: '🏪', title: t('landing.features.smartMandiFinder'), desc: t('landing.features.smartMandiFinderDesc'), color: '#16a34a' },
+    { icon: '💰', title: t('landing.features.profitSimulator'), desc: t('landing.features.profitSimulatorDesc'), color: '#8b5cf6' },
+    { icon: '🏛️', title: t('landing.features.governmentSchemes'), desc: t('landing.features.governmentSchemesDesc'), color: '#f97316' },
+    { icon: '🎤', title: t('landing.features.voiceAssistant'), desc: t('landing.features.voiceAssistantDesc'), color: '#06b6d4' },
+    { icon: '📈', title: t('landing.features.smartAnalytics'), desc: t('landing.features.smartAnalyticsDesc'), color: '#ec4899' },
+    { icon: '🎯', title: t('landing.features.reportsExport'), desc: t('landing.features.reportsExportDesc'), color: '#10b981' },
   ]
 
   const steps = [
@@ -84,7 +84,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="glass-nav rounded-2xl px-5 h-14 flex items-center justify-between shadow-2xl">
             <Link to="/" className="text-lg font-extrabold text-white flex items-center gap-2 drop-shadow">
-              <span className="text-green-300">AgroPulse</span> <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">AI</span>
+              <span className="text-green-300">AgroPulse</span> <span className="bg-gradient-to-r from-green-300 to-emerald-400 bg-clip-text text-transparent">🤖</span>
             </Link>
             <div className="hidden md:flex items-center gap-6 text-sm font-medium text-white/75">
               {navLinks.map(([href, label]) => <a key={href} href={href} className="hover:text-green-300 transition-colors duration-200">{label}</a>)}
@@ -172,7 +172,7 @@ export default function LandingPage() {
             {features.map(({ icon, title, desc, color }) => (
               <div key={title} className="group glass-card-dark rounded-2xl p-6 hover:bg-white/10 hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300 overflow-hidden relative cursor-default">
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-15 pointer-events-none blur-xl" style={{ backgroundColor: color }} />
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-extrabold mb-4 group-hover:scale-110 transition-transform duration-200" style={{ backgroundColor: `${color}22` }}>{icon}</div>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-[36px] mb-4 group-hover:scale-110 transition-transform duration-200" style={{ backgroundColor: `${color}22` }}>{icon}</div>
                 <h3 className="text-sm font-bold text-white mb-2 group-hover:text-green-300 transition-colors">{title}</h3>
                 <p className="text-white/50 text-xs leading-relaxed">{desc}</p>
               </div>

@@ -6,6 +6,28 @@ const Activity        = require('../models/Activity')
 const Notification    = require('../models/Notification')
 const Commodity       = require('../models/Commodity')
 const GovernmentScheme = require('../models/GovernmentScheme')
+const Report           = require('../models/Report')
+
+exports.getReports = async (req, res) => {
+  try {
+    const reports = await Report.find().sort({ createdAt: -1 }).lean()
+    res.json({
+      reports,
+      exports: [
+        '/api/reports/predictions/pdf',
+        '/api/reports/predictions/excel',
+        '/api/reports/predictions/csv',
+        '/api/reports/weather/pdf',
+        '/api/reports/profit/pdf',
+        '/api/reports/analytics/pdf',
+        '/api/reports/activity/pdf',
+        '/api/reports/notifications/pdf',
+      ],
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
 
 /* -- helpers -- */
 const fmtDate = (d) => new Date(d).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })

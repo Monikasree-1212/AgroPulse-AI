@@ -6,6 +6,13 @@ const SAFE_FIELDS = '-password'
 /* -- GET /api/profile -- */
 exports.getProfile = async (req, res) => {
   try {
+    if (!req.user?._id) {
+      return res.json({
+        authenticated: false,
+        message: 'Profile route is available. Send a Bearer token to load a user profile.',
+      })
+    }
+
     const user = await User.findById(req.user._id).select(SAFE_FIELDS).lean()
     if (!user) return res.status(404).json({ message: 'User not found' })
 

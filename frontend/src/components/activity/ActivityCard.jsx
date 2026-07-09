@@ -1,13 +1,13 @@
 import { useMemo } from 'react'
 
 const TYPE_CONFIG = {
-  price:      { icon: 'Price',      label: 'Price Check',  accent: '#16a34a' },
-  prediction: { icon: 'Predict',    label: 'AI Prediction', accent: '#3b82f6' },
-  weather:    { icon: 'Weather', label: 'Weather',       accent: '#f59e0b' },
-  profit:     { icon: 'Calculator', label: 'Profit Sim',    accent: '#8b5cf6' },
-  mandi:      { icon: 'Market', label: 'Mandi Search',  accent: '#f97316' },
-  voice:      { icon: 'Voice', label: 'Voice AI',      accent: '#06b6d4' },
-  government: { icon: 'Government', label: 'Gov. Schemes',  accent: '#ec4899' },
+  price:      { icon: '💲',      label: 'Price Check',  accent: '#16a34a' },
+  prediction: { icon: '🔮',    label: 'AI Prediction', accent: '#3b82f6' },
+  weather:    { icon: '🌦️', label: 'Weather',       accent: '#f59e0b' },
+  profit:     { icon: '💰', label: 'Profit Sim',    accent: '#8b5cf6' },
+  mandi:      { icon: '🏪', label: 'Mandi Search',  accent: '#f97316' },
+  voice:      { icon: '🎤', label: 'Voice AI',      accent: '#06b6d4' },
+  government: { icon: '🏛️', label: 'Gov. Schemes',  accent: '#ec4899' },
 }
 
 function timeAgo(date) {
@@ -32,7 +32,7 @@ export default function ActivityCard({ activity, onDelete }) {
     >
       {/* Icon */}
       <div
-        className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0 mt-0.5"
+        className="w-9 h-9 rounded-xl flex items-center justify-center text-[36px] flex-shrink-0 mt-0.5"
         style={{ backgroundColor: `${cfg.accent}18` }}
       >
         {cfg.icon}

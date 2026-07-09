@@ -8,13 +8,13 @@ import ActivityCard from './ActivityCard'
 import ActivityFilters from './ActivityFilters'
 
 const TYPE_META = {
-  price:      { icon: 'Price',   label: 'Price Check',   color: '#16a34a' },
-  prediction: { icon: 'Predict', label: 'AI Prediction',  color: '#3b82f6' },
-  weather:    { icon: 'Weather', label: 'Weather',        color: '#f59e0b' },
-  profit:     { icon: 'Calculator', label: 'Profit Sim',     color: '#8b5cf6' },
-  mandi:      { icon: 'Market', label: 'Mandi Search',   color: '#f97316' },
-  voice:      { icon: 'Voice', label: 'Voice AI',       color: '#06b6d4' },
-  government: { icon: 'Government', label: 'Gov. Schemes',   color: '#ec4899' },
+  price:      { icon: '💲',   label: 'Price Check',   color: '#16a34a' },
+  prediction: { icon: '🔮', label: 'AI Prediction',  color: '#3b82f6' },
+  weather:    { icon: '🌦️', label: 'Weather',        color: '#f59e0b' },
+  profit:     { icon: '💰', label: 'Profit Sim',     color: '#8b5cf6' },
+  mandi:      { icon: '🏪', label: 'Mandi Search',   color: '#f97316' },
+  voice:      { icon: '🎤', label: 'Voice AI',       color: '#06b6d4' },
+  government: { icon: '🏛️', label: 'Gov. Schemes',   color: '#ec4899' },
 }
 
 function SkeletonCard() {
