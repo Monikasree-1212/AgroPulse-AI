@@ -2,6 +2,7 @@ const express = require('express')
 const router  = express.Router()
 const { getDashboard } = require('../controllers/analyticsController')
 
-router.get('/dashboard', getDashboard)
+router.get('/',          getDashboard)  // GET /api/analytics
+router.get('/dashboard', getDashboard)  // GET /api/analytics/dashboard
 
 module.exports = router

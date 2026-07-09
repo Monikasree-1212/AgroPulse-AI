@@ -1,4 +1,5 @@
 const Activity = require("../models/Activity");
+const Commodity = require("../models/Commodity");
 
 // Linear regression coefficients derived from commodity_data.csv
 // Formula: price = slope * day + intercept
@@ -40,4 +41,24 @@ const getPrediction = async (req, res) => {
   }
 };
 
-module.exports = { getPrediction };
+/* GET /api/predict/history
+   Returns prediction history for all commodities (days 1-15) */
+const getPredictionHistory = async (req, res) => {
+  try {
+    const commodities = await Commodity.find().lean();
+    const history = commodities.map(c => ({
+      commodity: c.commodity,
+      prices: c.prices,
+      predictions: c.prices.map(p => ({
+        day: p.day,
+        actual: p.price,
+        predicted: predictPrice(c.commodity, c.prices.indexOf(p) + 1),
+      })),
+    }));
+    res.json(history);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getPrediction, getPredictionHistory };

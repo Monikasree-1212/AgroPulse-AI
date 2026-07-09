@@ -1,8 +1,20 @@
 const Notification = require('../models/Notification')
 const Commodity    = require('../models/Commodity')
 const GovernmentScheme = require('../models/GovernmentScheme')
-const axios = require('axios')
 const { getWeatherByCity } = require('../services/weatherService')
+
+/* Inline linear regression — same coefficients as predictionController */
+const MODELS = {
+  onion:   { slope: 0.8857, intercept: 21.3333 },
+  potato:  { slope: 0.5286, intercept: 13.0667 },
+  pulses:  { slope: 1.0000, intercept: 86.8667 },
+  maize:   { slope: 0.5357, intercept: 18.5333 },
+  coconut: { slope: 0.5000, intercept: 17.5333 },
+}
+const predictPrice = (commodity, day) => {
+  const m = MODELS[commodity.toLowerCase()] || MODELS.onion
+  return Math.round((m.slope * day + m.intercept) * 100) / 100
+}
 
 /* -----------------------------------------
    CRUD handlers
@@ -62,9 +74,8 @@ const clearAllNotifications = async (req, res) => {
    - calls DB / services directly (no HTTP self-loop)
 ----------------------------------------- */
 const COMMODITIES = ['Onion', 'Potato', 'Pulses', 'Maize', 'Coconut']
-const DEDUP_PRICE_MS   = 30 * 60 * 1000   // 30 min
-const DEDUP_WEATHER_MS = 60 * 60 * 1000   // 1 hr
-const ML_BASE = 'http://localhost:8000'
+const DEDUP_PRICE_MS   = 30 * 60 * 1000
+const DEDUP_WEATHER_MS = 60 * 60 * 1000
 
 const autoGenerateNotifications = async () => {
   /* -- 1. Price alerts (query DB + ML directly) -- */
@@ -83,10 +94,7 @@ const autoGenerateNotifications = async () => {
       if (!doc || !doc.prices?.length) continue
       const currentPrice = doc.prices[doc.prices.length - 1].price
 
-      // Get prediction from ML server directly
-      const predRes = await axios.get(`${ML_BASE}/predict/${commodity}/8`, { timeout: 5000 })
-      const predictedPrice = predRes.data?.predictedPrice
-      if (!predictedPrice) continue
+      const predictedPrice = predictPrice(commodity, 8)
 
       const diff    = +(predictedPrice - currentPrice).toFixed(2)
       const rising  = diff > 0

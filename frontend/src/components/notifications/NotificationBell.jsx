@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { Bell } from 'lucide-react'
 import api from '../../services/api'
 import NotificationCenter from './NotificationCenter'
 
@@ -97,12 +98,10 @@ export default function NotificationBell() {
         className="relative w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-green-500/20 border border-white/20 hover:border-green-400/40 transition-all duration-200"
         aria-label="Open notifications"
       >
-        <span
-          style={{ display: 'inline-block', fontSize: '18px' }}
-          className={ringing ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}
-        >
-          Bell
-        </span>
+        <Bell
+          size={18}
+          className={`text-white/80 ${ringing ? 'animate-[wiggle_0.5s_ease-in-out]' : ''}`}
+        />
 
         {unreadCount > 0 && (
           <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-red-500 text-white text-[10px] font-extrabold rounded-full px-1 shadow-sm animate-pulse select-none">

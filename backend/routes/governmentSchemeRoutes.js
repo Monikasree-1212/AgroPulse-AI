@@ -7,9 +7,10 @@ const {
   getMSPPrices,
 } = require("../controllers/governmentSchemeController");
 
-router.get("/schemes",      getAllSchemes);
-router.get("/search",       searchSchemes);
-router.get("/msp",          getMSPPrices);
-router.get("/schemes/:id",  getSchemeById);
+router.get("/",           getAllSchemes);   // GET /api/government
+router.get("/schemes",    getAllSchemes);   // GET /api/government/schemes
+router.get("/search",     searchSchemes);  // GET /api/government/search
+router.get("/msp",        getMSPPrices);   // GET /api/government/msp
+router.get("/schemes/:id",getSchemeById);  // GET /api/government/schemes/:id
 
 module.exports = router;
