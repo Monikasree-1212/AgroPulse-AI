@@ -11,7 +11,7 @@ import useTranslation     from '../hooks/useTranslation'
 
 const STATES = ['Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi','Jammu & Kashmir','Ladakh']
 const CROPS  = ['Onion','Potato','Pulses','Maize','Wheat','Rice','Tomato','Cotton','Sugarcane','Soybean','Groundnut','Mustard','Turmeric','Chilli','Garlic','Coconut']
-const LANGS  = ['English','Hindi','Marathi','Telugu','Tamil','Kannada','Gujarati','Bengali','Punjabi','Odia']
+const LANGS  = ['English', 'Hindi', 'Tamil', 'Telugu', 'Kannada', 'Malayalam']
 
 function InputField({ label, children }) {
   return (

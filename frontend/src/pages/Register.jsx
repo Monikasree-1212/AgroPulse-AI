@@ -5,7 +5,7 @@ import { useGuest } from '../components/auth/GuestMode'
 import useTranslation from '../hooks/useTranslation'
 import { stateDistricts, STATES } from '../data/stateDistricts'
 const CROPS = ['Onion', 'Potato', 'Pulses', 'Maize', 'Wheat', 'Rice', 'Tomato', 'Cotton', 'Sugarcane', 'Soybean', 'Groundnut', 'Mustard', 'Turmeric', 'Chilli', 'Garlic', 'Coconut']
-const LANGS = ['English', 'Hindi', 'Marathi', 'Telugu', 'Tamil', 'Kannada', 'Gujarati', 'Bengali', 'Punjabi', 'Odia']
+const LANGS = ['English', 'Hindi', 'Tamil', 'Telugu', 'Kannada', 'Malayalam']
 
 export default function Register() {
   const navigate = useNavigate()

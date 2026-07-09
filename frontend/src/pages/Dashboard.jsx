@@ -27,6 +27,7 @@ import ActivityTimeline from '../components/activity/ActivityTimeline'
 import FarmingTips from '../components/farmingTips/FarmingTips'
 import AnalyticsDashboard from '../components/analytics/AnalyticsDashboard'
 import ReportsCenter from '../components/reports/ReportsCenter'
+import PredictionCard from '../components/prediction/PredictionCard'
 import { useGuest } from '../components/auth/GuestMode'
 import LoginRequiredModal from '../components/auth/LoginRequiredModal'
 import useTranslation from '../hooks/useTranslation'
@@ -607,6 +608,12 @@ export default function Dashboard() {
                 </div>
                 <LockedSection label={t('dashboard.sections.aiPricePredictionHighlight')} onUnlock={() => openModal(t('dashboard.sections.aiPricePredictionHighlight'))} t={t} />
               </div>
+            )}
+
+            {isLoggedIn && (
+               <div className="mb-6">
+                 <PredictionCard />
+               </div>
             )}
 
             {/* AI Recommendation Card */}

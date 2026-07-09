@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { saveAs } from 'file-saver'
+// removed file-saver import
 import api from '../../services/api'
 
 const STATUS = { idle: 'idle', loading: 'loading', success: 'success', error: 'error' }
@@ -26,8 +26,25 @@ export default function ExportButton({ endpoint, format, filename }) {
     if (status === STATUS.loading) return
     setStatus(STATUS.loading)
     try {
-      const res = await api.get(endpoint, { responseType: 'blob' })
-      saveAs(new Blob([res.data], { type: MIME[format] }), `${filename}.${EXT[format]}`)
+      const res = await api.get(endpoint, { responseType: 'arraybuffer' })
+      const fileNameStr = `${filename}.${EXT[format]}`
+      
+      // Use standard File constructor which embeds the filename directly in the blob metadata
+      const fileBlob = new File([res.data], fileNameStr, { type: MIME[format] })
+      const url = URL.createObjectURL(fileBlob)
+      
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = fileNameStr
+      document.body.appendChild(a)
+      a.click()
+      
+      setTimeout(() => {
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+      }, 1000)
+      
       setStatus(STATUS.success)
       setTimeout(() => setStatus(STATUS.idle), 2500)
     } catch {

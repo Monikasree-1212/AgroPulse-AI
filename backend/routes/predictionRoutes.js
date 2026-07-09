@@ -1,10 +1,9 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const { getPredictionOverview, getPrediction, getPredictionHistory } = require("../controllers/predictionController");
+const predictionController = require('../controllers/predictionController');
+const protect = require('../middleware/authMiddleware');
 
-router.get("/",                  getPredictionOverview); // GET /api/predict
-router.get("",                   getPredictionOverview);
-router.get("/history",          getPredictionHistory);  // GET /api/predict/history
-router.get("/:commodity/:day",   getPrediction);         // GET /api/predict/:commodity/:day
+router.post('/', protect, predictionController.getPrediction);
+router.get('/:commodity/:days', predictionController.getPredictionForChart);
 
 module.exports = router;
