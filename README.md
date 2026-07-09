@@ -168,7 +168,6 @@ PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
 WEATHER_API_KEY=<your_openweather_api_key>
 JWT_SECRET=<your_jwt_secret>
-ML_URL=<your_flask_ml_server_url>
 ```
 
 ---
