@@ -199,21 +199,23 @@ export default function Dashboard() {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    Promise.all([
-      api.get(`/api/commodities/${commodity}`),
-      api.get(`/api/predict/${commodity}/8`),
-    ])
-      .then(([pricesRes, predRes]) => {
-        setChartData(pricesRes.data.prices)
-        setPredicted(predRes.data.predictedPrice)
-        setConfidence(predRes.data.confidence)
+
+    const fetchPrices = api.get(`/api/commodities/${commodity}`)
+      .then((r) => setChartData(r.data.prices))
+      .catch(() => setChartData([]))
+
+    const fetchPrediction = api.get(`/api/predict/${commodity}/8`)
+      .then((r) => {
+        setPredicted(r.data.predictedPrice)
+        setConfidence(r.data.confidence)
       })
       .catch((err) => {
         console.error('[Dashboard] Prediction fetch failed:', err)
         const msg = err.response?.data?.message || err.message || t('dashboard.errors.aiEngine')
         setError(msg)
       })
-      .finally(() => setLoading(false))
+
+    Promise.all([fetchPrices, fetchPrediction]).finally(() => setLoading(false))
 
     setWeatherLoading(true)
     setWeatherError(false)
