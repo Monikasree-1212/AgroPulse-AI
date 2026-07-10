@@ -19,7 +19,18 @@ const seedIfEmpty = async (Model, records, label) => {
 const ensureSeedData = async () => {
   await seedIfEmpty(Commodity, sampleData.commodities, 'Commodities')
   await seedIfEmpty(Mandi, sampleData.mandis, 'Mandis')
+  
+  // Specific logic for GovernmentSchemes: Replace old placeholder data
+  const brokenSchemesCount = await GovernmentScheme.countDocuments({
+    $or: [{ website: { $exists: false } }, { website: "" }, { website: null }]
+  });
+  
+  if (brokenSchemesCount > 0) {
+    console.log(`[Seed] Found ${brokenSchemesCount} outdated GovernmentSchemes missing URLs. Wiping and reseeding...`);
+    await GovernmentScheme.deleteMany({});
+  }
   await seedIfEmpty(GovernmentScheme, sampleData.governmentSchemes, 'GovernmentSchemes')
+
   await seedIfEmpty(User, sampleData.users, 'Users')
   await seedIfEmpty(Activity, sampleData.activities, 'Activities')
   await seedIfEmpty(Notification, sampleData.notifications, 'Notifications')

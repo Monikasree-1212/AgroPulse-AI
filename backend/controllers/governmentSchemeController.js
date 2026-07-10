@@ -25,6 +25,10 @@ const MSP_DATA = [
 const getAllSchemes = async (req, res) => {
   try {
     const schemes = await GovernmentScheme.find().sort({ createdAt: -1 }).limit(8);
+    
+    // Task 8: Temporary debug log (Server-side)
+    schemes.forEach((s, idx) => console.log(`[Schema-DB] Scheme Website [${idx}]:`, s.website));
+    
     res.json(schemes);
     Activity.create({
       activityType: 'government',
@@ -35,7 +39,15 @@ const getAllSchemes = async (req, res) => {
     console.error("[Schemes Fallback Triggered]", error.message);
     try {
       const { governmentSchemes } = require('../data/sampleData.js');
-      return res.json(governmentSchemes.slice(0, 8));
+      // Task 11: fallback data must contain valid website URLs
+      const mapped = governmentSchemes.slice(0, 8).map(s => ({
+        ...s,
+        website: s.website || 'https://www.myscheme.gov.in' // Fallback safety net
+      }));
+      
+      mapped.forEach((s, idx) => console.log(`[Schema-Fallback] Scheme Website [${idx}]:`, s.website));
+      
+      return res.json(mapped);
     } catch(e) {
       return res.json([]);
     }
@@ -70,7 +82,11 @@ const searchSchemes = async (req, res) => {
     console.error("[Schemes Search Fallback Triggered]", error.message);
     try {
       const { governmentSchemes } = require('../data/sampleData.js');
-      return res.json(governmentSchemes.slice(0, 8));
+      const mapped = governmentSchemes.slice(0, 8).map(s => ({
+        ...s,
+        website: s.website || 'https://www.myscheme.gov.in'
+      }));
+      return res.json(mapped);
     } catch(e) {
       return res.json([]);
     }

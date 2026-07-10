@@ -59,17 +59,19 @@ export default function SchemeCard({ scheme }) {
 
         {/* Official link */}
         {scheme.website && (scheme.website.startsWith('http://') || scheme.website.startsWith('https://')) ? (
-          <a
-            href={scheme.website}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => {
+              console.log("Received Scheme:", scheme)
+              window.open(scheme.website, "_blank", "noopener,noreferrer")
+            }}
             className="mt-auto inline-flex items-center justify-center gap-2 w-full py-2.5 bg-green-600 hover:bg-green-700 text-white text-xs font-extrabold rounded-xl shadow-sm hover:shadow-md transition-all duration-200"
           >
              Official Website
-          </a>
+          </button>
         ) : (
           <button
             disabled
+            onClick={() => console.log("Received Scheme (No Website):", scheme)}
             className="mt-auto inline-flex items-center justify-center gap-2 w-full py-2.5 bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs font-extrabold rounded-xl cursor-not-allowed"
           >
              Official website unavailable
