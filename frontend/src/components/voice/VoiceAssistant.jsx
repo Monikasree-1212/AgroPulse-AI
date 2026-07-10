@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import api from '../../services/api'
 import VoiceButton from './VoiceButton'
 import VoiceResponse from './VoiceResponse'
+import { useGuest } from '../auth/GuestMode'
 
 const SpeechRecognitionAPI =
   typeof window !== 'undefined'
@@ -13,15 +14,29 @@ function now() {
 }
 
 export default function VoiceAssistant() {
+  const { user } = useGuest()
+  const preferredLanguage = user?.preferredLanguage || 'English'
+  const langMap = {
+    'English': 'en-IN',
+    'Tamil': 'ta-IN',
+    'Hindi': 'hi-IN',
+    'Telugu': 'te-IN',
+    'Kannada': 'kn-IN',
+    'Malayalam': 'ml-IN'
+  }
+  const locale = langMap[preferredLanguage] || 'en-IN'
+
   const [open,       setOpen]       = useState(false)
   const [listening,  setListening]  = useState(false)
   const [processing, setProcessing] = useState(false)
+  const [speaking,   setSpeaking]   = useState(false)
   const [muted,      setMuted]      = useState(false)
   const [transcript, setTranscript] = useState('')
   const [history,    setHistory]    = useState([])
   const [error,      setError]      = useState('')
 
   const recognitionRef = useRef(null)
+  const silenceTimerRef = useRef(null)
   const synthRef       = useRef(window.speechSynthesis)
   const bottomRef      = useRef(null)
 
@@ -34,11 +49,14 @@ export default function VoiceAssistant() {
     if (muted || !synthRef.current) return
     synthRef.current.cancel()
     const utt = new SpeechSynthesisUtterance(text)
-    utt.lang  = 'en-IN'
-    utt.rate  = 0.95
+    utt.lang  = locale
+    utt.rate  = 0.90
     utt.pitch = 1
+    utt.onstart = () => setSpeaking(true)
+    utt.onend = () => setSpeaking(false)
+    utt.onerror = () => setSpeaking(false)
     synthRef.current.speak(utt)
-  }, [muted])
+  }, [muted, locale])
 
   const addMessage = useCallback((type, text) => {
     setHistory((h) => [...h, { type, text, time: now(), id: Date.now() + Math.random() }])
@@ -50,7 +68,12 @@ export default function VoiceAssistant() {
     addMessage('user', text)
     setProcessing(true)
     try {
-      const { data } = await api.post('/api/voice/query', { text })
+      const mappedHistory = history.map(h => ({ role: h.type, content: h.text }))
+      const { data } = await api.post('/api/voice/query', { 
+        text,
+        history: mappedHistory,
+        language: preferredLanguage
+      })
       addMessage(data.type, data.reply)
       speak(data.reply)
     } catch {
@@ -62,7 +85,7 @@ export default function VoiceAssistant() {
       setProcessing(false)
       setTranscript('')
     }
-  }, [addMessage, speak])
+  }, [addMessage, speak, history, preferredLanguage])
 
   const startListening = useCallback(() => {
     if (!SpeechRecognitionAPI) {
@@ -70,34 +93,50 @@ export default function VoiceAssistant() {
       return
     }
     if (recognitionRef.current) recognitionRef.current.abort()
+    
+    // Stop speaking when mic is clicked again
+    synthRef.current?.cancel()
+    setSpeaking(false)
 
     const rec = new SpeechRecognitionAPI()
-    rec.lang          = 'en-IN'
+    rec.lang          = locale
+    rec.continuous    = true
     rec.interimResults = true
     rec.maxAlternatives = 1
 
     rec.onstart  = () => { setListening(true); setTranscript(''); setError('') }
-    rec.onend    = () => setListening(false)
+    rec.onend    = () => {
+      setListening(false)
+      clearTimeout(silenceTimerRef.current)
+    }
     rec.onerror  = (e) => {
       setListening(false)
+      clearTimeout(silenceTimerRef.current)
       if (e.error !== 'no-speech') setError(`Microphone error: ${e.error}`)
     }
     rec.onresult = (e) => {
       const interim = Array.from(e.results).map((r) => r[0].transcript).join('')
       setTranscript(interim)
-      if (e.results[e.results.length - 1].isFinal) {
+      
+      clearTimeout(silenceTimerRef.current)
+      silenceTimerRef.current = setTimeout(() => {
         rec.stop()
-        sendQuery(interim)
-      }
+        if (interim.trim()) {
+          sendQuery(interim)
+        }
+      }, 3500)
     }
 
     recognitionRef.current = rec
     rec.start()
-  }, [sendQuery])
+  }, [sendQuery, locale])
 
   const stopListening = useCallback(() => {
     recognitionRef.current?.stop()
+    clearTimeout(silenceTimerRef.current)
     setListening(false)
+    synthRef.current?.cancel()
+    setSpeaking(false)
   }, [])
 
   const handleMicClick = () => {
@@ -112,6 +151,7 @@ export default function VoiceAssistant() {
     setTranscript('')
     setError('')
     synthRef.current?.cancel()
+    setSpeaking(false)
   }
 
   const handleKeyDown = (e) => {
@@ -154,7 +194,7 @@ export default function VoiceAssistant() {
                 <div>
                   <p className="text-white font-extrabold text-sm leading-tight">AgroPulse Voice AI</p>
                   <p className="text-white/70 text-[10px]">
-                    {listening ? 'High Listening...' : processing ? 'Processing Processing...' : 'Ready Ready'}
+                    {listening ? 'Listening...' : processing ? 'AI Thinking...' : speaking ? 'Speaking...' : 'Ready'}
                   </p>
                 </div>
               </div>

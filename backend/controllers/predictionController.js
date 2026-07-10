@@ -21,7 +21,14 @@ exports.getPrediction = async (req, res) => {
     let currentPrice = null;
     let lastUpdated = null;
     try {
-      const mandiData = await Mandi.findOne({ state, district, commodity: crop }).sort({ price: -1 });
+      let mandiData = await Mandi.findOne({ state, district, commodity: { $regex: new RegExp(`^${crop}$`, "i") } }).sort({ price: -1 });
+      if (!mandiData) {
+        mandiData = await Mandi.findOne({ state, commodity: { $regex: new RegExp(`^${crop}$`, "i") } }).sort({ price: -1 });
+      }
+      if (!mandiData) {
+        mandiData = await Mandi.findOne({ commodity: { $regex: new RegExp(`^${crop}$`, "i") } }).sort({ price: -1 });
+      }
+      
       if (mandiData) {
         currentPrice = mandiData.price;
         lastUpdated = mandiData.lastUpdated;

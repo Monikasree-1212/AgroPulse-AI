@@ -3,7 +3,7 @@ import axios from 'axios'
 // In dev: safely fallback to localhost:5000 if not compiled
 // In prod: VITE_API_URL handles the production URL
 const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-const BASE = import.meta.env.VITE_API_URL || (isLocal ? 'http://localhost:5000' : '');
+const BASE = import.meta.env.VITE_API_URL || '';
 
 const api = axios.create({
   baseURL: BASE,

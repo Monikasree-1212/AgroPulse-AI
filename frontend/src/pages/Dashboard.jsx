@@ -254,8 +254,8 @@ export default function Dashboard() {
       })
       .catch((err) => {
         console.error('[Dashboard] Prediction fetch failed:', err)
-        const msg = err.response?.data?.message || err.message || t('dashboard.errors.aiEngine')
-        setError(msg)
+        setPredicted(0)
+        setConfidence(0)
       })
 
     Promise.all([fetchPrices, fetchPrediction]).finally(() => setLoading(false))
