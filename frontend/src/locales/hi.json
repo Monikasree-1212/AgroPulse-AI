@@ -2,7 +2,6 @@
   "appName": "AgroPulse AI",
   "tagline": "Smart Agricultural Market Intelligence",
   "poweredByAI": "Powered by Artificial Intelligence",
-
   "nav": {
     "features": "Features",
     "howItWorks": "How It Works",
@@ -20,7 +19,6 @@
     "analytics": "Analytics",
     "reports": "Reports"
   },
-
   "landing": {
     "heroTitle": "Smart Farming",
     "heroTitleHighlight": "Powered by AI",
@@ -95,7 +93,6 @@
       "platformDesc": "Smart Agricultural Market Intelligence Platform - empowering farmers with AI-driven insights."
     }
   },
-
   "login": {
     "welcomeBack": "Welcome back",
     "subtitle": "Login to your farmer account",
@@ -114,7 +111,6 @@
     "errorPassword": "Password must be at least 6 characters.",
     "errorFailed": "Login failed. Please try again."
   },
-
   "register": {
     "createAccount": "Create Account",
     "farmProfile": "Your Farm Profile",
@@ -150,7 +146,6 @@
     "errorPasswordMatch": "Passwords do not match.",
     "errorFailed": "Registration failed. Please try again."
   },
-
   "commodity": {
     "step1Badge": "Step 1",
     "title": "Select",
@@ -168,7 +163,6 @@
       "Coconut": "Track coconut prices across southern mandi markets"
     }
   },
-
   "dashboard": {
     "predictionTitle": "AI Price Prediction",
     "actionRecommendation": "Recommendation",
@@ -284,9 +278,26 @@
     },
     "loginRequired": {
       "loginToAccess": "Login to access the Profit Simulator"
+    },
+    "predictionCard": {
+      "currentPrice": "Current Market Price",
+      "predictedPrice": "Tomorrow Prediction",
+      "expectedGain": "Expected Gain/Loss",
+      "trend": "Market Trend",
+      "confidence": "Confidence Score",
+      "aiRecommendation": "AI Recommendation",
+      "increasing": "Increasing",
+      "decreasing": "Decreasing",
+      "stable": "Stable",
+      "dataUnavailable": "Data unavailable",
+      "fallbackPrediction": "Using fallback prediction",
+      "recommendationHold": "Hold your stock. Prices are expected to increase tomorrow.",
+      "recommendationSell": "Sell today. Prices are expected to decrease tomorrow.",
+      "recommendationStable": "Market is stable. Sell based on your requirement.",
+      "lastUpdated": "Last Updated",
+      "justNow": "Just now"
     }
   },
-
   "profile": {
     "account": "Account",
     "myProfile": "My",
@@ -327,7 +338,6 @@
     "successUpdate": "Profile updated successfully!",
     "errorUpdate": "Update failed."
   },
-
   "voice": {
     "title": "AgroPulse Voice AI",
     "ready": "Ready",
@@ -346,7 +356,6 @@
     "voiceAI": "Voice AI",
     "listeningLabel": "Listening..."
   },
-
   "common": {
     "loading": "Loading...",
     "error": "Error",
