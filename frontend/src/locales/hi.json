@@ -170,6 +170,8 @@
   },
 
   "dashboard": {
+    "predictionTitle": "AI Price Prediction",
+    "actionRecommendation": "Recommendation",
     "aiDashboard": "AI Prediction Dashboard",
     "priceIntelligence": "Price Intelligence",
     "liveData": "Live Data",

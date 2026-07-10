@@ -21,7 +21,7 @@ exports.getPrediction = async (req, res) => {
     let todayPrice = 35.0; // fallback default
     const mandiData = await Mandi.findOne({ state, district, crop }).sort({ lastUpdated: -1 });
     if (mandiData) {
-      todayPrice = mandiData.todaysPrice;
+      todayPrice = mandiData.price;
     }
     
     // Dynamically generate current macro variables for prediction

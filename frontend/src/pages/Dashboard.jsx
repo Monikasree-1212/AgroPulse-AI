@@ -228,7 +228,8 @@ export default function Dashboard() {
     const fallback = Array.from({length: 6}).map((_, i) => ({
       _id: `fallback-${i}`, marketName: `${selectedDistrict} ${suffixes[i]}`,
       district: selectedDistrict, state: selectedState, commodity: selectedCommodity,
-      marketPrice: 40 + i, distance: 10 + (i * 12), transportCost: 4, expectedProfit: 36 + i
+      marketPrice: 40 + i, distance: 10 + (i * 12), transportCost: 4, expectedProfit: 36 + i,
+      lastUpdated: new Date(Date.now() - ((i + 1) * 17 * 60 * 1000)).toISOString()
     }))
     setMandiRecs(fallback)
     setMandiLoading(false)

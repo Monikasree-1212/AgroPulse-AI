@@ -171,9 +171,11 @@ const reports = [
   { title: 'Notifications Report', type: 'notifications', description: 'Alerts with priority and read status.', endpoint: '/api/reports/notifications/pdf' },
 ]
 
+const staggeredMandis = mandis.map((m, i) => ({ ...m, lastUpdated: new Date(Date.now() - (15 * 60 * 1000) - (i * 12 * 60 * 1000)) }));
+
 module.exports = {
   commodities,
-  mandis,
+  mandis: staggeredMandis,
   governmentSchemes,
   users,
   activities,
