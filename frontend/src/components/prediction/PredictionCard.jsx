@@ -37,11 +37,11 @@ export default function PredictionCard() {
   if (!data) return null;
 
   // Dynamic Logic Computation
-  const todayPrice = data.todayPrice || 0;
+  const todayPrice = data.currentPrice;
   const predictedPrice = data.predictedPrice || 0;
   
-  const gainValue = predictedPrice - todayPrice;
-  const gainPercent = todayPrice > 0 ? ((gainValue / todayPrice) * 100).toFixed(1) : 0;
+  const gainValue = todayPrice ? predictedPrice - todayPrice : 0;
+  const gainPercent = todayPrice ? ((gainValue / todayPrice) * 100).toFixed(1) : 0;
   
   let dynamicTrend = 'stable';
   if (predictedPrice > todayPrice) dynamicTrend = 'increasing';
@@ -54,11 +54,21 @@ export default function PredictionCard() {
   };
   const visual = trendVisuals[dynamicTrend];
   
-  const confidenceScore = data.confidence || 75;
+  const confidenceScore = data.confidence || 0;
 
   let recKey = 'dashboard.predictionCard.recommendationStable';
   if (dynamicTrend === 'increasing') recKey = 'dashboard.predictionCard.recommendationHold';
   if (dynamicTrend === 'decreasing') recKey = 'dashboard.predictionCard.recommendationSell';
+
+  const formatLastUpdated = (dateString) => {
+    if (!dateString) return t('dashboard.predictionCard.justNow');
+    const date = new Date(dateString);
+    const today = new Date();
+    if (date.toDateString() === today.toDateString()) {
+      return `Today, ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    }
+    return date.toLocaleDateString() + ', ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
   return (
     <div className="bg-white/80 dark:bg-gray-800/60 border border-indigo-100 dark:border-indigo-900/30 rounded-2xl p-6 shadow-xl backdrop-blur-xl relative overflow-hidden group transition-all duration-300 hover:shadow-2xl">
@@ -75,13 +85,17 @@ export default function PredictionCard() {
           </p>
         </div>
         <div className="flex flex-col items-end gap-2">
-          {data.mode === 'fallback' && (
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 shadow-sm border border-amber-200 dark:border-amber-800/50">
-              {t('dashboard.predictionCard.fallbackPrediction')}
+          {data.predictionSource && (
+            <span className={`px-3 py-1 rounded-full text-xs font-bold shadow-sm border ${
+              data.predictionSource === 'ML' 
+                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-400 border-indigo-200 dark:border-indigo-800/50'
+                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400 border-amber-200 dark:border-amber-800/50'
+            }`}>
+              {t('dashboard.predictionCard.predictionSource')}: {data.predictionSource === 'ML' ? t('dashboard.predictionCard.mlPrediction') : t('dashboard.predictionCard.fallbackPrediction')}
             </span>
           )}
           <span className="text-[11px] text-gray-400 font-medium">
-            {t('dashboard.predictionCard.lastUpdated')}: {t('dashboard.predictionCard.justNow')}
+            {t('dashboard.predictionCard.lastUpdated')}: {formatLastUpdated(data.lastUpdated)}
           </span>
         </div>
       </div>
@@ -94,7 +108,7 @@ export default function PredictionCard() {
             <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">{t('dashboard.predictionCard.currentPrice')}</p>
           </div>
           <p className="text-2xl font-black text-gray-900 dark:text-white">
-            {todayPrice > 0 ? `₹${todayPrice}/kg` : t('dashboard.predictionCard.dataUnavailable')}
+            {todayPrice ? `₹${todayPrice}/kg` : t('dashboard.predictionCard.dataUnavailable')}
           </p>
         </div>
 
@@ -105,7 +119,7 @@ export default function PredictionCard() {
             <p className="text-xs text-indigo-700 dark:text-indigo-300 font-bold uppercase tracking-wider">{t('dashboard.predictionCard.predictedPrice')}</p>
           </div>
           <p className="text-2xl font-black text-indigo-900 dark:text-indigo-100">
-            ₹{predictedPrice}/kg
+            {todayPrice ? `₹${predictedPrice}/kg` : '-'}
           </p>
         </div>
 
@@ -116,8 +130,12 @@ export default function PredictionCard() {
             <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">{t('dashboard.predictionCard.expectedGain')}</p>
           </div>
           <p className={`text-xl font-black ${gainValue >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-            {gainValue > 0 ? '+' : ''}₹{gainValue.toFixed(2)} 
-            <span className="text-sm ml-1 opacity-80">({gainPercent > 0 ? '+' : ''}{gainPercent}%)</span>
+            {todayPrice ? (
+              <>
+                {gainValue > 0 ? '+' : ''}₹{gainValue.toFixed(2)} 
+                <span className="text-sm ml-1 opacity-80">({gainPercent > 0 ? '+' : ''}{gainPercent}%)</span>
+              </>
+            ) : '-'}
           </p>
         </div>
 
@@ -126,9 +144,15 @@ export default function PredictionCard() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">{t('dashboard.predictionCard.trend')}</p>
-              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${visual.badge}`}>
-                {visual.icon} {t(`dashboard.predictionCard.${dynamicTrend}`)}
-              </span>
+              {todayPrice ? (
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${visual.badge}`}>
+                  {visual.icon} {t(`dashboard.predictionCard.${dynamicTrend}`)}
+                </span>
+              ) : (
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400">
+                  -
+                </span>
+              )}
             </div>
           </div>
           
@@ -155,7 +179,7 @@ export default function PredictionCard() {
               {t('dashboard.predictionCard.aiRecommendation')}
             </h4>
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
-              {t(recKey)}
+              {todayPrice ? t(recKey) : data.message || "No recommendation available without market data."}
             </p>
           </div>
         </div>

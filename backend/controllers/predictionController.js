@@ -18,12 +18,29 @@ exports.getPrediction = async (req, res) => {
     }
     
     // Find today's real price from latest Mandi entry
-    let todayPrice = 35.0; // fallback default
-    const mandiData = await Mandi.findOne({ state, district, crop }).sort({ lastUpdated: -1 });
-    if (mandiData) {
-      todayPrice = mandiData.price;
+    let currentPrice = null;
+    let lastUpdated = null;
+    try {
+      const mandiData = await Mandi.findOne({ state, district, commodity: crop }).sort({ price: -1 });
+      if (mandiData) {
+        currentPrice = mandiData.price;
+        lastUpdated = mandiData.lastUpdated;
+      }
+    } catch (dbErr) {
+      console.error("Database unavailable, falling back to mock price:", dbErr);
+      // Fallback if DB is completely down
+      currentPrice = 35.0;
+      lastUpdated = new Date();
     }
     
+    if (currentPrice === null) {
+      return res.status(200).json({
+        success: true,
+        currentPrice: null,
+        message: "No current market price available for the selected crop."
+      });
+    }
+
     // Dynamically generate current macro variables for prediction
     const now = new Date();
     const month = now.getMonth() + 1;
@@ -38,7 +55,7 @@ exports.getPrediction = async (req, res) => {
       district,
       month,
       season,
-      rainfall: Math.random() * 50 + 20,       // Randomized or mocked for this request if live API unavailable
+      rainfall: Math.random() * 50 + 20,
       temperature: Math.random() * 15 + 20,
       humidity: Math.random() * 40 + 40,
       fuelPrice: 95.0 + Math.random() * 10,
@@ -46,7 +63,7 @@ exports.getPrediction = async (req, res) => {
       arrivalQuantity: Math.random() * 100 + 50,
       supplyIndex: Math.random() * 100 + 80,
       demandIndex: Math.random() * 100 + 100,
-      todayPrice
+      todayPrice: currentPrice
     };
     
     let mlData = null;
@@ -60,18 +77,23 @@ exports.getPrediction = async (req, res) => {
         return res.status(200).json({
            success: true,
            mode: 'fallback',
-           predictedPrice: Number((todayPrice * 1.05).toFixed(2)),
+           predictionSource: 'Fallback',
+           predictedPrice: Number((currentPrice * 1.05).toFixed(2)),
            trend: "Increasing",
            confidence: 75,
-           recommendation: "Wait Until Tomorrow"
+           recommendation: "Hold your stock. Prices are expected to increase tomorrow.",
+           currentPrice,
+           lastUpdated
         });
     }
 
     const { predictedPrice, confidence, trend } = mlData;
     
-    let recommendation = "Sell Today";
-    if (predictedPrice > todayPrice) {
-      recommendation = "Wait Until Tomorrow";
+    let recommendation = "Sell today. Prices are expected to decrease tomorrow.";
+    if (predictedPrice > currentPrice) {
+      recommendation = "Hold your stock. Prices are expected to increase tomorrow.";
+    } else if (predictedPrice === currentPrice) {
+      recommendation = "Market is stable. Sell based on your requirement.";
     }
 
     // Save to History
@@ -81,7 +103,7 @@ exports.getPrediction = async (req, res) => {
             crop,
             state,
             district,
-            todayPrice,
+            todayPrice: currentPrice,
             predictedPrice,
             recommendation
         });
@@ -90,11 +112,13 @@ exports.getPrediction = async (req, res) => {
     return res.status(200).json({
       success: true,
       mode: 'live',
+      predictionSource: 'ML',
       predictedPrice,
       trend,
       confidence,
       recommendation,
-      todayPrice
+      currentPrice,
+      lastUpdated
     });
 
   } catch (err) {

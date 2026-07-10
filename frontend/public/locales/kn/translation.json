@@ -289,12 +289,14 @@
       "decreasing": "Decreasing",
       "stable": "Stable",
       "dataUnavailable": "Data unavailable",
-      "fallbackPrediction": "Using fallback prediction",
+      "fallbackPrediction": "Fallback Prediction",
       "recommendationHold": "Hold your stock. Prices are expected to increase tomorrow.",
       "recommendationSell": "Sell today. Prices are expected to decrease tomorrow.",
       "recommendationStable": "Market is stable. Sell based on your requirement.",
       "lastUpdated": "Last Updated",
-      "justNow": "Just now"
+      "justNow": "Just now",
+      "mlPrediction": "ML Prediction",
+      "predictionSource": "Prediction Source"
     }
   },
   "profile": {
